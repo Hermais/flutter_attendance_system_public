@@ -35,6 +35,7 @@ dependencies:
   url_launcher:
   qr_code_scanner:
   qr_flutter:
+  fl_chart:
 
 
 

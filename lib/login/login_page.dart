@@ -49,8 +49,13 @@ class LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextField(
+                  obscureText: true,
                   controller: usernameController,
-                  decoration: const InputDecoration(labelText: 'Identifier'),
+                  decoration: const InputDecoration(
+                      labelText: 'Identifier',
+                    icon: Icon(Icons.key)
+
+                  ),
                 ),
                 ElevatedButton(
                   onPressed: login,

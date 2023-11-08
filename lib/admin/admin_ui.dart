@@ -10,7 +10,9 @@ import 'package:flutter_attendance_system/database/database_table.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 void main() {
-  runApp(MaterialApp(home: MainAdminUI(),));
+  runApp(MaterialApp(
+    home: MainAdminUI(),
+  ));
 }
 
 class MainAdminUI extends StatefulWidget {
@@ -28,7 +30,6 @@ class _MainAdminUIState extends State<MainAdminUI> {
     super.initState();
     fetchMedicinesFromBackEnd();
   }
-
 
   Future<void> fetchMedicinesFromBackEnd() async {
     medicines = [];
@@ -92,21 +93,20 @@ class _MainAdminUIState extends State<MainAdminUI> {
     }
   }
 
-
-
   Future<void> _showAddMedicineDialog(BuildContext context) async {
-
     Medicine newMedicine;
 
-    var commercialName;
-    var price;
-    var stockQty;
-    var drugName;
-    var manufacturingDate;
-    var manufacturerName;
+    TextEditingController commercialName = TextEditingController();
+    TextEditingController price = TextEditingController();
+    TextEditingController stockQty = TextEditingController();
+    TextEditingController drugName = TextEditingController();
+    TextEditingController manufacturingDate = TextEditingController();
+    TextEditingController manufacturerName = TextEditingController();
+
 
     Future<void> _selectDate(BuildContext context) async {
-      DateTime selectedDate = DateTime.now(); // Initialize with the current date
+      DateTime selectedDate =
+          DateTime.now(); // Initialize with the current date
 
       final DateTime? picked = await showDatePicker(
         context: context,
@@ -122,11 +122,11 @@ class _MainAdminUIState extends State<MainAdminUI> {
         // Update your date variable with the formatted date string
         setState(() {
           selectedDate = picked;
-          manufacturingDate = formattedDate; // Assign the formatted date to your variable
+          manufacturingDate.text =
+              formattedDate; // Assign the formatted date to your variable
         });
       }
     }
-
 
     await showDialog(
       context: context,
@@ -138,28 +138,24 @@ class _MainAdminUIState extends State<MainAdminUI> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 TextField(
+                  keyboardType: TextInputType.text,
                   decoration: InputDecoration(labelText: 'Commercial Name'),
-                  onChanged: (value) {
-                    commercialName = value;
-                  },
+                  controller: commercialName,
                 ),
                 TextField(
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(labelText: 'Price'),
-                  onChanged: (value) {
-                    price = double.parse(value);
-                  },
+                  controller: price,
                 ),
                 TextField(
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(labelText: 'Stock Quantity'),
-                  onChanged: (value) {
-                    stockQty = int.parse(value);
-                  },
+                  controller: stockQty,
                 ),
                 TextField(
+                  keyboardType: TextInputType.text,
                   decoration: InputDecoration(labelText: 'Drug Name'),
-                  onChanged: (value) {
-                    drugName = value;
-                  },
+                  controller: drugName,
                 ),
                 TextButton(
                   onPressed: () {
@@ -167,12 +163,10 @@ class _MainAdminUIState extends State<MainAdminUI> {
                   },
                   child: Text('Select Manufacturing Date'),
                 ),
-
                 TextField(
+                  keyboardType: TextInputType.text,
                   decoration: InputDecoration(labelText: 'Manufacturer'),
-                  onChanged: (value) {
-                    manufacturerName = value;
-                  },
+                  controller: manufacturerName,
                 ),
               ],
             ),
@@ -187,9 +181,8 @@ class _MainAdminUIState extends State<MainAdminUI> {
             TextButton(
               child: Text('Add'),
               onPressed: () {
-                newMedicine = Medicine.withoutId(
-                    commercialName, price, stockQty, drugName,
-                    manufacturingDate, manufacturerName);
+                newMedicine = Medicine.withoutId(commercialName.text,  double.parse(price.text),
+                    int.parse(stockQty.text), drugName.text, manufacturingDate.text, manufacturerName.text);
                 addMedicine(newMedicine);
                 // Validate and add the new medicine to the database or perform the API call here
                 // You can also handle validation here before adding the medicine
@@ -213,7 +206,6 @@ class _MainAdminUIState extends State<MainAdminUI> {
           floatingActionButton: FloatingActionButton(
               child: Icon(Icons.add),
               onPressed: () {
-
                 _showAddMedicineDialog(context);
               }),
           appBar: AppBar(
@@ -239,43 +231,21 @@ class _MainAdminUIState extends State<MainAdminUI> {
                 },
               ),
             ],
-
           ),
           body: TabBarView(
             children: [
               DataBaseTable(medicines),
-              QrImageView(data: "7@T0RaemVXaDNNSGRp"
-              ,size: 300.0, version: QrVersions.auto
-              ),
+              QrImageView(
+                  data: "7@T0RaemVXaDNNSGRp",
+                  size: 300.0,
+                  version: QrVersions.auto),
               Icon(Icons.safety_check),
             ],
-          )
-      ),
+          )),
     );
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/// Unused method that allows us to add an entry and append it to the json file.
+  /// Unused method that allows us to add an entry and append it to the json file.
 // Future<void> addMedicineEntryLocal(Medicine newMedicine) async {
 //   // Read the existing JSON data from the file.
 //   final jsonString = await rootBundle.loadString('assets/localDB.json');
@@ -302,9 +272,7 @@ class _MainAdminUIState extends State<MainAdminUI> {
 //   await loadMedicineDataLocal();
 // }
 
-
-
-/// This loads the local json file, as a test of course.
+  /// This loads the local json file, as a test of course.
 // Future<void> loadMedicineDataLocal() async {
 //   final jsonString = await rootBundle.loadString('assets/localDB.json');
 //   final jsonData = json.decode(jsonString);
