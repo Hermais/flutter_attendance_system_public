@@ -5,28 +5,28 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-void main(){
-  void store(){}
-  runApp(MaterialApp(home: QRScanner(storeScanResult: store,qrAppTitle: "Attendance Scanner"),));
+void main() {
+  void store() {}
+  runApp(MaterialApp(
+    home: QRScanner(storeScanResult: store, qrAppTitle: "Attendance Scanner"),
+  ));
 }
 
-
-class QRScanner extends  StatefulWidget {
-
+class QRScanner extends StatefulWidget {
   Function storeScanResult;
   String? qrAppTitle;
-
+  final double margins = 30;
 
   QRScanner({required this.storeScanResult, this.qrAppTitle, super.key});
 
   @override
-   State< StatefulWidget> createState() => _QRScannerState();
+  State<StatefulWidget> createState() => _QRScannerState();
 }
 
-class _QRScannerState extends  State<QRScanner> {
+class _QRScannerState extends State<QRScanner> {
   Barcode? result;
   QRViewController? controller;
-  final  GlobalKey qrKey =  GlobalKey(debugLabel: 'QR');
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
@@ -40,82 +40,102 @@ class _QRScannerState extends  State<QRScanner> {
   }
 
   @override
-   Widget build( BuildContext context) {
-    return  Scaffold(
-      body:  Container(
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Stack(alignment: Alignment.bottomCenter, children: [
+      Column(
+        children: <Widget>[
+          Expanded(
+              child: _buildQrView(context)),
+        ],
+      ),
+      Container(
+        height: 180,
+        alignment: Alignment.bottomCenter,
+        transformAlignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          // You can add other decorations as needed
-        ),
+          color: Colors.white,
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(widget.margins),
+                topRight:Radius.circular(widget.margins) )),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Expanded(flex: 4, child: _buildQrView(context)),
-            Expanded(
-              flex: 1,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text(widget.qrAppTitle ?? "Scan a code",
-                    style: const TextStyle(fontWeight: FontWeight.bold,
-                      fontSize: 20,
+            Container(
+              alignment: Alignment.center,
+              height:50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(widget.margins),
+                    bottomRight:Radius.circular(widget.margins) ),
 
-                  ),),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller?.toggleFlash();
-                            setState(() {});
-                          },
-                          child: FutureBuilder(
-                            future: controller?.getFlashStatus(),
-                            builder: (context, snapshot) {
-                              //return Text('Flash: ${snapshot.data}');
-                              return Icon((snapshot.data ?? false) ? Icons.flash_on:Icons.flash_off);
-                            },
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller?.flipCamera();
-                            setState(() {});
-                          },
-                          child: FutureBuilder(
-                            future: controller?.getCameraInfo(),
-                            builder: (context, snapshot) {
-                              if (snapshot.data != null) {
-                                //return Text('Camera\'s facing ${describeEnum(snapshot.data!)}');
-                                return Icon(describeEnum(snapshot.data!) == 'front'? Icons.camera_rear:Icons.camera_front);
-                              } else {
-                                return const Text('loading');
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                color: Color.fromRGBO(245, 240, 235, 1),
+
               ),
+              child: Text(
+                widget.qrAppTitle ?? "Scan a code",
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  margin: const EdgeInsets.all(8),
+                  child: FilledButton(
+                    onPressed: () async {
+                      await controller?.toggleFlash();
+                      setState(() {});
+                    },
+                    child: FutureBuilder(
+                      future: controller?.getFlashStatus(),
+                      builder: (context, snapshot) {
+                        //return Text('Flash: ${snapshot.data}');
+                        return Icon((snapshot.data ?? false)
+                            ? Icons.flash_on
+                            : Icons.flash_off);
+                      },
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.all(8),
+                  child: FilledButton(
+                    onPressed: () async {
+                      await controller?.flipCamera();
+                      setState(() {});
+                    },
+                    child: FutureBuilder(
+                      future: controller?.getCameraInfo(),
+                      builder: (context, snapshot) {
+                        if (snapshot.data != null) {
+                          //return Text('Camera\'s facing ${describeEnum(snapshot.data!)}');
+                          return Icon(describeEnum(snapshot.data!) == 'front'
+                              ? Icons.camera_rear
+                              : Icons.camera_front);
+                        } else {
+                          return const Text('loading');
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
       )
-
-    );
+    ]));
   }
 
-   Widget _buildQrView( BuildContext context) {
+  Widget _buildQrView(BuildContext context) {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
-    var scanArea = ( MediaQuery.of(context).size.width < 400 ||
-         MediaQuery.of(context).size.height < 400)
+    var scanArea = (MediaQuery.of(context).size.width < 400 ||
+            MediaQuery.of(context).size.height < 400)
         ? 150.0
         : 300.0;
     // To ensure the Scanner view is properly sizes after rotation
@@ -124,7 +144,7 @@ class _QRScannerState extends  State<QRScanner> {
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,
       overlay: QrScannerOverlayShape(
-          borderColor:  Colors.red,
+          borderColor: Colors.blue,
           borderRadius: 10,
           borderLength: 30,
           borderWidth: 10,
@@ -144,25 +164,18 @@ class _QRScannerState extends  State<QRScanner> {
         widget.storeScanResult(result!.code ?? "NULL Error!");
         Navigator.of(context).pop();
         Navigator.of(context).pop();
-        //  Navigator.of(context).push( MaterialPageRoute(
-        //   builder: (context) => MyQRNavigator(toLaunch: Uri.parse(result!.code ?? 'hi')),
-        // )).then((value)  {
-        //     controller!.resumeCamera();
-        // });
       });
     });
   }
 
-  void _onPermissionSet( BuildContext context, QRViewController ctrl, bool p) {
+  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
     log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
     if (!p) {
-       ScaffoldMessenger.of(context).showSnackBar(
-        const  SnackBar(content:  Text('no Permission')),
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('no Permission')),
       );
     }
   }
-
-
 
   @override
   void dispose() {
