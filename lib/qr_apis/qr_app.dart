@@ -5,12 +5,19 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
+void main(){
+  void store(){}
+  runApp(MaterialApp(home: QRScanner(storeScanResult: store,qrAppTitle: "Attendance Scanner"),));
+}
+
+
 class QRScanner extends  StatefulWidget {
 
   Function storeScanResult;
+  String? qrAppTitle;
 
 
-  QRScanner(this.storeScanResult, {super.key});
+  QRScanner({required this.storeScanResult, this.qrAppTitle, super.key});
 
   @override
    State< StatefulWidget> createState() => _QRScannerState();
@@ -35,92 +42,73 @@ class _QRScannerState extends  State<QRScanner> {
   @override
    Widget build( BuildContext context) {
     return  Scaffold(
-      body:  Column(
-        children: < Widget>[
-           Expanded(flex: 4, child: _buildQrView(context)),
-           Expanded(
-            flex: 1,
-            child:  FittedBox(
-              fit:  BoxFit.contain,
-              child:  Column(
-                mainAxisAlignment:  MainAxisAlignment.spaceEvenly,
-                children: < Widget>[
-                  if (result != null)
-                     Text(
-                        'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-                  else
-                    const  Text('Scan a code'),
-                   Row(
-                    mainAxisAlignment:  MainAxisAlignment.center,
-                    crossAxisAlignment:  CrossAxisAlignment.center,
-                    children: < Widget>[
-                       Container(
-                        margin: const  EdgeInsets.all(8),
-                        child:  ElevatedButton(
-                            onPressed: () async {
-                              await controller?.toggleFlash();
-                              setState(() {});
-                            },
-                            child:  FutureBuilder(
-                              future: controller?.getFlashStatus(),
-                              builder: (context, snapshot) {
-                                return  Text('Flash: ${snapshot.data}');
-                              },
-                            )),
-                      ),
-                       Container(
-                        margin: const  EdgeInsets.all(8),
-                        child:  ElevatedButton(
-                            onPressed: () async {
-                              await controller?.flipCamera();
-                              setState(() {});
-                            },
-                            child:  FutureBuilder(
-                              future: controller?.getCameraInfo(),
-                              builder: (context, snapshot) {
-                                if (snapshot.data != null) {
-                                  return  Text(
-                                      'Camera facing ${describeEnum(snapshot.data!)}');
-                                } else {
-                                  return const  Text('loading');
-                                }
-                              },
-                            )),
-                      )
-                    ],
-                  ),
-                   Row(
-                    mainAxisAlignment:  MainAxisAlignment.center,
-                    crossAxisAlignment:  CrossAxisAlignment.center,
-                    children: < Widget>[
-                       Container(
-                        margin: const  EdgeInsets.all(8),
-                        child:  ElevatedButton(
+      body:  Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          // You can add other decorations as needed
+        ),
+        child: Column(
+          children: <Widget>[
+            Expanded(flex: 4, child: _buildQrView(context)),
+            Expanded(
+              flex: 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text(widget.qrAppTitle ?? "Scan a code",
+                    style: const TextStyle(fontWeight: FontWeight.bold,
+                      fontSize: 20,
+
+                  ),),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        margin: const EdgeInsets.all(8),
+                        child: ElevatedButton(
                           onPressed: () async {
-                            await controller?.pauseCamera();
+                            await controller?.toggleFlash();
+                            setState(() {});
                           },
-                          child: const  Text('pause',
-                              style:  TextStyle(fontSize: 20)),
+                          child: FutureBuilder(
+                            future: controller?.getFlashStatus(),
+                            builder: (context, snapshot) {
+                              //return Text('Flash: ${snapshot.data}');
+                              return Icon((snapshot.data ?? false) ? Icons.flash_on:Icons.flash_off);
+                            },
+                          ),
                         ),
                       ),
-                       Container(
-                        margin: const  EdgeInsets.all(8),
-                        child:  ElevatedButton(
+                      Container(
+                        margin: const EdgeInsets.all(8),
+                        child: ElevatedButton(
                           onPressed: () async {
-                            await controller?.resumeCamera();
+                            await controller?.flipCamera();
+                            setState(() {});
                           },
-                          child: const  Text('resume',
-                              style:  TextStyle(fontSize: 20)),
+                          child: FutureBuilder(
+                            future: controller?.getCameraInfo(),
+                            builder: (context, snapshot) {
+                              if (snapshot.data != null) {
+                                //return Text('Camera\'s facing ${describeEnum(snapshot.data!)}');
+                                return Icon(describeEnum(snapshot.data!) == 'front'? Icons.camera_rear:Icons.camera_front);
+                              } else {
+                                return const Text('loading');
+                              }
+                            },
+                          ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ],
               ),
             ),
-          )
-        ],
-      ),
+          ],
+        ),
+      )
+
     );
   }
 
