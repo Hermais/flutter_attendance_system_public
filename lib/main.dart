@@ -3,7 +3,8 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_attendance_system/login/login_page.dart';
+import 'tests/ignore__/login_page.dart';
+
 
 void main() {
   final ThemeData appTheme = ThemeData(
