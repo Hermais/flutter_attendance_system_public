@@ -3,22 +3,36 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../utilities/card_widget.dart';
 
 
 
-class DeveloperAdminDashboard extends StatefulWidget {
+class FacultyAdminDashboard extends StatefulWidget {
   final String? adminName;
-  DeveloperAdminDashboard({super.key, this.adminName});
+  FacultyAdminDashboard({super.key, this.adminName});
   @override
-  _DeveloperAdminDashboardState createState() => _DeveloperAdminDashboardState();
+  _FacultyAdminDashboardState createState() => _FacultyAdminDashboardState();
 }
 
-class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
+class _FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text('Tab 1 Content'),
-    Text('Tab 2 Content'),
+  static final List<Widget> _widgetOptions = <Widget>[
+    Text('Faculty timetable should be here.'),
+    Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        CustomCard(),
+        CustomCard(),
+        CustomCard(),
+        CustomCard(),
+        CustomCard(),
+        CustomCard(),
+        CustomCard(),
+
+      ],
+    ),
   ];
 
   void _onItemTapped(int index) {
@@ -33,9 +47,6 @@ class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
       appBar: AppBar(
         elevation: 0,
 
-        actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.filter_alt_sharp))
-        ],
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(40.0),
@@ -43,16 +54,18 @@ class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
           ),
         ),
 
-        title: Text('Welcome, ${widget.adminName ?? "Developer!"}',
+        title: Text('Welcome, ${widget.adminName ?? "Faculty Admin!"}',
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){},
         child: Icon(Icons.settings_suggest),
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
+      body: SingleChildScrollView(child:
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:[ _widgetOptions.elementAt(_selectedIndex)],
+      ),),
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 17,
         iconSize: 30,
@@ -61,11 +74,11 @@ class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
           BottomNavigationBarItem(
 
 
-            icon: Icon(Icons.supervised_user_circle),
+            icon: Icon(Icons.calendar_month_rounded),
             label: 'All Users',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.info),
+            icon: Icon(Icons.pin_drop_rounded),
             label: 'Info',
           ),
 

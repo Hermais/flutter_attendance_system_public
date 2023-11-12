@@ -11,6 +11,27 @@ void main() {
     home: QRScanner(storeScanResult: store, qrAppTitle: "Attendance Scanner"),
   ));
 }
+class QRScannerWithScaffold extends StatelessWidget
+{
+  Function storeScanResult;
+  String? qrAppTitle;
+
+  QRScannerWithScaffold({super.key, required this.storeScanResult, this.qrAppTitle});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+
+
+
+
+      ),
+      body: QRScanner(storeScanResult: storeScanResult,qrAppTitle: qrAppTitle,),
+    );
+  }
+}
 
 class QRScanner extends StatefulWidget {
   Function storeScanResult;

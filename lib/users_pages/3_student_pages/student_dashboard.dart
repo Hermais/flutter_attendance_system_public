@@ -1,24 +1,26 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/qr_apis/qr_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
+void temp(){}
 
 
-class DeveloperAdminDashboard extends StatefulWidget {
+class StudentDashboard extends StatefulWidget {
   final String? adminName;
-  DeveloperAdminDashboard({super.key, this.adminName});
+  StudentDashboard({super.key, this.adminName});
   @override
-  _DeveloperAdminDashboardState createState() => _DeveloperAdminDashboardState();
+  _StudentDashboardState createState() => _StudentDashboardState();
 }
 
-class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
+class _StudentDashboardState extends State<StudentDashboard> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    Text('Tab 1 Content'),
-    Text('Tab 2 Content'),
+    Text('Lectures (or sections) for the student shall appear here. Lectures appear in cards.'),
+    Text('Undefined tab functionality.'),
   ];
 
   void _onItemTapped(int index) {
@@ -34,7 +36,7 @@ class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
         elevation: 0,
 
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.filter_alt_sharp))
+          IconButton(onPressed: () {}, icon: Icon(Icons.search))
         ],
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -43,12 +45,14 @@ class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
           ),
         ),
 
-        title: Text('Welcome, ${widget.adminName ?? "Developer!"}',
+        title: Text('Welcome, ${widget.adminName ?? "Student!"}',
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
-        child: Icon(Icons.settings_suggest),
+        onPressed: (){
+
+        },
+        child: Icon(Icons.question_mark),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -61,12 +65,12 @@ class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
           BottomNavigationBarItem(
 
 
-            icon: Icon(Icons.supervised_user_circle),
-            label: 'All Users',
+            icon: Icon(Icons.dashboard_rounded),
+            label: 'Lectures',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'Info',
+            icon: Icon(Icons.question_mark),
+            label: 'TBD',
           ),
 
         ],

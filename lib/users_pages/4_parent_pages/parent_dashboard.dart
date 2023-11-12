@@ -1,24 +1,26 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/qr_apis/qr_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
+void temp(){}
 
 
-class DeveloperAdminDashboard extends StatefulWidget {
+class ParentDashboard extends StatefulWidget {
   final String? adminName;
-  DeveloperAdminDashboard({super.key, this.adminName});
+  ParentDashboard({super.key, this.adminName});
   @override
-  _DeveloperAdminDashboardState createState() => _DeveloperAdminDashboardState();
+  _ParentDashboardState createState() => _ParentDashboardState();
 }
 
-class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
+class _ParentDashboardState extends State<ParentDashboard> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    Text('Tab 1 Content'),
-    Text('Tab 2 Content'),
+    Text('A record of attendance for the student is shown here.'),
+    Text('Gives information of the whereabouts of the student.'),
   ];
 
   void _onItemTapped(int index) {
@@ -34,7 +36,7 @@ class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
         elevation: 0,
 
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.filter_alt_sharp))
+          IconButton(onPressed: () {}, icon: Icon(Icons.search))
         ],
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -43,12 +45,14 @@ class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
           ),
         ),
 
-        title: Text('Welcome, ${widget.adminName ?? "Developer!"}',
+        title: Text('Welcome, ${widget.adminName ?? "Parent!"}',
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
-        child: Icon(Icons.settings_suggest),
+        onPressed: (){
+
+        },
+        child: Icon(Icons.question_mark),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -61,12 +65,12 @@ class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
           BottomNavigationBarItem(
 
 
-            icon: Icon(Icons.supervised_user_circle),
-            label: 'All Users',
+            icon: Icon(Icons.checklist),
+            label: 'Attendance Record',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'Info',
+            icon: Icon(Icons.pin_drop_rounded),
+            label: 'Student Whereabouts',
           ),
 
         ],
