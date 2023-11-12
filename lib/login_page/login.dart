@@ -10,6 +10,8 @@ void main()
 
 class LoginPage extends StatefulWidget
 {
+  const LoginPage({super.key});
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -28,7 +30,7 @@ class _LoginPageState extends State<LoginPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login to continue"),
+        title: const Text("Login to continue"),
       ),
       /// AHMED SALEM - put the body here after removing the container.
       body: Container(),
