@@ -15,15 +15,17 @@ class QRScannerWithScaffold extends StatelessWidget
 {
   Function storeScanResult;
   String? qrAppTitle;
+  final Widget? appBarFlexableSpace;
 
-  QRScannerWithScaffold({super.key, required this.storeScanResult, this.qrAppTitle});
+
+  QRScannerWithScaffold({super.key, required this.storeScanResult, this.qrAppTitle, this.appBarFlexableSpace});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-
+        flexibleSpace: appBarFlexableSpace,
 
 
 
@@ -165,7 +167,7 @@ class _QRScannerState extends State<QRScanner> {
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,
       overlay: QrScannerOverlayShape(
-          borderColor: Colors.blue,
+          borderColor: Theme.of(context).primaryColor,
           borderRadius: 10,
           borderLength: 30,
           borderWidth: 10,

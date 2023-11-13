@@ -15,7 +15,7 @@ class CustomCard extends StatelessWidget {
       padding: const EdgeInsets.all(4),
       child: Card(
         child: InkWell(
-          splashColor: Colors.blue.withAlpha(30),
+          splashColor: Theme.of(context).primaryColor.withAlpha(30),
           onTap: () {
             if (onTap != null) {
               onTap!();

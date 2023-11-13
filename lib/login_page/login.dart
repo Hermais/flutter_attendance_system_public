@@ -1,5 +1,4 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main()
@@ -10,7 +9,9 @@ void main()
 
 class LoginPage extends StatefulWidget
 {
-  const LoginPage({super.key});
+  final Widget? appBarFlexableSpace;
+
+  const LoginPage({super.key, this.appBarFlexableSpace});
 
   @override
   State<StatefulWidget> createState() {
@@ -30,6 +31,7 @@ class _LoginPageState extends State<LoginPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        flexibleSpace: widget.appBarFlexableSpace,
         title: const Text("Login to continue"),
       ),
       /// AHMED SALEM - put the body here after removing the container.

@@ -63,7 +63,7 @@ flexibleSpace: widget.appBarFlexableSpace,
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => QRScannerWithScaffold(
+              builder: (context) => QRScannerWithScaffold(appBarFlexableSpace: widget.appBarFlexableSpace,
                 storeScanResult: temp,
               ),
             ),
@@ -91,7 +91,7 @@ flexibleSpace: widget.appBarFlexableSpace,
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Theme.of(context).primaryColor,
         onTap: _onItemTapped,
       ),
     );

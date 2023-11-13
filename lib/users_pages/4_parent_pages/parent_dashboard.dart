@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_const_constructors_in_immutables, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 
@@ -71,7 +71,7 @@ flexibleSpace: widget.appBarFlexableSpace,
 
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Theme.of(context).primaryColor,
         onTap: _onItemTapped,
       ),
     );

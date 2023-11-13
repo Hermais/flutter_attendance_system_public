@@ -68,7 +68,7 @@ class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
 
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Theme.of(context).primaryColor,
         onTap: _onItemTapped,
       ),
     );
