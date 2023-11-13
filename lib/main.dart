@@ -23,7 +23,7 @@ void main() {
       ),
     ),
     home: NoLoginNavigation(
-        appBarFlexableSpace: Container(
+        appBarFlexibleSpace: Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(bottomRight: Radius.circular(18),
             bottomLeft:Radius.circular(18) ),

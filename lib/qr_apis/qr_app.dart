@@ -15,17 +15,17 @@ class QRScannerWithScaffold extends StatelessWidget
 {
   Function storeScanResult;
   String? qrAppTitle;
-  final Widget? appBarFlexableSpace;
+  final Widget? appBarFlexibleSpace;
 
 
-  QRScannerWithScaffold({super.key, required this.storeScanResult, this.qrAppTitle, this.appBarFlexableSpace});
+  QRScannerWithScaffold({super.key, required this.storeScanResult, this.qrAppTitle, this.appBarFlexibleSpace});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        flexibleSpace: appBarFlexableSpace,
+        flexibleSpace: appBarFlexibleSpace,
 
 
 

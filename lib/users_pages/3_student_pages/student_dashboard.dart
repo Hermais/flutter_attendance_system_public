@@ -9,10 +9,10 @@ void temp(){}
 
 
 class StudentDashboard extends StatefulWidget {
-  final String? adminName;
-  final Widget? appBarFlexableSpace;
+  final String? userName;
+  final Widget? appBarFlexibleSpace;
 
-  StudentDashboard({super.key, this.adminName, this.appBarFlexableSpace});
+  StudentDashboard({super.key, this.userName, this.appBarFlexibleSpace});
   @override
   _StudentDashboardState createState() => _StudentDashboardState();
 }
@@ -36,13 +36,13 @@ class _StudentDashboardState extends State<StudentDashboard> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-flexibleSpace: widget.appBarFlexableSpace,
+flexibleSpace: widget.appBarFlexibleSpace,
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.search))
         ],
 
 
-        title: Text('Welcome, ${widget.adminName ?? "Student!"}',
+        title: Text('Welcome, ${widget.userName ?? "Student!"}',
         ),
       ),
       floatingActionButton: FloatingActionButton(

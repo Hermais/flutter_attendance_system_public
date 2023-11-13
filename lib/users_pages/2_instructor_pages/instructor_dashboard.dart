@@ -7,12 +7,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 void temp() {}
 
+
 class InstructorDashboard extends StatefulWidget {
-  final String? adminName;
-  final Widget? appBarFlexableSpace;
+  final String? userName;
+  final Widget? appBarFlexibleSpace;
 
 
-  InstructorDashboard({super.key, this.adminName, this.appBarFlexableSpace});
+  InstructorDashboard({super.key, this.userName, this.appBarFlexibleSpace});
 
   @override
   _InstructorDashboardState createState() => _InstructorDashboardState();
@@ -54,16 +55,16 @@ class _InstructorDashboardState extends State<InstructorDashboard> {
       appBar: AppBar(
         elevation: 0,
         actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
-flexibleSpace: widget.appBarFlexableSpace,
+flexibleSpace: widget.appBarFlexibleSpace,
         title: Text(
-          'Welcome, ${widget.adminName ?? "Instructor!"}',
+          'Welcome, ${widget.userName ?? "Instructor!"}',
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => QRScannerWithScaffold(appBarFlexableSpace: widget.appBarFlexableSpace,
+              builder: (context) => QRScannerWithScaffold(appBarFlexibleSpace: widget.appBarFlexibleSpace,
                 storeScanResult: temp,
               ),
             ),

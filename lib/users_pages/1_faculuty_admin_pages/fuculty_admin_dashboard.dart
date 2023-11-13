@@ -8,9 +8,9 @@ import '../utilities/card_widget.dart';
 
 
 class FacultyAdminDashboard extends StatefulWidget {
-  final String? adminName;
-  final Widget? appBarFlexableSpace;
-  FacultyAdminDashboard({super.key, this.adminName, this.appBarFlexableSpace});
+  final String? userName;
+  final Widget? appBarFlexibleSpace;
+  FacultyAdminDashboard({super.key, this.userName, this.appBarFlexibleSpace});
   @override
   _FacultyAdminDashboardState createState() => _FacultyAdminDashboardState();
 }
@@ -47,8 +47,8 @@ class _FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-flexibleSpace: widget.appBarFlexableSpace,
-        title: Text('Welcome, ${widget.adminName ?? "Faculty Admin!"}',
+flexibleSpace: widget.appBarFlexibleSpace,
+        title: Text('Welcome, ${widget.userName ?? "Faculty Admin!"}',
         ),
       ),
       floatingActionButton: FloatingActionButton(

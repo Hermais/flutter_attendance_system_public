@@ -7,9 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class DeveloperAdminDashboard extends StatefulWidget {
-  final String? adminName;
-  final Widget? appBarFlexableSpace;
-  DeveloperAdminDashboard({super.key, this.adminName, this.appBarFlexableSpace});
+  final String? userName;
+  final Widget? appBarFlexibleSpace;
+  DeveloperAdminDashboard({super.key, this.userName, this.appBarFlexibleSpace});
   @override
   _DeveloperAdminDashboardState createState() => _DeveloperAdminDashboardState();
 }
@@ -17,7 +17,7 @@ class DeveloperAdminDashboard extends StatefulWidget {
 class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _widgetOptions = <Widget>[
+  final List<Widget> _widgetOptions = <Widget>[
     Text('Tab 1 Content'),
     Text('Tab 2 Content'),
   ];
@@ -32,7 +32,7 @@ class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        flexibleSpace: widget.appBarFlexableSpace,
+        flexibleSpace: widget.appBarFlexibleSpace,
         elevation: 0,
 
         actions: [
@@ -40,7 +40,7 @@ class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
         ],
 
 
-        title: Text('Welcome, ${widget.adminName ?? "Developer!"}',
+        title: Text('Welcome, ${widget.userName ?? "Developer!"}',
         ),
       ),
       floatingActionButton: FloatingActionButton(

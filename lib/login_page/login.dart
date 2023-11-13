@@ -9,9 +9,9 @@ void main()
 
 class LoginPage extends StatefulWidget
 {
-  final Widget? appBarFlexableSpace;
+  final Widget? appBarFlexibleSpace;
 
-  const LoginPage({super.key, this.appBarFlexableSpace});
+  const LoginPage({super.key, this.appBarFlexibleSpace});
 
   @override
   State<StatefulWidget> createState() {
@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        flexibleSpace: widget.appBarFlexableSpace,
+        flexibleSpace: widget.appBarFlexibleSpace,
         title: const Text("Login to continue"),
       ),
       /// AHMED SALEM - put the body here after removing the container.

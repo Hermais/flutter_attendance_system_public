@@ -8,10 +8,10 @@ void temp(){}
 
 
 class ParentDashboard extends StatefulWidget {
-  final String? adminName;
-  final Widget? appBarFlexableSpace;
+  final String? userName;
+  final Widget? appBarFlexibleSpace;
 
-  ParentDashboard({super.key, this.adminName, this.appBarFlexableSpace});
+  ParentDashboard({super.key, this.userName, this.appBarFlexibleSpace});
   @override
   _ParentDashboardState createState() => _ParentDashboardState();
 }
@@ -35,13 +35,13 @@ class _ParentDashboardState extends State<ParentDashboard> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-flexibleSpace: widget.appBarFlexableSpace,
+flexibleSpace: widget.appBarFlexibleSpace,
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.search))
         ],
 
 
-        title: Text('Welcome, ${widget.adminName ?? "Parent!"}',
+        title: Text('Welcome, ${widget.userName ?? "Parent!"}',
         ),
       ),
       floatingActionButton: FloatingActionButton(

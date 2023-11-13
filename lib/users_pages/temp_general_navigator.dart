@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/users_pages/0_developer_admin_pages/developer_admin_dashboard.dart';
 import 'package:flutter_attendance_system/users_pages/1_faculuty_admin_pages/fuculty_admin_dashboard.dart';
@@ -8,15 +7,15 @@ import 'package:flutter_attendance_system/users_pages/4_parent_pages/parent_dash
 import 'package:flutter_attendance_system/users_pages/utilities/card_widget.dart';
 
 class NoLoginNavigation extends StatelessWidget {
-  final Widget? appBarFlexableSpace;
+  final Widget? appBarFlexibleSpace;
 
-  const NoLoginNavigation({super.key, this.appBarFlexableSpace});
+  const NoLoginNavigation({super.key, this.appBarFlexibleSpace});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        flexibleSpace: appBarFlexableSpace,
+        flexibleSpace: appBarFlexibleSpace,
         title: const Text("Temp Public Navigator"),
       ),
       body: SingleChildScrollView(
@@ -27,7 +26,7 @@ class NoLoginNavigation extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => DeveloperAdminDashboard(
-                          appBarFlexableSpace: appBarFlexableSpace,
+                          appBarFlexibleSpace: appBarFlexibleSpace,
                         )));
               },
             ),
@@ -36,7 +35,7 @@ class NoLoginNavigation extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => FacultyAdminDashboard(
-                          appBarFlexableSpace: appBarFlexableSpace,
+                          appBarFlexibleSpace: appBarFlexibleSpace,
                         )));
               },
             ),
@@ -45,7 +44,7 @@ class NoLoginNavigation extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => InstructorDashboard(
-                          appBarFlexableSpace: appBarFlexableSpace,
+                          appBarFlexibleSpace: appBarFlexibleSpace,
                         )));
               },
             ),
@@ -54,7 +53,7 @@ class NoLoginNavigation extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => StudentDashboard(
-                          appBarFlexableSpace: appBarFlexableSpace,
+                          appBarFlexibleSpace: appBarFlexibleSpace,
                         )));
               },
             ),
@@ -63,7 +62,7 @@ class NoLoginNavigation extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => ParentDashboard(
-                          appBarFlexableSpace: appBarFlexableSpace,
+                          appBarFlexibleSpace: appBarFlexibleSpace,
                         )));
               },
             ),
