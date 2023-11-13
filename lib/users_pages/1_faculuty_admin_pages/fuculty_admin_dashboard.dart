@@ -9,7 +9,8 @@ import '../utilities/card_widget.dart';
 
 class FacultyAdminDashboard extends StatefulWidget {
   final String? adminName;
-  FacultyAdminDashboard({super.key, this.adminName});
+  final Widget? appBarFlexableSpace;
+  FacultyAdminDashboard({super.key, this.adminName, this.appBarFlexableSpace});
   @override
   _FacultyAdminDashboardState createState() => _FacultyAdminDashboardState();
 }
@@ -46,14 +47,7 @@ class _FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-
-        shape: ContinuousRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(40.0),
-            bottomRight: Radius.circular(40.0),
-          ),
-        ),
-
+flexibleSpace: widget.appBarFlexableSpace,
         title: Text('Welcome, ${widget.adminName ?? "Faculty Admin!"}',
         ),
       ),

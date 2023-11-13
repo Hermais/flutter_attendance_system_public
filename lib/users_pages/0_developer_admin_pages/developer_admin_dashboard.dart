@@ -8,7 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class DeveloperAdminDashboard extends StatefulWidget {
   final String? adminName;
-  DeveloperAdminDashboard({super.key, this.adminName});
+  final Widget? appBarFlexableSpace;
+  DeveloperAdminDashboard({super.key, this.adminName, this.appBarFlexableSpace});
   @override
   _DeveloperAdminDashboardState createState() => _DeveloperAdminDashboardState();
 }
@@ -31,17 +32,13 @@ class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        flexibleSpace: widget.appBarFlexableSpace,
         elevation: 0,
 
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.filter_alt_sharp))
         ],
-        shape: ContinuousRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(40.0),
-            bottomRight: Radius.circular(40.0),
-          ),
-        ),
+
 
         title: Text('Welcome, ${widget.adminName ?? "Developer!"}',
         ),

@@ -10,7 +10,9 @@ void temp(){}
 
 class StudentDashboard extends StatefulWidget {
   final String? adminName;
-  StudentDashboard({super.key, this.adminName});
+  final Widget? appBarFlexableSpace;
+
+  StudentDashboard({super.key, this.adminName, this.appBarFlexableSpace});
   @override
   _StudentDashboardState createState() => _StudentDashboardState();
 }
@@ -34,16 +36,11 @@ class _StudentDashboardState extends State<StudentDashboard> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-
+flexibleSpace: widget.appBarFlexableSpace,
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.search))
         ],
-        shape: ContinuousRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(40.0),
-            bottomRight: Radius.circular(40.0),
-          ),
-        ),
+
 
         title: Text('Welcome, ${widget.adminName ?? "Student!"}',
         ),

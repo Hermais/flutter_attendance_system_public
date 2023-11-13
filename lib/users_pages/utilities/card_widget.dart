@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CustomCard extends StatelessWidget
-{
-  String? cardTitle;
-  Function? onTap;
-  double? cardWidth;
-  double? cardHeight;
+class CustomCard extends StatelessWidget {
+  final String? cardTitle;
+  final Function? onTap;
+  final double? cardWidth;
+  final double? cardHeight;
 
-
-  CustomCard({super.key, this.cardTitle, this.onTap, this.cardWidth, this.cardHeight});
-
-
-
+  const CustomCard(
+      {super.key, this.cardTitle, this.onTap, this.cardWidth, this.cardHeight});
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +16,18 @@ class CustomCard extends StatelessWidget
       child: Card(
         child: InkWell(
           splashColor: Colors.blue.withAlpha(30),
-          onTap: (){
-            onTap;
+          onTap: () {
+            if (onTap != null) {
+              onTap!();
+            }
           },
-          child:  SizedBox(
+          child: SizedBox(
             width: cardWidth ?? 400,
             height: cardHeight ?? 130,
-            child: Container(padding: const  EdgeInsets.all(8),child: Text(cardTitle?? "Empty Card"),),
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              child: Text(cardTitle ?? "Empty Card"),
+            ),
           ),
         ),
       ),

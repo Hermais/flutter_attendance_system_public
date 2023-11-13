@@ -1,8 +1,7 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_attendance_system/qr_apis/qr_app.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 
 void temp(){}
@@ -10,7 +9,9 @@ void temp(){}
 
 class ParentDashboard extends StatefulWidget {
   final String? adminName;
-  ParentDashboard({super.key, this.adminName});
+  final Widget? appBarFlexableSpace;
+
+  ParentDashboard({super.key, this.adminName, this.appBarFlexableSpace});
   @override
   _ParentDashboardState createState() => _ParentDashboardState();
 }
@@ -34,16 +35,11 @@ class _ParentDashboardState extends State<ParentDashboard> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-
+flexibleSpace: widget.appBarFlexableSpace,
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.search))
         ],
-        shape: ContinuousRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(40.0),
-            bottomRight: Radius.circular(40.0),
-          ),
-        ),
+
 
         title: Text('Welcome, ${widget.adminName ?? "Parent!"}',
         ),
