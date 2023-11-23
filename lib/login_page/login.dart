@@ -147,7 +147,7 @@ class _LoginPageState extends State<LoginPage>{
 
                   },
                   child: const Text(
-                    'Scan with QRcode',
+                    'Scan to Login',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 25
