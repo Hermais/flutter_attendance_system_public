@@ -50,6 +50,7 @@ class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+
         selectedFontSize: 17,
         iconSize: 30,
         landscapeLayout: BottomNavigationBarLandscapeLayout.spread,

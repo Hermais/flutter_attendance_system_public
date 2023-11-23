@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 void main() {
-  const MaterialColor? primarySwatchAppColor = Colors.lightGreen;
+  const MaterialColor? primarySwatchAppColor = Colors.orange;
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
     theme: ThemeData(
@@ -29,8 +29,12 @@ void main() {
             bottomLeft:Radius.circular(18) ),
         gradient: LinearGradient(
           colors: [primarySwatchAppColor,
-            primarySwatchAppColor.withOpacity(0.5),
-            primarySwatchAppColor.withOpacity(0.8)],
+            primarySwatchAppColor.withOpacity(0.8),
+            primarySwatchAppColor.withOpacity(0.4),
+            // primarySwatchAppColor.withRed(60),
+            // primarySwatchAppColor.withBlue(44),
+            // primarySwatchAppColor.withBlue(75)
+          ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),

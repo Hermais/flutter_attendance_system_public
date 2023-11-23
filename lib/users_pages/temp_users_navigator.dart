@@ -22,6 +22,7 @@ class NoLoginNavigation extends StatelessWidget {
         child: Column(
           children: [
             CustomCard(
+              cardThumbnail: const Icon(Icons.developer_mode),
               cardTitle: "Developer Admin",
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
@@ -31,6 +32,8 @@ class NoLoginNavigation extends StatelessWidget {
               },
             ),
             CustomCard(
+              cardThumbnail: const Icon(Icons.admin_panel_settings),
+
               cardTitle: "Faculty Admin",
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
@@ -40,6 +43,7 @@ class NoLoginNavigation extends StatelessWidget {
               },
             ),
             CustomCard(
+              cardThumbnail: const Icon(Icons.person),
               cardTitle: "Instructor",
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
@@ -49,6 +53,8 @@ class NoLoginNavigation extends StatelessWidget {
               },
             ),
             CustomCard(
+              cardThumbnail: const Icon(Icons.supervised_user_circle),
+
               cardTitle: "Student",
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
@@ -58,6 +64,8 @@ class NoLoginNavigation extends StatelessWidget {
               },
             ),
             CustomCard(
+              cardThumbnail:const Icon(Icons.supervisor_account),
+
               cardTitle: "Parent",
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
