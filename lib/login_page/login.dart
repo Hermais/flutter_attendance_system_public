@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 void main()
 {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
       home: LoginPage()
     ));
 
@@ -28,8 +28,8 @@ class LoginPage extends StatefulWidget
 
 
 class _LoginPageState extends State<LoginPage>{
-  var emailcontroler = TextEditingController();
-  var passwordcontroler = TextEditingController();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
 
 
   @override
@@ -44,24 +44,25 @@ class _LoginPageState extends State<LoginPage>{
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Icon(
                 Icons.lock,
+                color: Theme.of(context).primaryColor,
                 size: 100,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              Text(
+              const Text(
                 'Welcome To You',
                 style: TextStyle(
                     fontSize: 25,
                     fontWeight:FontWeight.w500
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Padding(
@@ -70,11 +71,11 @@ class _LoginPageState extends State<LoginPage>{
                 ),
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
-                  controller: emailcontroler,
+                  controller: emailController,
                   onFieldSubmitted: (String value){
                     print(value);
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'User Name',
                     prefixIcon: Icon(
                       Icons.key,
@@ -84,7 +85,7 @@ class _LoginPageState extends State<LoginPage>{
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Padding(
@@ -93,12 +94,12 @@ class _LoginPageState extends State<LoginPage>{
                 ),
                 child: TextFormField(
                   keyboardType: TextInputType.visiblePassword,
-                  controller: passwordcontroler,
+                  controller: passwordController,
                   obscureText: true,
                   onFieldSubmitted: (String value){
                     print(value);
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Password',
                     prefixIcon: Icon(
                       Icons.lock,
@@ -111,60 +112,56 @@ class _LoginPageState extends State<LoginPage>{
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
-              Container(
-                color: Colors.black,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 79
-                  ),
-                  child: MaterialButton(
-                    onPressed: (){
-                      print(emailcontroler.text);
-                      print(passwordcontroler.text);
-                    },
-                    child: Text(
-                      'Login',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25
-                      ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 79
+                ),
+                child: MaterialButton(
+                  color: Theme.of(context).primaryColor,
+                  onPressed: (){
+                    print(emailController.text);
+                    print(passwordController.text);
+                  },
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25
                     ),
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 7,
               ),
-              Container(
-                color: Colors.black,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 45
-                  ),
-                  child: MaterialButton(
-                    onPressed: (){
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 45
+                ),
+                child: MaterialButton(
+                  color: Theme.of(context).primaryColor,
+                  onPressed: (){
 
-                    },
-                    child: Text(
-                      'Scan with QRcode',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15
-                      ),
+                  },
+                  child: const Text(
+                    'Scan with QRcode',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25
                     ),
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 7,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Don\'t have an account?',
                     style: TextStyle(
                       fontSize: 16,
@@ -172,7 +169,7 @@ class _LoginPageState extends State<LoginPage>{
                     ),
                   ),
                   MaterialButton(
-                    child: Text(
+                    child: const Text(
                       'Create',
                       style: TextStyle(
                         fontSize: 20,
