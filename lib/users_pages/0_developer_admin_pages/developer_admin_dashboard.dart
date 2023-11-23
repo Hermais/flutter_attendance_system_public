@@ -11,11 +11,11 @@ class DeveloperAdminDashboard extends StatefulWidget {
   DeveloperAdminDashboard({super.key, this.userName, this.appBarFlexibleSpace});
 
   @override
-  _DeveloperAdminDashboardState createState() =>
-      _DeveloperAdminDashboardState();
+  DeveloperAdminDashboardState createState() =>
+      DeveloperAdminDashboardState();
 }
 
-class _DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
+class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
   int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = <Widget>[
