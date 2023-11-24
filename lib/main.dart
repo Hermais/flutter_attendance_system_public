@@ -33,7 +33,7 @@ void main() {
         gradient: LinearGradient(
           colors: [primarySwatchAppColor,
             primarySwatchAppColor.withOpacity(0.8),
-            primarySwatchAppColor.withOpacity(0.4),
+            primarySwatchAppColor.withOpacity(0.398),
             // primarySwatchAppColor.withRed(60),
             // primarySwatchAppColor.withBlue(44),
             // primarySwatchAppColor.withBlue(75)
