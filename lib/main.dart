@@ -5,6 +5,8 @@ import 'package:flutter_attendance_system/login_page/login.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /// A small change...
+///
+/// Yet another change...but by hermais0
 
 void main() {
   const MaterialColor? primarySwatchAppColor = Colors.orange;
@@ -31,7 +33,7 @@ void main() {
         gradient: LinearGradient(
           colors: [primarySwatchAppColor,
             primarySwatchAppColor.withOpacity(0.8),
-            primarySwatchAppColor.withOpacity(0.4),
+            primarySwatchAppColor.withOpacity(0.398),
             // primarySwatchAppColor.withRed(60),
             // primarySwatchAppColor.withBlue(44),
             // primarySwatchAppColor.withBlue(75)
