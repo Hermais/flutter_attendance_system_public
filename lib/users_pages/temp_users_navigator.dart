@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/users_pages/0_developer_admin_pages/developer_admin_dashboard.dart';
-import 'package:flutter_attendance_system/users_pages/1_faculuty_admin_pages/fuculty_admin_dashboard.dart';
+import 'package:flutter_attendance_system/users_pages/1_faculty_admin_pages/faculty_admin_dashboard.dart';
 import 'package:flutter_attendance_system/users_pages/2_instructor_pages/instructor_dashboard.dart';
 import 'package:flutter_attendance_system/users_pages/3_student_pages/student_dashboard.dart';
 import 'package:flutter_attendance_system/users_pages/4_parent_pages/parent_dashboard.dart';
-import 'package:flutter_attendance_system/users_pages/utilities/card_widget.dart';
+import 'package:flutter_attendance_system/users_pages/utilities/custom_widgets/card_widget.dart';
 
 class NoLoginNavigation extends StatelessWidget {
   final Widget? appBarFlexibleSpace;

@@ -1,9 +1,8 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/qr_apis/qr_app.dart';
-import 'package:flutter_attendance_system/users_pages/utilities/card_widget.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_attendance_system/users_pages/utilities/custom_widgets/card_widget.dart';
 
 void temp() {}
 
@@ -16,10 +15,10 @@ class InstructorDashboard extends StatefulWidget {
   InstructorDashboard({super.key, this.userName, this.appBarFlexibleSpace});
 
   @override
-  _InstructorDashboardState createState() => _InstructorDashboardState();
+  InstructorDashboardState createState() => InstructorDashboardState();
 }
 
-class _InstructorDashboardState extends State<InstructorDashboard> {
+class InstructorDashboardState extends State<InstructorDashboard> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[

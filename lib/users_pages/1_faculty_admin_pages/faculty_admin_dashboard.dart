@@ -1,9 +1,8 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import '../utilities/card_widget.dart';
+import '../utilities/custom_widgets/card_widget.dart';
 
 
 
@@ -12,10 +11,10 @@ class FacultyAdminDashboard extends StatefulWidget {
   final Widget? appBarFlexibleSpace;
   FacultyAdminDashboard({super.key, this.userName, this.appBarFlexibleSpace});
   @override
-  _FacultyAdminDashboardState createState() => _FacultyAdminDashboardState();
+  FacultyAdminDashboardState createState() => FacultyAdminDashboardState();
 }
 
-class _FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
+class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
