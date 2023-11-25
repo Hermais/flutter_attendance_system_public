@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/login_page/login.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// This is my comment as Shehab, Ahmed, Anton.
 
 void main() {
   const MaterialColor? primarySwatchAppColor = Colors.green;

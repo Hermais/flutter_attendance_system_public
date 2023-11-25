@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/users_pages/temp_users_navigator.dart';
 
 void main()
 {
@@ -122,6 +123,11 @@ class _LoginPageState extends State<LoginPage>{
                 child: MaterialButton(
                   color: Theme.of(context).primaryColor,
                   onPressed: (){
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => NoLoginNavigation(appBarFlexibleSpace: widget.appBarFlexibleSpace,),
+                      ),
+                    );
                     print(emailController.text);
                     print(passwordController.text);
                   },
