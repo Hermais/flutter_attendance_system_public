@@ -132,12 +132,24 @@ class _LoginPageState extends State<LoginPage>{
                     print(emailController.text);
                     print(passwordController.text);
                   },
-                  child: const Text(
-                    'Login',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25
-                    ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding:  EdgeInsets.all(8.0),
+                        child: Icon(Icons.login,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ),
+                      Text(
+                        'Login',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -152,12 +164,24 @@ class _LoginPageState extends State<LoginPage>{
                   onPressed: (){
 
                   },
-                  child: const Text(
-                    'Scan to Login',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25
-                    ),
+                  child:  const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding:  EdgeInsets.all(8.0),
+                        child: Icon(Icons.qr_code_scanner,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ),
+                      Text(
+                        'Scan to Login',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
