@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../utilities/custom_widgets/card_widget.dart';
+
 
 void temp(){}
 
@@ -19,8 +21,63 @@ class StudentDashboardState extends State<StudentDashboard> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    Text('Lectures (or sections) for the student shall appear here. Lectures appear in cards.'),
-    Text('Undefined tab functionality.'),
+    /// Lectures Tab:
+    Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        CustomCard(),
+        CustomCard(),
+        CustomCard(),
+        CustomCard(),
+        CustomCard(),
+        CustomCard(),
+        CustomCard(),
+
+      ],
+    ),
+    Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        CustomCard(
+          isLectureCard: false,
+          isButtonVisible: false,
+          isTopLeftBorderMaxRadius: false,
+          cardHeight: 100,
+          cardThumbnail: Icon(Icons.person),
+          cardDescription: "The whereabouts of the instructor will be here.",
+          cardTitle: "Instructor 1",
+        ),
+        CustomCard(
+          isLectureCard: false,
+          isButtonVisible: false,
+          isTopLeftBorderMaxRadius: false,
+          cardHeight: 100,
+          cardThumbnail: Icon(Icons.person),
+          cardDescription: "The whereabouts of the instructor will be here.",
+          cardTitle: "Instructor 2",
+        ),
+        CustomCard(
+          isLectureCard: false,
+          isButtonVisible: false,
+          isTopLeftBorderMaxRadius: false,
+          cardHeight: 100,
+          cardThumbnail: Icon(Icons.person),
+          cardDescription: "The whereabouts of the instructor will be here.",
+          cardTitle: "Instructor 3",
+        ),
+        CustomCard(
+          isLectureCard: false,
+          isButtonVisible: false,
+          isTopLeftBorderMaxRadius: false,
+          cardHeight: 100,
+          cardThumbnail: Icon(Icons.person),
+          cardDescription: "The whereabouts of the instructor will be here.",
+          cardTitle: "Instructor 4",
+        ),
+      ],
+    ),
   ];
 
   void _onItemTapped(int index) {
@@ -49,7 +106,7 @@ flexibleSpace: widget.appBarFlexibleSpace,
         },
         child: Icon(Icons.question_mark),
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -64,8 +121,8 @@ flexibleSpace: widget.appBarFlexibleSpace,
             label: 'Lectures',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.question_mark),
-            label: 'TBD',
+            icon: Icon(Icons.supervisor_account),
+            label: 'Instructors',
           ),
 
         ],

@@ -24,6 +24,8 @@ class NoLoginNavigation extends StatelessWidget {
             CustomCard(
               cardThumbnail: const Icon(Icons.developer_mode),
               cardTitle: "Developer Admin",
+              isLectureCard: false,
+
               onTap: () {
                 _navigateToPage(context, DeveloperAdminDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
               },
@@ -31,6 +33,8 @@ class NoLoginNavigation extends StatelessWidget {
             CustomCard(
               cardThumbnail: const Icon(Icons.admin_panel_settings),
               cardTitle: "Faculty Admin",
+              isLectureCard: false,
+
               onTap: () {
                 _navigateToPage(context, FacultyAdminDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
               },
@@ -38,6 +42,7 @@ class NoLoginNavigation extends StatelessWidget {
             CustomCard(
               cardThumbnail: const Icon(Icons.person),
               cardTitle: "Instructor",
+              isLectureCard: false,
               onTap: () {
                 _navigateToPage(context, InstructorDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
               },
@@ -45,6 +50,8 @@ class NoLoginNavigation extends StatelessWidget {
             CustomCard(
               cardThumbnail: const Icon(Icons.supervised_user_circle),
               cardTitle: "Student",
+              isLectureCard: false,
+
               onTap: () {
                 _navigateToPage(context, StudentDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
               },
@@ -52,6 +59,8 @@ class NoLoginNavigation extends StatelessWidget {
             CustomCard(
               cardThumbnail: const Icon(Icons.supervisor_account),
               cardTitle: "Parent",
+              isLectureCard: false,
+
               onTap: () {
                 _navigateToPage(context, ParentDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
               },

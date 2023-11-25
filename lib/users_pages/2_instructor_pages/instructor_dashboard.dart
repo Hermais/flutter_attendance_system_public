@@ -39,7 +39,53 @@ class InstructorDashboardState extends State<InstructorDashboard> {
     ),
 
 
-    Text('Cards for students will appear here.'),
+    Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        CustomCard(
+          isLectureCard: false,
+          isButtonVisible: false,
+          isTopLeftBorderMaxRadius: false,
+          cardHeight: 100,
+          cardThumbnail: const Icon(Icons.person),
+          cardDescription: "Info about the student's attendance will be here (Attending "
+              "now or not).",
+          cardTitle: "Student 1",
+        ),
+        CustomCard(
+          isLectureCard: false,
+          isButtonVisible: false,
+          isTopLeftBorderMaxRadius: false,
+          cardHeight: 100,
+          cardThumbnail: const Icon(Icons.person),
+          cardDescription: "Info about the student's attendance will be here (Attending "
+              "now or not).",
+          cardTitle: "Student 2",
+        ),
+        CustomCard(
+          isLectureCard: false,
+          isButtonVisible: false,
+          isTopLeftBorderMaxRadius: false,
+          cardHeight: 100,
+          cardThumbnail: const Icon(Icons.person),
+          cardDescription: "Info about the student's attendance will be here (Attending "
+              "now or not).",
+          cardTitle: "Student 3",
+        ),
+        CustomCard(
+          isLectureCard: false,
+          isButtonVisible: false,
+          isTopLeftBorderMaxRadius: false,
+          cardHeight: 100,
+          cardThumbnail: const Icon(Icons.person),
+          cardDescription: "Info about the student's attendance will be here (Attending "
+              "now or not).",
+          cardTitle: "Student 4",
+        ),
+
+      ],
+    )
   ];
 
   void _onItemTapped(int index) {
@@ -87,7 +133,7 @@ flexibleSpace: widget.appBarFlexibleSpace,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.people),
-            label: 'Attending Students',
+            label: 'Students',
           ),
         ],
         currentIndex: _selectedIndex,
