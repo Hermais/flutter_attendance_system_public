@@ -120,8 +120,9 @@ class _LoginPageState extends State<LoginPage>{
                 padding: const EdgeInsets.symmetric(
                     horizontal: 79
                 ),
-                child: MaterialButton(
-                  color: Theme.of(context).primaryColor,
+                child: FilledButton(
+
+
                   onPressed: (){
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -147,8 +148,7 @@ class _LoginPageState extends State<LoginPage>{
                 padding: const EdgeInsets.symmetric(
                     horizontal: 45
                 ),
-                child: MaterialButton(
-                  color: Theme.of(context).primaryColor,
+                child: FilledButton(
                   onPressed: (){
 
                   },
