@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-/// hi! I am hermais0
 void main() {
   void store() {}
   runApp(MaterialApp(
@@ -13,12 +12,12 @@ void main() {
 }
 class QRScannerWithScaffold extends StatelessWidget
 {
-  Function storeScanResult;
-  String? qrAppTitle;
+  final Function storeScanResult;
+  final String? qrAppTitle;
   final Widget? appBarFlexibleSpace;
 
 
-  QRScannerWithScaffold({super.key, required this.storeScanResult, this.qrAppTitle, this.appBarFlexibleSpace});
+  const QRScannerWithScaffold({super.key, required this.storeScanResult, this.qrAppTitle, this.appBarFlexibleSpace});
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +35,11 @@ class QRScannerWithScaffold extends StatelessWidget
 }
 
 class QRScanner extends StatefulWidget {
-  Function storeScanResult;
-  String? qrAppTitle;
+  final Function storeScanResult;
+  final String? qrAppTitle;
   final double margins = 30;
 
-  QRScanner({required this.storeScanResult, this.qrAppTitle, super.key});
+  const QRScanner({required this.storeScanResult, this.qrAppTitle, super.key});
 
   @override
   State<StatefulWidget> createState() => _QRScannerState();
@@ -90,7 +89,7 @@ class _QRScannerState extends State<QRScanner> {
                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(widget.margins),
                     bottomRight:Radius.circular(widget.margins) ),
 
-                color: Color.fromRGBO(245, 240, 235, 1),
+                color: const Color.fromRGBO(245, 240, 235, 1),
 
               ),
               child: Text(
@@ -183,7 +182,7 @@ class _QRScannerState extends State<QRScanner> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
-        controller!.pauseCamera();
+        controller.pauseCamera();
         widget.storeScanResult(result!.code ?? "NULL Error!");
         Navigator.of(context).pop();
         Navigator.of(context).pop();

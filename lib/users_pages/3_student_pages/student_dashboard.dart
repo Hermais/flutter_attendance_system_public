@@ -1,8 +1,6 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_attendance_system/qr_apis/qr_app.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 
 void temp(){}
@@ -14,10 +12,10 @@ class StudentDashboard extends StatefulWidget {
 
   StudentDashboard({super.key, this.userName, this.appBarFlexibleSpace});
   @override
-  _StudentDashboardState createState() => _StudentDashboardState();
+  StudentDashboardState createState() => StudentDashboardState();
 }
 
-class _StudentDashboardState extends State<StudentDashboard> {
+class StudentDashboardState extends State<StudentDashboard> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
