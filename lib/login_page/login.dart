@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_attendance_system/users_pages/temp_users_navigator.dart';
+import 'package:flutter_attendance_system/users_pages/utilities/temp_users_navigator.dart';
 
 void main()
 {

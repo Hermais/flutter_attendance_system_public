@@ -9,7 +9,7 @@ import 'package:flutter_attendance_system/users_pages/utilities/custom_widgets/c
 class NoLoginNavigation extends StatelessWidget {
   final Widget? appBarFlexibleSpace;
 
-  const NoLoginNavigation({super.key, this.appBarFlexibleSpace});
+  const NoLoginNavigation({Key? key, this.appBarFlexibleSpace}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,58 +25,59 @@ class NoLoginNavigation extends StatelessWidget {
               cardThumbnail: const Icon(Icons.developer_mode),
               cardTitle: "Developer Admin",
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => DeveloperAdminDashboard(
-                          appBarFlexibleSpace: appBarFlexibleSpace,
-                        )));
+                _navigateToPage(context, DeveloperAdminDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
               },
             ),
             CustomCard(
               cardThumbnail: const Icon(Icons.admin_panel_settings),
-
               cardTitle: "Faculty Admin",
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => FacultyAdminDashboard(
-                          appBarFlexibleSpace: appBarFlexibleSpace,
-                        )));
+                _navigateToPage(context, FacultyAdminDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
               },
             ),
             CustomCard(
               cardThumbnail: const Icon(Icons.person),
               cardTitle: "Instructor",
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => InstructorDashboard(
-                          appBarFlexibleSpace: appBarFlexibleSpace,
-                        )));
+                _navigateToPage(context, InstructorDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
               },
             ),
             CustomCard(
               cardThumbnail: const Icon(Icons.supervised_user_circle),
-
               cardTitle: "Student",
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => StudentDashboard(
-                          appBarFlexibleSpace: appBarFlexibleSpace,
-                        )));
+                _navigateToPage(context, StudentDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
               },
             ),
             CustomCard(
-              cardThumbnail:const Icon(Icons.supervisor_account),
-
+              cardThumbnail: const Icon(Icons.supervisor_account),
               cardTitle: "Parent",
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ParentDashboard(
-                          appBarFlexibleSpace: appBarFlexibleSpace,
-                        )));
+                _navigateToPage(context, ParentDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
               },
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _navigateToPage(BuildContext context, Widget page) {
+    Navigator.of(context).push(PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.easeInOut;
+        var curveTween = CurveTween(curve: curve);
+        var tween = Tween(begin: begin, end: end).chain(curveTween);
+        var offsetAnimation = animation.drive(tween);
+
+        return SlideTransition(
+          position: offsetAnimation,
+          child: child,
+        );
+      },
+    ));
   }
 }
