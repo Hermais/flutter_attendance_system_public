@@ -26,13 +26,13 @@ class StudentDashboardState extends State<StudentDashboard> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        CustomCard(),
-        CustomCard(),
-        CustomCard(),
-        CustomCard(),
-        CustomCard(),
-        CustomCard(),
-        CustomCard(),
+        InfoCard(),
+        InfoCard(),
+        InfoCard(),
+        InfoCard(),
+        InfoCard(),
+        InfoCard(),
+        InfoCard(),
 
       ],
     ),
@@ -40,7 +40,7 @@ class StudentDashboardState extends State<StudentDashboard> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        CustomCard(
+        InfoCard(
           isLectureCard: false,
           isButtonVisible: false,
           isTopLeftBorderMaxRadius: false,
@@ -49,7 +49,7 @@ class StudentDashboardState extends State<StudentDashboard> {
           cardDescription: "The whereabouts of the instructor will be here.",
           cardTitle: "Instructor 1",
         ),
-        CustomCard(
+        InfoCard(
           isLectureCard: false,
           isButtonVisible: false,
           isTopLeftBorderMaxRadius: false,
@@ -58,7 +58,7 @@ class StudentDashboardState extends State<StudentDashboard> {
           cardDescription: "The whereabouts of the instructor will be here.",
           cardTitle: "Instructor 2",
         ),
-        CustomCard(
+        InfoCard(
           isLectureCard: false,
           isButtonVisible: false,
           isTopLeftBorderMaxRadius: false,
@@ -67,7 +67,7 @@ class StudentDashboardState extends State<StudentDashboard> {
           cardDescription: "The whereabouts of the instructor will be here.",
           cardTitle: "Instructor 3",
         ),
-        CustomCard(
+        InfoCard(
           isLectureCard: false,
           isButtonVisible: false,
           isTopLeftBorderMaxRadius: false,

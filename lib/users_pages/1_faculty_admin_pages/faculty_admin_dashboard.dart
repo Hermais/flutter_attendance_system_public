@@ -22,7 +22,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        CustomCard(
+        InfoCard(
           isLectureCard: false,
           isButtonVisible: false,
           isTopLeftBorderMaxRadius: false,
@@ -32,7 +32,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
               "Here a small description of the timetable is supplied.",
           cardTitle: "Timetable 1",
         ),
-        CustomCard(
+        InfoCard(
           isLectureCard: false,
           isButtonVisible: false,
           isTopLeftBorderMaxRadius: false,
@@ -42,7 +42,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
               "Here a small description of the timetable is supplied.",
           cardTitle: "Timetable 2",
         ),
-        CustomCard(
+        InfoCard(
           isLectureCard: false,
           isButtonVisible: false,
           isTopLeftBorderMaxRadius: false,
@@ -52,7 +52,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
               "Here a small description of the timetable is supplied.",
           cardTitle: "Timetable 3",
         ),
-        CustomCard(
+        InfoCard(
           isLectureCard: false,
           isButtonVisible: false,
           isTopLeftBorderMaxRadius: false,
@@ -68,7 +68,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        CustomCard(
+        InfoCard(
           isLectureCard: false,
           isButtonVisible: false,
           isTopLeftBorderMaxRadius: false,
@@ -77,7 +77,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
           cardDescription: "The whereabouts of the instructor will be here.",
           cardTitle: "Instructor 1",
         ),
-        CustomCard(
+        InfoCard(
           isLectureCard: false,
           isButtonVisible: false,
           isTopLeftBorderMaxRadius: false,
@@ -86,7 +86,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
           cardDescription: "The whereabouts of the instructor will be here.",
           cardTitle: "Instructor 2",
         ),
-        CustomCard(
+        InfoCard(
           isLectureCard: false,
           isButtonVisible: false,
           isTopLeftBorderMaxRadius: false,
@@ -95,7 +95,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
           cardDescription: "The whereabouts of the instructor will be here.",
           cardTitle: "Instructor 3",
         ),
-        CustomCard(
+        InfoCard(
           isLectureCard: false,
           isButtonVisible: false,
           isTopLeftBorderMaxRadius: false,

@@ -27,13 +27,13 @@ class InstructorDashboardState extends State<InstructorDashboard> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        CustomCard(),
-        CustomCard(),
-        CustomCard(),
-        CustomCard(),
-        CustomCard(),
-        CustomCard(),
-        CustomCard(),
+        InfoCard(),
+        InfoCard(),
+        InfoCard(),
+        InfoCard(),
+        InfoCard(),
+        InfoCard(),
+        InfoCard(),
 
       ],
     ),
@@ -43,7 +43,7 @@ class InstructorDashboardState extends State<InstructorDashboard> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        CustomCard(
+        InfoCard(
           isLectureCard: false,
           isButtonVisible: false,
           isTopLeftBorderMaxRadius: false,
@@ -53,7 +53,7 @@ class InstructorDashboardState extends State<InstructorDashboard> {
               "now or not).",
           cardTitle: "Student 1",
         ),
-        CustomCard(
+        InfoCard(
           isLectureCard: false,
           isButtonVisible: false,
           isTopLeftBorderMaxRadius: false,
@@ -63,7 +63,7 @@ class InstructorDashboardState extends State<InstructorDashboard> {
               "now or not).",
           cardTitle: "Student 2",
         ),
-        CustomCard(
+        InfoCard(
           isLectureCard: false,
           isButtonVisible: false,
           isTopLeftBorderMaxRadius: false,
@@ -73,7 +73,7 @@ class InstructorDashboardState extends State<InstructorDashboard> {
               "now or not).",
           cardTitle: "Student 3",
         ),
-        CustomCard(
+        InfoCard(
           isLectureCard: false,
           isButtonVisible: false,
           isTopLeftBorderMaxRadius: false,

@@ -1,34 +1,48 @@
 import 'package:flutter/material.dart';
 
-class CustomCard extends StatelessWidget {
-  final String? cardTitle;
-  final String? cardDescription;
-  final Function? onTap;
-  final double? cardHeight;
-  final Widget? cardThumbnail;
-  final double? thumbnailRadius;
-  final String? buttonText;
-  final bool? isButtonVisible;
+class InfoCard extends StatelessWidget {
+  // Booleans
   final bool? bordersVisible;
+  final bool? isBasicTheme;
+  final bool? isButtonVisible;
   final bool? isLectureCard;
-  final String? durationStartsAt;
-  final String? durationEndsAt;
   final bool? isTopLeftBorderMaxRadius;
 
-  const CustomCard(
+// Doubles
+  final double? cardHeight;
+  final double? thumbnailRadius;
+
+// Strings
+  final String? buttonText;
+  final String? cardDescription;
+  final String? cardTitle;
+  final String? durationEndsAt;
+  final String? durationStartsAt;
+  final String? lecturePlace;
+
+// Function
+  final Function? onTap;
+
+// Widget
+  final Widget? cardThumbnail;
+
+  const InfoCard(
       {super.key,
-      this.cardTitle,
-      this.onTap,
+      this.bordersVisible,
+      this.isBasicTheme,
+      this.isButtonVisible,
+      this.isLectureCard,
+      this.isTopLeftBorderMaxRadius,
       this.cardHeight,
-      this.cardThumbnail,
       this.thumbnailRadius,
       this.buttonText,
-      this.isButtonVisible,
-      this.bordersVisible,
       this.cardDescription,
-      this.isLectureCard,
+      this.cardTitle,
+      this.durationEndsAt,
       this.durationStartsAt,
-      this.durationEndsAt, this.isTopLeftBorderMaxRadius});
+      this.onTap,
+      this.cardThumbnail,
+      this.lecturePlace});
 
   @override
   Widget build(BuildContext context) {
@@ -46,142 +60,194 @@ class CustomCard extends StatelessWidget {
             onTap!();
           }
         },
-        child: Container(
-          height: cardHeight ?? 180,
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            borderRadius:  BorderRadius.only(
-                topRight: Radius.circular((isTopLeftBorderMaxRadius ?? true)?65:10),
-                topLeft: const Radius.circular(10),
-                bottomRight: const Radius.circular(10),
-                bottomLeft: const Radius.circular(10)),
-            border: (bordersVisible ?? false)
-                ? Border.all(width: 2, color: Colors.black38)
-                : null,
-            color: Theme.of(context).primaryColor.withAlpha(50),
-          ),
-          child: Column(
-            children: [
-              Expanded(
-                flex: 10,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: thumbnailRadius ?? 50,
-                            width: thumbnailRadius ?? 50,
-                            decoration: cardThumbnail == null
-                                ? null
-                                : BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: (bordersVisible ?? false)
-                                        ? Border.all(
-                                            width: 2, color: Colors.black38)
-                                        : null,
-                                    color: Theme.of(context)
-                                        .primaryColor
-                                        .withAlpha(200),
-                                  ),
-                            child: cardThumbnail,
-                          ),
-                        ],
+        child: IntrinsicHeight(
+          child: Container(
+            height: cardHeight,
+            padding: const EdgeInsets.all(6),
+            decoration: (isBasicTheme ?? false)
+                ? BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(
+                            (isTopLeftBorderMaxRadius ?? true) ? 65 : 10),
+                        topLeft: const Radius.circular(10),
+                        bottomRight: const Radius.circular(10),
+                        bottomLeft: const Radius.circular(10)),
+                    border: (bordersVisible ?? false)
+                        ? Border.all(width: 2, color: Colors.black38)
+                        : null,
+                    color: Theme.of(context).primaryColor.withAlpha(50),
+                  )
+                : BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(
+                            (isTopLeftBorderMaxRadius ?? true) ? 65 : 10),
+                        topLeft: const Radius.circular(10),
+                        bottomRight: const Radius.circular(10),
+                        bottomLeft: const Radius.circular(10)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context).primaryColor.withAlpha(50),
+                        offset: const Offset(0, 30),
+                        blurRadius: 50,
+                        spreadRadius: -5,
                       ),
-                    ),
-                    Expanded(
-                      flex: 5,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Column(
-                              children: [
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    cardTitle ?? "Card Title",
-                                    textAlign: TextAlign.start,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                    ],
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Theme.of(context).primaryColor.withAlpha(50),
+                          Theme.of(context).primaryColor.withAlpha(100),
+                          Theme.of(context).primaryColor.withAlpha(150),
+                          Theme.of(context).primaryColor.withAlpha(150),
+                        ],
+                        stops: const [
+                          0.1,
+                          0.3,
+                          0.9,
+                          1.0
+                        ])),
+            child: Column(
+              children: [
+                Expanded(
+                  /// flex for upper row
+                  flex: 2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: thumbnailRadius ?? 50,
+                              width: thumbnailRadius ?? 50,
+                              decoration: cardThumbnail == null
+                                  ? null
+                                  : BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: (bordersVisible ?? false)
+                                          ? Border.all(
+                                              width: 2, color: Colors.black38)
+                                          : null,
+                                      color: Theme.of(context)
+                                          .primaryColor
+                                          .withAlpha(200),
+                                    ),
+                              child: cardThumbnail,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 5,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      cardTitle ?? "Card Title",
+                                      textAlign: TextAlign.start,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Text(
-                                  cardDescription ??
-                                      "This is a short description"
-                                          " of the card. This should appear if the the property"
-                                          "is set to null. The text is meant to be a little long"
-                                          "for test purposes.",
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.start,
-                                  maxLines: 5,
-                                )
-                              ],
+                                  Text(
+                                    cardDescription ??
+                                        "This is a short description"
+                                            " of the card. This should appear if the the property "
+                                            "is set to null. The text is meant to be a little long"
+                                            " for test purposes.",
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.start,
+                                    maxLines: 5,
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Visibility(
-                visible: isLectureCard ?? true,
-                child: const Expanded(
-                  flex:1,
-                  child: Divider(
-                    color: Colors.black38,
-                    thickness: 1,
-                  )
-                ),
-              ),
-              Expanded(
-                flex: 3,
-                child: Row(mainAxisSize: MainAxisSize.max,
-                    children: [
-                  Visibility(
-                    visible: isLectureCard ?? true,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.access_time_outlined, size: 20,),
-                        const SizedBox(width: 3),
-                        Text(durationStartsAt ?? "00:00AM",
+                          ],
                         ),
-                        const SizedBox(width: 6),
-                        const Icon(Icons.timelapse_outlined, size: 20,),
-                        const SizedBox(width: 3),
-
-                        Text(durationEndsAt ?? "00:00AM"),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  const Spacer(),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Visibility(
-                      visible: isButtonVisible ?? true,
-                      child: TextButton(
-                          onPressed: () {
-                            if (onTap != null) {
-                              onTap!();
-                            }
-                          },
-                          child: Text(buttonText ?? "Go to page")),
-                    ),
-                  )
-                ]),
-              ),
-            ],
+                ),
+                Expanded(
+                  /// flex for lower row
+                  flex: 1,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Visibility(
+                        visible: isLectureCard ?? true,
+                        child: const Divider(
+                          color: Colors.black38,
+                          thickness: 1,
+                        ),
+                      ),
+                      Row(mainAxisSize: MainAxisSize.min, children: [
+                        Visibility(
+                          visible: isLectureCard ?? true,
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.access_time_outlined,
+                                size: 20,
+                              ),
+                              const SizedBox(width: 3),
+                              Text(
+                                durationStartsAt ?? "09:00AM",
+                              ),
+                              const SizedBox(width: 6),
+                              const Icon(
+                                Icons.timelapse_outlined,
+                                size: 20,
+                              ),
+                              const SizedBox(width: 3),
+                              Text(durationEndsAt ?? "10:30AM"),
+                              const SizedBox(width: 6),
+                              const Icon(
+                                Icons.place_outlined,
+                                size: 20,
+                              ),
+                              Text(lecturePlace ?? "24408"),
+                            ],
+                          ),
+                        ),
+                        const Spacer(),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Visibility(
+                            visible: isButtonVisible ?? true,
+                            child: TextButton(
+                                onPressed: () {
+                                  if (onTap != null) {
+                                    onTap!();
+                                  }
+                                },
+                                child: Text(
+                                  buttonText ?? "Go to page",
+                                  style: const TextStyle(color: Colors.black38),
+                                )),
+                          ),
+                        )
+                      ]),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

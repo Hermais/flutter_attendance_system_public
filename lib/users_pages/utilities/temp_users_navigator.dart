@@ -21,7 +21,7 @@ class NoLoginNavigation extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CustomCard(
+            InfoCard(
               cardThumbnail: const Icon(Icons.developer_mode),
               cardTitle: "Developer Admin",
               isLectureCard: false,
@@ -30,7 +30,7 @@ class NoLoginNavigation extends StatelessWidget {
                 _navigateToPage(context, DeveloperAdminDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
               },
             ),
-            CustomCard(
+            InfoCard(
               cardThumbnail: const Icon(Icons.admin_panel_settings),
               cardTitle: "Faculty Admin",
               isLectureCard: false,
@@ -39,7 +39,7 @@ class NoLoginNavigation extends StatelessWidget {
                 _navigateToPage(context, FacultyAdminDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
               },
             ),
-            CustomCard(
+            InfoCard(
               cardThumbnail: const Icon(Icons.person),
               cardTitle: "Instructor",
               isLectureCard: false,
@@ -47,7 +47,7 @@ class NoLoginNavigation extends StatelessWidget {
                 _navigateToPage(context, InstructorDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
               },
             ),
-            CustomCard(
+            InfoCard(
               cardThumbnail: const Icon(Icons.supervised_user_circle),
               cardTitle: "Student",
               isLectureCard: false,
@@ -56,7 +56,7 @@ class NoLoginNavigation extends StatelessWidget {
                 _navigateToPage(context, StudentDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
               },
             ),
-            CustomCard(
+            InfoCard(
               cardThumbnail: const Icon(Icons.supervisor_account),
               cardTitle: "Parent",
               isLectureCard: false,
