@@ -16,9 +16,11 @@ class InfoCard extends StatelessWidget {
   final String? buttonText;
   final String? cardDescription;
   final String? cardTitle;
-  final String? durationEndsAt;
-  final String? durationStartsAt;
+  final String? lectureEndsAt;
+  final String? lectureStartsAt;
   final String? lecturePlace;
+
+
 
 // Function
   final Function? onTap;
@@ -38,12 +40,11 @@ class InfoCard extends StatelessWidget {
       this.buttonText,
       this.cardDescription,
       this.cardTitle,
-      this.durationEndsAt,
-      this.durationStartsAt,
+      this.lectureEndsAt,
+      this.lectureStartsAt,
       this.onTap,
       this.cardThumbnail,
       this.lecturePlace});
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,6 +63,7 @@ class InfoCard extends StatelessWidget {
         },
         child: IntrinsicHeight(
           child: Container(
+
             height: cardHeight,
             padding: const EdgeInsets.all(6),
             decoration: (isBasicTheme ?? false)
@@ -207,7 +209,7 @@ class InfoCard extends StatelessWidget {
                               ),
                               const SizedBox(width: 3),
                               Text(
-                                durationStartsAt ?? "09:00AM",
+                                lectureStartsAt ?? "09:00AM",
                               ),
                               const SizedBox(width: 6),
                               const Icon(
@@ -215,7 +217,7 @@ class InfoCard extends StatelessWidget {
                                 size: 20,
                               ),
                               const SizedBox(width: 3),
-                              Text(durationEndsAt ?? "10:30AM"),
+                              Text(lectureEndsAt ?? "10:30AM"),
                               const SizedBox(width: 6),
                               const Icon(
                                 Icons.place_outlined,

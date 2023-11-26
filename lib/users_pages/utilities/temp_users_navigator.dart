@@ -10,7 +10,6 @@ class NoLoginNavigation extends StatelessWidget {
   final Widget? appBarFlexibleSpace;
 
   const NoLoginNavigation({Key? key, this.appBarFlexibleSpace}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +24,6 @@ class NoLoginNavigation extends StatelessWidget {
               cardThumbnail: const Icon(Icons.developer_mode),
               cardTitle: "Developer Admin",
               isLectureCard: false,
-
               onTap: () {
                 _navigateToPage(context, DeveloperAdminDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
               },
