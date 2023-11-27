@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 void main() {
-  const MaterialColor? primarySwatchAppColor = Colors.teal;
+  const MaterialColor? primarySwatchAppColor = Colors.brown;
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
     theme: ThemeData(

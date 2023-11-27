@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../commons/student_and_parent_info_popup.dart';
+
 
 
 void temp(){}
@@ -36,18 +38,14 @@ class _ParentDashboardState extends State<ParentDashboard> {
       appBar: AppBar(
         elevation: 0,
 flexibleSpace: widget.appBarFlexibleSpace,
-        actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.search))
-        ],
+
 
 
         title: Text('Welcome, ${widget.userName ?? "Parent!"}',
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-
-        },
+        onPressed: () {StudentAndParentInfo().studentInfoPopup(context: context);},
         child: Icon(Icons.question_mark),
       ),
       body: Center(

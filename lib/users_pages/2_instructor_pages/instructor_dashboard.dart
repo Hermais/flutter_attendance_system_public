@@ -27,18 +27,18 @@ class InstructorDashboardState extends State<InstructorDashboard> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        InfoCard(),
-        InfoCard(),
-        InfoCard(),
-        InfoCard(),
-        InfoCard(),
-        InfoCard(),
-        InfoCard(),
+        InfoCard(buttonText: "Start",),
+        InfoCard(buttonText: "Start",),
+        InfoCard(buttonText: "Start",),
+        InfoCard(buttonText: "Start",),
+        InfoCard(buttonText: "Start",),
+        InfoCard(buttonText: "Start",),
+        InfoCard(buttonText: "Start",),
 
       ],
     ),
 
-
+  /// Students Tab:
     Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -99,7 +99,6 @@ class InstructorDashboardState extends State<InstructorDashboard> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
 flexibleSpace: widget.appBarFlexibleSpace,
         title: Text(
           'Welcome, ${widget.userName ?? "Instructor!"}',
@@ -123,6 +122,7 @@ flexibleSpace: widget.appBarFlexibleSpace,
         children:[ _widgetOptions.elementAt(_selectedIndex)],
       ),),
       bottomNavigationBar: BottomNavigationBar(
+
         selectedFontSize: 17,
         iconSize: 30,
         landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
