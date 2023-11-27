@@ -28,13 +28,16 @@ class StudentDashboardState extends State<StudentDashboard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          InfoCard(buttonText: "Attend", onTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onTap: () => showQRCodePopup()),
+          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+
         ],
       ),
 
