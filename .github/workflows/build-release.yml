@@ -57,10 +57,10 @@ jobs:
         uses: adityak74/google-drive-upload-git-action@v0.3
         with:
           credentials: ${{ secrets.CREDENTIALS }}
+          filename: "build/app/outputs/flutter-apk/app-release.apk"
           folderId: ${{ steps.folderURL.outputs.value }}
           name: ${{ steps.date.outputs.date }}-release-${{steps.branch.outputs.branch}}.apk
           overwrite: true
-          filePath: "build/app/outputs/flutter-apk/app-release.apk"
 
 
 
