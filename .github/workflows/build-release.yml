@@ -50,14 +50,14 @@ jobs:
       - name: Get Dependencies
         run: flutter pub get
 
-      - name: Debugging - List Files Before Build
-        run: ls -R
+#      - name: Debugging - List Files Before Build
+#        run: ls -R
 
       - name: Build Release APK
         run: flutter build apk --release
 
-      - name: Debugging - List Files After Build
-        run: ls -R
+#      - name: Debugging - List Files After Build
+#        run: ls -R
 
 
       - name: Upload APK as Artifact
@@ -66,14 +66,15 @@ jobs:
           name: app-release
           path: build/app/outputs/flutter-apk/app-release.apk
 
-      - name: Upload APK to Google Drive
-        uses: adityak74/google-drive-upload-git-action@v0.3
-        with:
-          credentials: ${{ secrets.CREDENTIALS }}
-          filename: "build/app/outputs/flutter-apk/app-release.apk"
-          folderId: ${{ steps.folderURL.outputs.value }}
-          name: ${{ steps.date.outputs.date }}-release-${{steps.branch.outputs.branch}}.apk
-          overwrite: true
+
+#      - name: Upload APK to Google Drive
+#        uses: adityak74/google-drive-upload-git-action@v0.3
+#        with:
+#          credentials: ${{ secrets.CREDENTIALS }}
+#          filename: "build/app/outputs/flutter-apk/app-release.apk"
+#          folderId: ${{ steps.folderURL.outputs.value }}
+#          name: ${{ steps.date.outputs.date }}-release-${{steps.branch.outputs.branch}}.apk
+#          overwrite: true
 
 
 
