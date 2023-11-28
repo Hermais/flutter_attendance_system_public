@@ -21,7 +21,7 @@ class InstructorDashboard extends StatefulWidget {
 class InstructorDashboardState extends State<InstructorDashboard> {
   int _selectedIndex = 0;
 
-  static final List<Widget> _widgetOptions = <Widget>[
+   final List<Widget> _widgetOptions = <Widget>[
     /// Lectures Tab:
     Column(
       crossAxisAlignment: CrossAxisAlignment.start,
