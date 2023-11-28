@@ -50,8 +50,15 @@ jobs:
       - name: Get Dependencies
         run: flutter pub get
 
+      - name: Debugging - List Files Before Build
+        run: ls -R
+
       - name: Build Release APK
         run: flutter build apk --release
+
+      - name: Debugging - List Files After Build
+        run: ls -R
+
 
       - name: Upload APK to Google Drive
         uses: adityak74/google-drive-upload-git-action@v0.3
