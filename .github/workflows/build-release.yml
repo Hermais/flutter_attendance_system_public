@@ -1,5 +1,5 @@
 # This file build the release version of the app, currently, for android only.
-# It also uploads the apk to the google drive folder.
+# It also uploads the apk to the google drive folder..
 name: Build and Deploy for Android
 
 on:
