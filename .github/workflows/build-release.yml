@@ -1,68 +1,68 @@
-# This file build the release version of the app, currently, for android only.
-# It also uploads the apk to the google drive folder.
-name: Build and Deploy for Android
-
-on:
-  push:
-    branches:
-      - master
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Setup Java 12
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu'
-          java-version: "12.x"
-          cache: 'gradle'
-
-      - name: Setup Flutter Actions
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.13.9'
-          cache: 'true'
-
-
-      - name: Get Branch Name # This is only required for multiple branches. We are doing it anyways...
-        id: branch
-        run: echo " ::set-output name=branch::${GITHUB_REF##*/}"
-        # or run: echo "::set-output name=name::$(echo ${GITHUB_REF#refs/heads/})"
-
-      - name: Get Current Date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-
-
-      - name: Assign folder url or id using haya14busa/action-cond@v1
-        id: folderURL
-        uses: haya14busa/action-cond@v1
-        with:
-          cond: ${{ steps.branch.outputs.branch == 'master' }}
-          if_true: ${{ secrets.MASTER_FOLDER}}
-          if_false: ${{ secrets.TEST_FOLDER}}
-
-      - name: Get Dependencies
-        run: flutter pub get
-
-      - name: Build Release APK
-        run: flutter build apk --release
-
-      - name: Upload APK to Google Drive
-        uses: adityak74/google-drive-upload-git-action@v0.3
-        with:
-          credentials: ${{ secrets.CREDENTIALS }}
-          filename: "build/app/outputs/flutter-apk/app-release.apk"
-          folderId: ${{ steps.folderURL.outputs.value }}
-          name: ${{ steps.date.outputs.date }}-release-${{steps.branch.outputs.branch}}.apk
-          overwrite: true
-
-
-
-
-
+## This file build the release version of the app, currently, for android only.
+## It also uploads the apk to the google drive folder.
+#name: Build and Deploy for Android
+#
+#on:
+#  push:
+#    branches:
+#      - master
+#
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout Repository
+#        uses: actions/checkout@v2
+#
+#      - name: Setup Java 12
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: 'zulu'
+#          java-version: "12.x"
+#          cache: 'gradle'
+#
+#      - name: Setup Flutter Actions
+#        uses: subosito/flutter-action@v2
+#        with:
+#          flutter-version: '3.13.9'
+#          cache: 'true'
+#
+#
+#      - name: Get Branch Name # This is only required for multiple branches. We are doing it anyways...
+#        id: branch
+#        run: echo " ::set-output name=branch::${GITHUB_REF##*/}"
+#        # or run: echo "::set-output name=name::$(echo ${GITHUB_REF#refs/heads/})"
+#
+#      - name: Get Current Date
+#        id: date
+#        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+#
+#
+#      - name: Assign folder url or id using haya14busa/action-cond@v1
+#        id: folderURL
+#        uses: haya14busa/action-cond@v1
+#        with:
+#          cond: ${{ steps.branch.outputs.branch == 'master' }}
+#          if_true: ${{ secrets.MASTER_FOLDER}}
+#          if_false: ${{ secrets.TEST_FOLDER}}
+#
+#      - name: Get Dependencies
+#        run: flutter pub get
+#
+#      - name: Build Release APK
+#        run: flutter build apk --release
+#
+#      - name: Upload APK to Google Drive
+#        uses: adityak74/google-drive-upload-git-action@v0.3
+#        with:
+#          credentials: ${{ secrets.CREDENTIALS }}
+#          filename: "build/app/outputs/flutter-apk/app-release.apk"
+#          folderId: ${{ steps.folderURL.outputs.value }}
+#          name: ${{ steps.date.outputs.date }}-release-${{steps.branch.outputs.branch}}.apk
+#          overwrite: true
+#
+#
+#
+#
+#
