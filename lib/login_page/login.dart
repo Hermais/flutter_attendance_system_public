@@ -1,45 +1,67 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/shared_pref/load_last_theme_color.dart';
 import 'package:flutter_attendance_system/users_pages/utilities/temp_users_navigator.dart';
 
-void main()
-{
-  runApp(const MaterialApp(
-      home: LoginPage()
-    ));
 
-}
-
-
-class LoginPage extends StatefulWidget
-{
+class LoginPage extends StatefulWidget {
   final Widget? appBarFlexibleSpace;
 
-  const LoginPage({super.key, this.appBarFlexibleSpace});
+  final Function onColorChange;
+
+  const LoginPage(
+      {super.key, this.appBarFlexibleSpace, required this.onColorChange});
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _LoginPageState();
   }
-
-
-
 }
 
-
-class _LoginPageState extends State<LoginPage>{
+class _LoginPageState extends State<LoginPage> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
+    MaterialColor selectedColor = Colors.red; // Default selected color
+
+
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: widget.appBarFlexibleSpace,
         title: const Text("Login to continue"),
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(right: 20),
+            alignment: Alignment.centerRight,
+            child: DropdownButton<MaterialColor>(
+              icon: Icon(Icons.color_lens_sharp,size: 50, color: Theme.of(context).primaryColorDark,),
+              value: selectedColor,
+              elevation: 0,
+              underline: Container(
+                height: 0,
+                color: Colors.transparent,
+              ),
+              onChanged: (MaterialColor? newValue) {
+                ManageLastThemeColor.saveLastThemeColor(newValue!);
+                widget.onColorChange(newValue);
+              },
+              items: ManageLastThemeColor.materialColors.map((MaterialColor color) {
+                return DropdownMenuItem<MaterialColor>(
+
+                  value: color,
+                  child: Container(
+                    color: color[500],
+                    height: 30,
+                  ),
+                );
+              }).toList(),
+            ),
+          )
+        ],
       ),
+
       /// AHMED SALEM - put the body here after removing the container.
       body: Center(
         child: SingleChildScrollView(
@@ -58,10 +80,7 @@ class _LoginPageState extends State<LoginPage>{
               ),
               const Text(
                 'Welcome!',
-                style: TextStyle(
-                    fontSize: 25,
-                    fontWeight:FontWeight.w500
-                ),
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
               ),
               const SizedBox(
                 height: 40,
@@ -73,7 +92,7 @@ class _LoginPageState extends State<LoginPage>{
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: emailController,
-                  onFieldSubmitted: (String value){
+                  onFieldSubmitted: (String value) {
                     print(value);
                   },
                   decoration: const InputDecoration(
@@ -82,7 +101,6 @@ class _LoginPageState extends State<LoginPage>{
                       Icons.key,
                     ),
                     border: OutlineInputBorder(),
-
                   ),
                 ),
               ),
@@ -97,7 +115,7 @@ class _LoginPageState extends State<LoginPage>{
                   keyboardType: TextInputType.visiblePassword,
                   controller: passwordController,
                   obscureText: true,
-                  onFieldSubmitted: (String value){
+                  onFieldSubmitted: (String value) {
                     print(value);
                   },
                   decoration: const InputDecoration(
@@ -105,11 +123,8 @@ class _LoginPageState extends State<LoginPage>{
                     prefixIcon: Icon(
                       Icons.lock,
                     ),
-                    suffixIcon: Icon(
-                        Icons.remove_red_eye
-                    ),
+                    suffixIcon: Icon(Icons.remove_red_eye),
                     border: OutlineInputBorder(),
-
                   ),
                 ),
               ),
@@ -117,16 +132,14 @@ class _LoginPageState extends State<LoginPage>{
                 height: 25,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 79
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 79),
                 child: FilledButton(
-
-
-                  onPressed: (){
+                  onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => NoLoginNavigation(appBarFlexibleSpace: widget.appBarFlexibleSpace,),
+                        builder: (context) => NoLoginNavigation(
+                          appBarFlexibleSpace: widget.appBarFlexibleSpace,
+                        ),
                       ),
                     );
                     print(emailController.text);
@@ -136,18 +149,16 @@ class _LoginPageState extends State<LoginPage>{
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Padding(
-                        padding:  EdgeInsets.all(8.0),
-                        child: Icon(Icons.login,
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.login,
                           color: Colors.white,
                           size: 30,
                         ),
                       ),
                       Text(
                         'Login',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25
-                        ),
+                        style: TextStyle(color: Colors.white, fontSize: 25),
                       ),
                     ],
                   ),
@@ -157,29 +168,23 @@ class _LoginPageState extends State<LoginPage>{
                 height: 7,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 45
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 45),
                 child: FilledButton(
-                  onPressed: (){
-
-                  },
-                  child:  const Row(
+                  onPressed: () {},
+                  child: const Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Padding(
-                        padding:  EdgeInsets.all(8.0),
-                        child: Icon(Icons.qr_code_scanner,
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.qr_code_scanner,
                           color: Colors.white,
                           size: 30,
                         ),
                       ),
                       Text(
                         'Scan to Login',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25
-                        ),
+                        style: TextStyle(color: Colors.white, fontSize: 25),
                       ),
                     ],
                   ),
@@ -206,7 +211,7 @@ class _LoginPageState extends State<LoginPage>{
                         color: Colors.lightBlue,
                       ),
                     ),
-                    onPressed: (){
+                    onPressed: () {
                       print("click On create");
                     },
                   )
@@ -216,7 +221,6 @@ class _LoginPageState extends State<LoginPage>{
           ),
         ),
       ),
-
     );
   }
 }

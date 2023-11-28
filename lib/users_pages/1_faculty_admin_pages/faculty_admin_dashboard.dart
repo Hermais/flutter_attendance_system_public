@@ -17,7 +17,7 @@ class FacultyAdminDashboard extends StatefulWidget {
 class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
   int _selectedIndex = 0;
 
-  static final List<Widget> _widgetOptions = <Widget>[
+   final List<Widget> _widgetOptions = <Widget>[
     Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
