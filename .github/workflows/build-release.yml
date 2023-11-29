@@ -26,7 +26,6 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.13.9'
-          cache: 'true'
 
 
       - name: Get Branch Name # This is only required for multiple branches. We are doing it anyways...
@@ -46,6 +45,7 @@ jobs:
           cond: ${{ steps.branch.outputs.branch == 'master' }}
           if_true: ${{ secrets.MASTER_FOLDER}}
           if_false: ${{ secrets.TEST_FOLDER}}
+
 
       - name: Get Dependencies
         run: flutter pub get
