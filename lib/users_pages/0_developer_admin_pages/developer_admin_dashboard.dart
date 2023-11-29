@@ -16,7 +16,7 @@ class DeveloperAdminDashboard extends StatefulWidget {
 class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
   int _selectedIndex = 0;
 
-  final List<Widget> _widgetOptions = <Widget>[
+   List<Widget> provideWidgetOptions() => <Widget>[
     Text('Tab 1 Content'),
     Text('Tab 2 Content'),
   ];
@@ -45,7 +45,7 @@ class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
         child: Icon(Icons.settings_suggest),
       ),
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: provideWidgetOptions().elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
 

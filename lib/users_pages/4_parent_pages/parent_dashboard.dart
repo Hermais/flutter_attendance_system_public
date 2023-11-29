@@ -1,8 +1,9 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_const_constructors_in_immutables, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/users_pages/utilities/custom_widgets/card_widget.dart';
 
-import '../commons/student_and_parent_info_popup.dart';
+import '../commons/student_info_popup.dart';
 
 
 
@@ -21,8 +22,26 @@ class ParentDashboard extends StatefulWidget {
 class _ParentDashboardState extends State<ParentDashboard> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text('A record of attendance for the student is shown here.'),
+   List<Widget> provideWidgetOptions() => <Widget>[
+    Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        InfoCard(cardTitle: "Week 1", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: Icon(Icons.check),),
+        InfoCard(cardTitle: "Week 2",isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: Icon(Icons.check),),
+        InfoCard(cardTitle: "Week 3", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: Icon(Icons.check),),
+        InfoCard(cardTitle: "Week 4", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: Icon(Icons.check),),
+        InfoCard(cardTitle: "Week 5", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: Icon(Icons.check),),
+        InfoCard(cardTitle: "Week 6", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: Icon(Icons.check),),
+        InfoCard(cardTitle: "Week 7", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: Icon(Icons.check),),
+        InfoCard(cardTitle: "Week 8", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: Icon(Icons.check),),
+        InfoCard(cardTitle: "Week 9", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: Icon(Icons.check),),
+        InfoCard(cardTitle: "Week 10", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: Icon(Icons.check),),
+        InfoCard(cardTitle: "Week 11", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: Icon(Icons.check),),
+        InfoCard(cardTitle: "Week 12", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: Icon(Icons.check),),
+
+      ],
+    ),
     Text('Gives information of the whereabouts of the student.'),
   ];
 
@@ -48,8 +67,8 @@ flexibleSpace: widget.appBarFlexibleSpace,
         onPressed: () {StudentAndParentInfo().studentInfoPopup(context: context);},
         child: Icon(Icons.question_mark),
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: SingleChildScrollView(
+        child: provideWidgetOptions().elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 17,

@@ -17,7 +17,7 @@ class FacultyAdminDashboard extends StatefulWidget {
 class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
   int _selectedIndex = 0;
 
-   final List<Widget> _widgetOptions = <Widget>[
+    List<Widget> provideWidgetOptions()=> <Widget>[
     Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -131,7 +131,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [_widgetOptions.elementAt(_selectedIndex)],
+          children: [provideWidgetOptions().elementAt(_selectedIndex)],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(

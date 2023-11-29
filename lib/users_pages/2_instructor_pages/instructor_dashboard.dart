@@ -21,19 +21,23 @@ class InstructorDashboard extends StatefulWidget {
 class InstructorDashboardState extends State<InstructorDashboard> {
   int _selectedIndex = 0;
 
-   final List<Widget> _widgetOptions = <Widget>[
+    List<Widget> provideWidgetOptions()=> <Widget>[
     /// Lectures Tab:
     Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        InfoCard(buttonText: "Start",),
-        InfoCard(buttonText: "Start",),
-        InfoCard(buttonText: "Start",),
-        InfoCard(buttonText: "Start",),
-        InfoCard(buttonText: "Start",),
-        InfoCard(buttonText: "Start",),
-        InfoCard(buttonText: "Start",),
+        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+
 
       ],
     ),
@@ -119,7 +123,7 @@ flexibleSpace: widget.appBarFlexibleSpace,
       body: SingleChildScrollView(child:
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children:[ _widgetOptions.elementAt(_selectedIndex)],
+        children:[ provideWidgetOptions().elementAt(_selectedIndex)],
       ),),
       bottomNavigationBar: BottomNavigationBar(
 
@@ -142,4 +146,39 @@ flexibleSpace: widget.appBarFlexibleSpace,
       ),
     );
   }
+
+  // Create a confirmation popup for the instructor again.
+
+Future<void> showLectureStartConfirmationPopup() async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Lecture Start Confirmation"),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text("Are you sure you want to start this lecture? "
+                  "The lecture can be terminated at least after 30 minutes."),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text("Confirm"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: Text("Cancel"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );}
 }
