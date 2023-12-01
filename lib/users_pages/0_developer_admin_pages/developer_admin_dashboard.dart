@@ -15,7 +15,7 @@ class DeveloperAdminDashboard extends StatefulWidget {
 
 class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
   int _selectedIndex = 0;
-  PageController _pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController(initialPage: 0);
 
 
   List<Widget> provideWidgetOptions() => <Widget>[

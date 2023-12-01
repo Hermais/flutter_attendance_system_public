@@ -20,7 +20,7 @@ class StudentDashboard extends StatefulWidget {
 
 class StudentDashboardState extends State<StudentDashboard> {
   int _selectedIndex = 0;
-  PageController _pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController(initialPage: 0);
 
   List<Widget> provideWidgetOptions(BuildContext context) {
     return <Widget>[

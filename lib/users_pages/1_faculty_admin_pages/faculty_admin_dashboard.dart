@@ -16,7 +16,7 @@ class FacultyAdminDashboard extends StatefulWidget {
 
 class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
   int _selectedIndex = 0;
-  PageController _pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController(initialPage: 0);
 
 
   List<Widget> provideWidgetOptions()=> <Widget>[
