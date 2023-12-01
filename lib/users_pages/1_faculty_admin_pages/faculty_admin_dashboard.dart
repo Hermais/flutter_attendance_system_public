@@ -16,101 +16,109 @@ class FacultyAdminDashboard extends StatefulWidget {
 
 class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
   int _selectedIndex = 0;
+  PageController _pageController = PageController(initialPage: 0);
 
-    List<Widget> provideWidgetOptions()=> <Widget>[
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        InfoCard(
-          isLectureCard: false,
-          isButtonVisible: false,
-          isTopLeftBorderMaxRadius: false,
-          cardHeight: 100,
-          cardThumbnail: const Icon(Icons.table_chart),
-          cardDescription:
-              "Here a small description of the timetable is supplied.",
-          cardTitle: "Timetable 1",
-        ),
-        InfoCard(
-          isLectureCard: false,
-          isButtonVisible: false,
-          isTopLeftBorderMaxRadius: false,
-          cardHeight: 100,
-          cardThumbnail: const Icon(Icons.table_chart),
-          cardDescription:
-              "Here a small description of the timetable is supplied.",
-          cardTitle: "Timetable 2",
-        ),
-        InfoCard(
-          isLectureCard: false,
-          isButtonVisible: false,
-          isTopLeftBorderMaxRadius: false,
-          cardHeight: 100,
-          cardThumbnail: const Icon(Icons.table_chart),
-          cardDescription:
-              "Here a small description of the timetable is supplied.",
-          cardTitle: "Timetable 3",
-        ),
-        InfoCard(
-          isLectureCard: false,
-          isButtonVisible: false,
-          isTopLeftBorderMaxRadius: false,
-          cardHeight: 100,
-          cardThumbnail: const Icon(Icons.table_chart),
-          cardDescription:
-              "Here a small description of the timetable is supplied.",
-          cardTitle: "Timetable 4",
-        ),
-      ],
+
+  List<Widget> provideWidgetOptions()=> <Widget>[
+    SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          InfoCard(
+            isLectureCard: false,
+            isButtonVisible: false,
+            isTopLeftBorderMaxRadius: false,
+            cardHeight: 100,
+            cardThumbnail: const Icon(Icons.table_chart),
+            cardDescription:
+                "Here a small description of the timetable is supplied.",
+            cardTitle: "Timetable 1",
+          ),
+          InfoCard(
+            isLectureCard: false,
+            isButtonVisible: false,
+            isTopLeftBorderMaxRadius: false,
+            cardHeight: 100,
+            cardThumbnail: const Icon(Icons.table_chart),
+            cardDescription:
+                "Here a small description of the timetable is supplied.",
+            cardTitle: "Timetable 2",
+          ),
+          InfoCard(
+            isLectureCard: false,
+            isButtonVisible: false,
+            isTopLeftBorderMaxRadius: false,
+            cardHeight: 100,
+            cardThumbnail: const Icon(Icons.table_chart),
+            cardDescription:
+                "Here a small description of the timetable is supplied.",
+            cardTitle: "Timetable 3",
+          ),
+          InfoCard(
+            isLectureCard: false,
+            isButtonVisible: false,
+            isTopLeftBorderMaxRadius: false,
+            cardHeight: 100,
+            cardThumbnail: const Icon(Icons.table_chart),
+            cardDescription:
+                "Here a small description of the timetable is supplied.",
+            cardTitle: "Timetable 4",
+          ),
+        ],
+      ),
     ),
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        InfoCard(
-          isLectureCard: false,
-          isButtonVisible: false,
-          isTopLeftBorderMaxRadius: false,
-          cardHeight: 100,
-          cardThumbnail: const Icon(Icons.person),
-          cardDescription: "The whereabouts of the instructor will be here.",
-          cardTitle: "Instructor 1",
-        ),
-        InfoCard(
-          isLectureCard: false,
-          isButtonVisible: false,
-          isTopLeftBorderMaxRadius: false,
-          cardHeight: 100,
-          cardThumbnail: const Icon(Icons.person),
-          cardDescription: "The whereabouts of the instructor will be here.",
-          cardTitle: "Instructor 2",
-        ),
-        InfoCard(
-          isLectureCard: false,
-          isButtonVisible: false,
-          isTopLeftBorderMaxRadius: false,
-          cardHeight: 100,
-          cardThumbnail: const Icon(Icons.person),
-          cardDescription: "The whereabouts of the instructor will be here.",
-          cardTitle: "Instructor 3",
-        ),
-        InfoCard(
-          isLectureCard: false,
-          isButtonVisible: false,
-          isTopLeftBorderMaxRadius: false,
-          cardHeight: 100,
-          cardThumbnail: const Icon(Icons.person),
-          cardDescription: "The whereabouts of the instructor will be here.",
-          cardTitle: "Instructor 4",
-        ),
-      ],
+    SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          InfoCard(
+            isLectureCard: false,
+            isButtonVisible: false,
+            isTopLeftBorderMaxRadius: false,
+            cardHeight: 100,
+            cardThumbnail: const Icon(Icons.person),
+            cardDescription: "The whereabouts of the instructor will be here.",
+            cardTitle: "Instructor 1",
+          ),
+          InfoCard(
+            isLectureCard: false,
+            isButtonVisible: false,
+            isTopLeftBorderMaxRadius: false,
+            cardHeight: 100,
+            cardThumbnail: const Icon(Icons.person),
+            cardDescription: "The whereabouts of the instructor will be here.",
+            cardTitle: "Instructor 2",
+          ),
+          InfoCard(
+            isLectureCard: false,
+            isButtonVisible: false,
+            isTopLeftBorderMaxRadius: false,
+            cardHeight: 100,
+            cardThumbnail: const Icon(Icons.person),
+            cardDescription: "The whereabouts of the instructor will be here.",
+            cardTitle: "Instructor 3",
+          ),
+          InfoCard(
+            isLectureCard: false,
+            isButtonVisible: false,
+            isTopLeftBorderMaxRadius: false,
+            cardHeight: 100,
+            cardThumbnail: const Icon(Icons.person),
+            cardDescription: "The whereabouts of the instructor will be here.",
+            cardTitle: "Instructor 4",
+          ),
+        ],
+      ),
     ),
   ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      _pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+
     });
   }
 
@@ -128,11 +136,14 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
         onPressed: () {},
         child: Icon(Icons.settings_suggest),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [provideWidgetOptions().elementAt(_selectedIndex)],
-        ),
+      body: PageView(
+        controller: _pageController,
+        children: provideWidgetOptions(),
+        onPageChanged: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 17,

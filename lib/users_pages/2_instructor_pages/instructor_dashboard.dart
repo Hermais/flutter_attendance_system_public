@@ -20,81 +20,89 @@ class InstructorDashboard extends StatefulWidget {
 
 class InstructorDashboardState extends State<InstructorDashboard> {
   int _selectedIndex = 0;
+  PageController _pageController = PageController(initialPage: 0);
 
-    List<Widget> provideWidgetOptions()=> <Widget>[
+
+  List<Widget> provideWidgetOptions()=> <Widget>[
     /// Lectures Tab:
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
-        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
-        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
-        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
-        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
-        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
-        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
-        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
-        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
-        InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
-
-
-      ],
+    SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+          InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+          InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+          InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+          InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+          InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+          InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+          InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+          InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+          InfoCard(buttonText: "Start",onButtonTap: ()=>showLectureStartConfirmationPopup(),),
+      
+      
+        ],
+      ),
     ),
 
   /// Students Tab:
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        InfoCard(
-          isLectureCard: false,
-          isButtonVisible: false,
-          isTopLeftBorderMaxRadius: false,
-          cardHeight: 100,
-          cardThumbnail: const Icon(Icons.person),
-          cardDescription: "Info about the student's attendance will be here (Attending "
-              "now or not).",
-          cardTitle: "Student 1",
-        ),
-        InfoCard(
-          isLectureCard: false,
-          isButtonVisible: false,
-          isTopLeftBorderMaxRadius: false,
-          cardHeight: 100,
-          cardThumbnail: const Icon(Icons.person),
-          cardDescription: "Info about the student's attendance will be here (Attending "
-              "now or not).",
-          cardTitle: "Student 2",
-        ),
-        InfoCard(
-          isLectureCard: false,
-          isButtonVisible: false,
-          isTopLeftBorderMaxRadius: false,
-          cardHeight: 100,
-          cardThumbnail: const Icon(Icons.person),
-          cardDescription: "Info about the student's attendance will be here (Attending "
-              "now or not).",
-          cardTitle: "Student 3",
-        ),
-        InfoCard(
-          isLectureCard: false,
-          isButtonVisible: false,
-          isTopLeftBorderMaxRadius: false,
-          cardHeight: 100,
-          cardThumbnail: const Icon(Icons.person),
-          cardDescription: "Info about the student's attendance will be here (Attending "
-              "now or not).",
-          cardTitle: "Student 4",
-        ),
-
-      ],
+    SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          InfoCard(
+            isLectureCard: false,
+            isButtonVisible: false,
+            isTopLeftBorderMaxRadius: false,
+            cardHeight: 100,
+            cardThumbnail: const Icon(Icons.person),
+            cardDescription: "Info about the student's attendance will be here (Attending "
+                "now or not).",
+            cardTitle: "Student 1",
+          ),
+          InfoCard(
+            isLectureCard: false,
+            isButtonVisible: false,
+            isTopLeftBorderMaxRadius: false,
+            cardHeight: 100,
+            cardThumbnail: const Icon(Icons.person),
+            cardDescription: "Info about the student's attendance will be here (Attending "
+                "now or not).",
+            cardTitle: "Student 2",
+          ),
+          InfoCard(
+            isLectureCard: false,
+            isButtonVisible: false,
+            isTopLeftBorderMaxRadius: false,
+            cardHeight: 100,
+            cardThumbnail: const Icon(Icons.person),
+            cardDescription: "Info about the student's attendance will be here (Attending "
+                "now or not).",
+            cardTitle: "Student 3",
+          ),
+          InfoCard(
+            isLectureCard: false,
+            isButtonVisible: false,
+            isTopLeftBorderMaxRadius: false,
+            cardHeight: 100,
+            cardThumbnail: const Icon(Icons.person),
+            cardDescription: "Info about the student's attendance will be here (Attending "
+                "now or not).",
+            cardTitle: "Student 4",
+          ),
+      
+        ],
+      ),
     )
   ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      _pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+
     });
   }
 
@@ -120,11 +128,15 @@ flexibleSpace: widget.appBarFlexibleSpace,
         },
         child: Icon(Icons.qr_code_scanner),
       ),
-      body: SingleChildScrollView(child:
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children:[ provideWidgetOptions().elementAt(_selectedIndex)],
-      ),),
+      body: PageView(
+        controller: _pageController,
+        children: provideWidgetOptions(),
+        onPageChanged: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+      ),
       bottomNavigationBar: BottomNavigationBar(
 
         selectedFontSize: 17,
