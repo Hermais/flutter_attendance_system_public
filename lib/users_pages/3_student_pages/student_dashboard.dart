@@ -20,25 +20,28 @@ class StudentDashboard extends StatefulWidget {
 
 class StudentDashboardState extends State<StudentDashboard> {
   int _selectedIndex = 0;
+  PageController _pageController = PageController(initialPage: 0);
 
   List<Widget> provideWidgetOptions(BuildContext context) {
     return <Widget>[
       /// Lectures Tab:
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
-
-        ],
+      SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+            InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+            InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+            InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+            InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+            InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+            InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+            InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+            InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+        
+          ],
+        ),
       ),
 
       /// Instructors Tab:
@@ -134,6 +137,8 @@ class StudentDashboardState extends State<StudentDashboard> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      _pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+
     });
   }
 
@@ -151,9 +156,16 @@ class StudentDashboardState extends State<StudentDashboard> {
         onPressed: () {StudentAndParentInfo(isForStudent: true).studentInfoPopup(context: context);},
         child: Icon(Icons.question_mark),
       ),
-      body: SingleChildScrollView(
-        child: provideWidgetOptions(context).elementAt(_selectedIndex),
+      body: PageView(
+        controller: _pageController,
+        children: provideWidgetOptions(context),
+        onPageChanged: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
       ),
+
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 17,
         iconSize: 30,
