@@ -20,113 +20,120 @@ class StudentDashboard extends StatefulWidget {
 
 class StudentDashboardState extends State<StudentDashboard> {
   int _selectedIndex = 0;
+  PageController _pageController = PageController(initialPage: 0);
 
   List<Widget> provideWidgetOptions(BuildContext context) {
     return <Widget>[
       /// Lectures Tab:
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
-          InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
-
-        ],
+      SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+            InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+            InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+            InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+            InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+            InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+            InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+            InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+            InfoCard(buttonText: "Attend", onButtonTap: () => showQRCodePopup()),
+        
+          ],
+        ),
       ),
 
       /// Instructors Tab:
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          InfoCard(
-            isLectureCard: false,
-            isButtonVisible: false,
-            isTopLeftBorderMaxRadius: false,
-            cardHeight: 100,
-            cardThumbnail: Icon(Icons.person),
-            cardDescription: "The whereabouts of the instructor will be here.",
-            cardTitle: "Instructor 1",
-          ),
-          InfoCard(
-            isLectureCard: false,
-            isButtonVisible: false,
-            isTopLeftBorderMaxRadius: false,
-            cardHeight: 100,
-            cardThumbnail: Icon(Icons.person),
-            cardDescription: "The whereabouts of the instructor will be here.",
-            cardTitle: "Instructor 2",
-          ),
-          InfoCard(
-            isLectureCard: false,
-            isButtonVisible: false,
-            isTopLeftBorderMaxRadius: false,
-            cardHeight: 100,
-            cardThumbnail: Icon(Icons.person),
-            cardDescription: "The whereabouts of the instructor will be here.",
-            cardTitle: "Instructor 3",
-          ),
-          InfoCard(
-            isLectureCard: false,
-            isButtonVisible: false,
-            isTopLeftBorderMaxRadius: false,
-            cardHeight: 100,
-            cardThumbnail: Icon(Icons.person),
-            cardDescription: "The whereabouts of the instructor will be here.",
-            cardTitle: "Instructor 4",
-          ),
-        ],
+      SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            InfoCard(
+              isLectureCard: false,
+              isButtonVisible: false,
+              isTopLeftBorderMaxRadius: false,
+              cardHeight: 100,
+              cardThumbnail: Icon(Icons.person),
+              cardDescription: "The whereabouts of the instructor will be here.",
+              cardTitle: "Instructor 1",
+            ),
+            InfoCard(
+              isLectureCard: false,
+              isButtonVisible: false,
+              isTopLeftBorderMaxRadius: false,
+              cardHeight: 100,
+              cardThumbnail: Icon(Icons.person),
+              cardDescription: "The whereabouts of the instructor will be here.",
+              cardTitle: "Instructor 2",
+            ),
+            InfoCard(
+              isLectureCard: false,
+              isButtonVisible: false,
+              isTopLeftBorderMaxRadius: false,
+              cardHeight: 100,
+              cardThumbnail: Icon(Icons.person),
+              cardDescription: "The whereabouts of the instructor will be here.",
+              cardTitle: "Instructor 3",
+            ),
+            InfoCard(
+              isLectureCard: false,
+              isButtonVisible: false,
+              isTopLeftBorderMaxRadius: false,
+              cardHeight: 100,
+              cardThumbnail: Icon(Icons.person),
+              cardDescription: "The whereabouts of the instructor will be here.",
+              cardTitle: "Instructor 4",
+            ),
+          ],
+        ),
       ),
 
       /// Timetable Tab:
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          InfoCard(
-              isButtonVisible: false,
-              isLectureCard: false,
-              cardTitle: "Sunday",
-              cardDescription: "No lectures today.",
-              cardThumbnail: Icon(Icons.table_chart)),
-          InfoCard(
-              isButtonVisible: false,
-              isLectureCard: false,
-              cardTitle: "Monday",
-              cardDescription: "No lectures today.",
-              cardThumbnail: Icon(Icons.table_chart)),
-          InfoCard(
-              isButtonVisible: false,
-              isLectureCard: false,
-              cardTitle: "Tuesday",
-              cardDescription: "No lectures today.",
-              cardThumbnail: Icon(Icons.table_chart)),
-          InfoCard(
-              isButtonVisible: false,
-              isLectureCard: false,
-              cardTitle: "Wednesday",
-              cardDescription: "No lectures today.",
-              cardThumbnail: Icon(Icons.table_chart)),
-          InfoCard(
-              isButtonVisible: false,
-              isLectureCard: false,
-              cardTitle: "Thursday",
-              cardDescription: "No lectures today.",
-              cardThumbnail: Icon(Icons.table_chart)),
-          InfoCard(
-              isButtonVisible: false,
-              isLectureCard: false,
-              cardTitle: "Saturday",
-              cardDescription: "No lectures today.",
-              cardThumbnail: Icon(Icons.table_chart)),
-        ],
+      SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            InfoCard(
+                isButtonVisible: false,
+                isLectureCard: false,
+                cardTitle: "Sunday",
+                cardDescription: "No lectures today.",
+                cardThumbnail: Icon(Icons.table_chart)),
+            InfoCard(
+                isButtonVisible: false,
+                isLectureCard: false,
+                cardTitle: "Monday",
+                cardDescription: "No lectures today.",
+                cardThumbnail: Icon(Icons.table_chart)),
+            InfoCard(
+                isButtonVisible: false,
+                isLectureCard: false,
+                cardTitle: "Tuesday",
+                cardDescription: "No lectures today.",
+                cardThumbnail: Icon(Icons.table_chart)),
+            InfoCard(
+                isButtonVisible: false,
+                isLectureCard: false,
+                cardTitle: "Wednesday",
+                cardDescription: "No lectures today.",
+                cardThumbnail: Icon(Icons.table_chart)),
+            InfoCard(
+                isButtonVisible: false,
+                isLectureCard: false,
+                cardTitle: "Thursday",
+                cardDescription: "No lectures today.",
+                cardThumbnail: Icon(Icons.table_chart)),
+            InfoCard(
+                isButtonVisible: false,
+                isLectureCard: false,
+                cardTitle: "Saturday",
+                cardDescription: "No lectures today.",
+                cardThumbnail: Icon(Icons.table_chart)),
+          ],
+        ),
       ),
     ];
   }
@@ -134,6 +141,8 @@ class StudentDashboardState extends State<StudentDashboard> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      _pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+
     });
   }
 
@@ -151,9 +160,16 @@ class StudentDashboardState extends State<StudentDashboard> {
         onPressed: () {StudentAndParentInfo(isForStudent: true).studentInfoPopup(context: context);},
         child: Icon(Icons.question_mark),
       ),
-      body: SingleChildScrollView(
-        child: provideWidgetOptions(context).elementAt(_selectedIndex),
+      body: PageView(
+        controller: _pageController,
+        children: provideWidgetOptions(context),
+        onPageChanged: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
       ),
+
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 17,
         iconSize: 30,

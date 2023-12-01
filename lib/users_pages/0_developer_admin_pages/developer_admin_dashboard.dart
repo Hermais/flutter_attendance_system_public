@@ -15,15 +15,19 @@ class DeveloperAdminDashboard extends StatefulWidget {
 
 class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
   int _selectedIndex = 0;
+  PageController _pageController = PageController(initialPage: 0);
 
-   List<Widget> provideWidgetOptions() => <Widget>[
-    Text('Tab 1 Content'),
-    Text('Tab 2 Content'),
+
+  List<Widget> provideWidgetOptions() => <Widget>[
+    Center(child: Text('Tab 1 Content')),
+    Center(child: Text('Tab 2 Content')),
   ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      _pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+
     });
   }
 
@@ -44,8 +48,14 @@ class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
         onPressed: () {},
         child: Icon(Icons.settings_suggest),
       ),
-      body: Center(
-        child: provideWidgetOptions().elementAt(_selectedIndex),
+      body: PageView(
+        controller: _pageController,
+        children: provideWidgetOptions(),
+        onPageChanged: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
 
