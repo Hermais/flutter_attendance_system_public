@@ -8,6 +8,7 @@ class FacultyAdminDashboard extends StatefulWidget {
   final String? userName;
   final Widget? appBarFlexibleSpace;
 
+
   FacultyAdminDashboard({super.key, this.userName, this.appBarFlexibleSpace});
 
   @override
@@ -18,7 +19,15 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController(initialPage: 0);
 
-
+  String? _courseCode;
+  String? _startTime;
+  String? _endTime;
+  String? _hallLocation;
+  String ? _courseName;
+  String ? _selectTheTerm;
+  String ? _groupName;
+  String ? _instractorName;
+  String ? _courseDescription;
   List<Widget> provideWidgetOptions()=> <Widget>[
     SingleChildScrollView(
       child: Column(
@@ -133,8 +142,8 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.settings_suggest),
+        onPressed: _showSettingsDialog,
+          child: Icon(Icons.settings_suggest),
       ),
       body: PageView(
         controller: _pageController,
@@ -165,4 +174,127 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
       ),
     );
   }
+  void _showSettingsDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Settings'),
+          content:SingleChildScrollView(
+             child: Column(
+            mainAxisSize: MainAxisSize.min,
+
+               children: [
+                 DropdownButton<String>(
+                   value: _groupName,
+                   onChanged: (String? newValue) {
+                     setState(() {
+                       _groupName = newValue;
+                     });
+                   },
+                   items: <String>['Group 1', 'Group 2', 'Group 3', 'Group 4']
+                       .map<DropdownMenuItem<String>>(
+                         (String value) {
+                       return DropdownMenuItem<String>(
+                         value: value,
+                         child: Text(value),
+                       );
+                     },
+                   ).toList(),
+                   hint: Text('Select Group'),
+                 ),
+                 SizedBox(height: 16),
+                 DropdownButton<String>(
+                   value: _selectTheTerm,
+                   onChanged: (String? newValue) {
+                     setState(() {
+                       _selectTheTerm = newValue;
+                     });
+                   },
+                   items: <String>['Term 1', 'Term 2', 'Term 3', 'Term 4']
+                       .map<DropdownMenuItem<String>>(
+                         (String value) {
+                       return DropdownMenuItem<String>(
+                         value: value,
+                         child: Text(value),
+                       );
+                     },
+                   ).toList(),
+                   hint: Text('Select Term'),
+                 ),
+                 SizedBox(height: 16),
+                 Divider(color: Colors.black,thickness: 5,), // Add a divider line
+
+                 Divider(color: Colors.black,thickness: 5,), // Add a divider line
+                 Text('to add lecture'),
+                 TextField(
+                   onChanged: (value) {
+                     _instractorName = value;
+                   },
+                   decoration: InputDecoration(labelText: 'instructor Name'),
+                 ),
+                 TextField(
+                   onChanged: (value) {
+                     _courseCode = value;
+                   },
+                   decoration: InputDecoration(labelText: 'Course Code'),
+                 ),
+                 TextField(
+                   onChanged: (value) {
+                     _courseName = value;
+                   },
+                   decoration: InputDecoration(labelText: 'Course Name'),
+                 ),
+                 TextField(
+                   onChanged: (value) {
+                     _startTime = value;
+                   },
+                   decoration: InputDecoration(labelText: 'Start Time'),
+                 ),
+                 TextField(
+                   onChanged: (value) {
+                     _endTime = value;
+                   },
+                   decoration: InputDecoration(labelText: 'End Time'),
+                 ),
+                 TextField(
+                   onChanged: (value) {
+                     _hallLocation = value;
+                   },
+                   decoration: InputDecoration(labelText: 'Hall Location'),
+                 ),
+                 TextField(
+                   onChanged: (value) {
+                     _courseDescription = value;
+                   },
+                   decoration: InputDecoration(labelText: 'course description'),
+                 ),
+               ],
+             ),
+          ),
+
+          actions: [
+
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+
+                // Do something with the entered data
+
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text('add lecture'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
 }
