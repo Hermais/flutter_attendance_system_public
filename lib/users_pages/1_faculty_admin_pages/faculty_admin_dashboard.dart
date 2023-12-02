@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_field
 
 import 'package:flutter/material.dart';
 
@@ -26,7 +26,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
   String ? _courseName;
   String ? _selectTheTerm;
   String ? _groupName;
-  String ? _instractorName;
+  String ? _instructorName;
   String ? _courseDescription;
   String ? _selectDepartment;
 
@@ -146,7 +146,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _showSettingsDialog,
+        onPressed: _showSettingsDialog ,
         child: Icon(Icons.settings_suggest),
       ),
       body: PageView(
@@ -186,7 +186,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Settings'),
+          title: Text('Add Lecture'),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -199,7 +199,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                       _groupName = newValue;
                     });
                   },
-                  items: <String>['electrical ', 'civil', 'mechanical',]
+                  items: <String>['Electrical ', 'Civil', 'Mechanical',]
                       .map<DropdownMenuItem<String>>(
                         (String value) {
                       return DropdownMenuItem<String>(
@@ -237,7 +237,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                       _selectTheTerm = newValue;
                     });
                   },
-                  items: <String>['Term 1', 'Term 2', 'Term 3', 'Term 4']
+                  items: <String>['Term 1', 'Term 2']
                       .map<DropdownMenuItem<String>>(
                         (String value) {
                       return DropdownMenuItem<String>(
@@ -253,10 +253,42 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                 // Add a divider line
 
                 //  Divider(color: Colors.black,thickness: 5,), // Add a divider line
-                Text('add a lecture'),
+                Text('Provide New Lecture Info:'),
+                TextButton(
+                  onPressed: () async {
+                    TimeOfDay? selectedTime = await showTimePicker(
+                      initialTime: TimeOfDay.now(),
+                      context: context,
+                    );
+
+                    if (selectedTime != null) {
+                      setState(() {
+                        _startTime = selectedTime.format(context);
+
+                      });
+                    }
+                  },
+                  child: Text(_startTime ?? 'Select Start Time'),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    TimeOfDay? selectedTime = await showTimePicker(
+                      initialTime: TimeOfDay.now(),
+                      context: context,
+                    );
+
+                    if (selectedTime != null) {
+                      setState(() {
+                        _endTime = selectedTime.format(context);
+
+                      });
+                    }
+                  },
+                  child: Text(_endTime ?? 'Select End Time' ),
+                ),
                 TextField(
                   onChanged: (value) {
-                    _instractorName = value;
+                    _instructorName = value;
                   },
                   decoration: InputDecoration(labelText: 'Instructor Name'),
                 ),
@@ -271,18 +303,6 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                     _courseName = value;
                   },
                   decoration: InputDecoration(labelText: 'Course Name'),
-                ),
-                TextField(
-                  onChanged: (value) {
-                    _startTime = value;
-                  },
-                  decoration: InputDecoration(labelText: 'Start Time'),
-                ),
-                TextField(
-                  onChanged: (value) {
-                    _endTime = value;
-                  },
-                  decoration: InputDecoration(labelText: 'End Time'),
                 ),
                 TextField(
                   onChanged: (value) {
