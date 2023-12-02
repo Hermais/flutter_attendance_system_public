@@ -9,25 +9,24 @@ class DeveloperAdminDashboard extends StatefulWidget {
   DeveloperAdminDashboard({super.key, this.userName, this.appBarFlexibleSpace});
 
   @override
-  DeveloperAdminDashboardState createState() =>
-      DeveloperAdminDashboardState();
+  DeveloperAdminDashboardState createState() => DeveloperAdminDashboardState();
 }
 
 class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController(initialPage: 0);
 
-
-  List<Widget> provideWidgetOptions() => <Widget>[
-    Center(child: Text('Tab 1 Content')),
-    Center(child: Text('Tab 2 Content')),
-  ];
+  List<Widget> provideWidgetOptions() =>
+      <Widget>[
+        Center(child: Text('Tab 1 Content')),
+        Center(child: Text('Tab 2 Content')),
+      ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      _pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-
+      _pageController.animateToPage(index,
+          duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
     });
   }
 
@@ -46,6 +45,7 @@ class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
+        tooltip: 'Modify a table.',
         child: Icon(Icons.settings_suggest),
       ),
       body: PageView(
@@ -58,7 +58,6 @@ class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
-
         selectedFontSize: 17,
         iconSize: 30,
         landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
@@ -73,10 +72,18 @@ class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Theme.of(context).primaryColor,
+        selectedItemColor: Theme
+            .of(context)
+            .primaryColor,
         onTap: _onItemTapped,
       ),
     );
   }
-}
 
+// Create a dialog to show to allow to modify, add, or delete a faculty table.
+
+// The faculty table is chosen by week from a dropdown menu.
+// Then we can choose to add, modify, or delete a lecture.
+// If we choose to add a lecture, we can choose the day, time, and room.
+
+}
