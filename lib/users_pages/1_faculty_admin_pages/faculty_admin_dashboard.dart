@@ -1,13 +1,14 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_field
 
-import 'package:flutter/material.dart';
 
-import '../utilities/custom_widgets/card_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/users_pages/1_faculty_admin_pages/pages_list.dart';
+import 'package:flutter_attendance_system/users_pages/utilities/custom_widgets/drop_down_button.dart';
+import 'package:flutter_attendance_system/users_pages/utilities/custom_widgets/text_button_clock_viewer.dart';
 
 class FacultyAdminDashboard extends StatefulWidget {
   final String? userName;
   final Widget? appBarFlexibleSpace;
-
 
   FacultyAdminDashboard({super.key, this.userName, this.appBarFlexibleSpace});
 
@@ -18,120 +19,28 @@ class FacultyAdminDashboard extends StatefulWidget {
 class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController(initialPage: 0);
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String? _courseCode;
   String? _startTime;
   String? _endTime;
   String? _hallLocation;
-  String ? _courseName;
-  String ? _selectTheTerm;
-  String ? _groupName;
-  String ? _instructorName;
-  String ? _courseDescription;
-  String ? _selectDepartment;
+  String? _courseName;
+  String? _term;
+  String? _groupName;
+  String? _instructorName;
+  String? _courseDescription;
+  String? _department;
+  bool? _isFloatingActionButtonVisible;
 
-  List<Widget> provideWidgetOptions() =>
-      <Widget>[
-        SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              InfoCard(
-                isLectureCard: false,
-                isButtonVisible: false,
-                isTopLeftBorderMaxRadius: false,
-                cardHeight: 100,
-                cardThumbnail: const Icon(Icons.table_chart),
-                cardDescription:
-                "Here a small description of the timetable is supplied.",
-                cardTitle: "Timetable 1",
-              ),
-              InfoCard(
-                isLectureCard: false,
-                isButtonVisible: false,
-                isTopLeftBorderMaxRadius: false,
-                cardHeight: 100,
-                cardThumbnail: const Icon(Icons.table_chart),
-                cardDescription:
-                "Here a small description of the timetable is supplied.",
-                cardTitle: "Timetable 2",
-              ),
-              InfoCard(
-                isLectureCard: false,
-                isButtonVisible: false,
-                isTopLeftBorderMaxRadius: false,
-                cardHeight: 100,
-                cardThumbnail: const Icon(Icons.table_chart),
-                cardDescription:
-                "Here a small description of the timetable is supplied.",
-                cardTitle: "Timetable 3",
-              ),
-              InfoCard(
-                isLectureCard: false,
-                isButtonVisible: false,
-                isTopLeftBorderMaxRadius: false,
-                cardHeight: 100,
-                cardThumbnail: const Icon(Icons.table_chart),
-                cardDescription:
-                "Here a small description of the timetable is supplied.",
-                cardTitle: "Timetable 4",
-              ),
-            ],
-          ),
-        ),
-        SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              InfoCard(
-                isLectureCard: false,
-                isButtonVisible: false,
-                isTopLeftBorderMaxRadius: false,
-                cardHeight: 100,
-                cardThumbnail: const Icon(Icons.person),
-                cardDescription: "The whereabouts of the instructor will be here.",
-                cardTitle: "Instructor 1",
-              ),
-              InfoCard(
-                isLectureCard: false,
-                isButtonVisible: false,
-                isTopLeftBorderMaxRadius: false,
-                cardHeight: 100,
-                cardThumbnail: const Icon(Icons.person),
-                cardDescription: "The whereabouts of the instructor will be here.",
-                cardTitle: "Instructor 2",
-              ),
-              InfoCard(
-                isLectureCard: false,
-                isButtonVisible: false,
-                isTopLeftBorderMaxRadius: false,
-                cardHeight: 100,
-                cardThumbnail: const Icon(Icons.person),
-                cardDescription: "The whereabouts of the instructor will be here.",
-                cardTitle: "Instructor 3",
-              ),
-              InfoCard(
-                isLectureCard: false,
-                isButtonVisible: false,
-                isTopLeftBorderMaxRadius: false,
-                cardHeight: 100,
-                cardThumbnail: const Icon(Icons.person),
-                cardDescription: "The whereabouts of the instructor will be here.",
-                cardTitle: "Instructor 4",
-              ),
-            ],
-          ),
-        ),
-      ];
+
 
   void _onItemTapped(int index) {
     setState(() {
+      _isFloatingActionButtonVisible = true;
       _selectedIndex = index;
-      _pageController.animateToPage(
-          index, duration: Duration(milliseconds: 300),
-          curve: Curves.easeInOut);
+      _pageController.animateToPage(index,
+          duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
     });
   }
 
@@ -145,10 +54,21 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
           'Welcome, ${widget.userName ?? "Faculty Admin!"}',
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showSettingsDialog ,
-        child: Icon(Icons.settings_suggest),
+      floatingActionButton: Visibility(
+        visible: _isFloatingActionButtonVisible ?? true,
+        child: AnimatedOpacity(
+          opacity: _selectedIndex == 0 ? 1.0 : 0.0,
+          duration: Duration(milliseconds: 200),
+          onEnd: (){_isFloatingActionButtonVisible = _selectedIndex==0 ?true:false; setState(() {
+
+          });},// Adjust the duration as needed
+          child: FloatingActionButton(
+            onPressed: _showSettingsDialog,
+            child: Icon(Icons.settings_suggest),
+          ),
+        ),
       ),
+
       body: PageView(
         controller: _pageController,
         children: provideWidgetOptions(),
@@ -173,155 +93,124 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Theme
-            .of(context)
-            .primaryColor,
+        selectedItemColor: Theme.of(context).primaryColor,
         onTap: _onItemTapped,
       ),
     );
   }
 
-  void _showSettingsDialog() {
-    showDialog(
+  Future<void> _showSettingsDialog() async {
+    return await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          key: _formKey,
           title: Text('Add Lecture'),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
-
               children: [
-                DropdownButton<String>(
-                  value: _groupName,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _groupName = newValue;
-                    });
+                Text('Specify Main Properties:'),
+                DropdownButtonWidget<String>(
+                  items: ['CSE', 'Mechanics', 'Power'],
+                  selectionDescription: 'Select Department',
+                  setValue: (String? value) {
+                    department = value!;
                   },
-                  items: <String>['Electrical ', 'Civil', 'Mechanical',]
-                      .map<DropdownMenuItem<String>>(
-                        (String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    },
-                  ).toList(),
-                  hint: Text('Select Department'),
+                ),
+                DropdownButtonWidget<String>(
+                  items: [
+                    'Group 1',
+                    'Group 2',
+                    'Group 3',
+                    'Group 4',
+                    'Group 5'
+                  ],
+                  selectionDescription: 'Select Group',
+                  setValue: (String? value) {
+                    groupName = value!;
+                  },
+                ),
+                DropdownButtonWidget<String>(
+                  items: ['Term 1', 'Term 2'],
+                  selectionDescription: 'Select Term',
+                  setValue: (String? value) {
+                    term = value!;
+                  },
                 ),
                 SizedBox(height: 16),
-                DropdownButton<String>(
-                  value: _selectDepartment,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectDepartment = newValue;
-                    });
+                Divider(
+                  color: Colors.black,
+                  thickness: 1,
+                ),
+                Text('Select Lecture Details:'),
+                ClockViewerTextButton(
+                  setChangedTime: (String? value) {
+                    startTime = value!;
                   },
-                  items: <String>['Group 1', 'Group 2', 'Group 3', 'Group 4']
-                      .map<DropdownMenuItem<String>>(
-                        (String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    },
-                  ).toList(),
-                  hint: Text('Select Group'),
+                  selectedTime: 'Select a start time',
+                ),
+                ClockViewerTextButton(
+                  setChangedTime: (String? value) {
+                    endTime = value!;
+                  },
+                  selectedTime: 'Select a start time',
+                ),
+                DropdownButtonWidget<String>(
+                  items: [
+                    'Instructor 1',
+                    'Instructor 2',
+                    'Instructor 3',
+                    'Instructor 4'
+                  ],
+                  selectionDescription: 'Select Instructor',
+                  setValue: (String? value) {
+                    instructorName = value!;
+                  },
+                ),
+                DropdownButtonWidget<String>(
+                  items: ['Code 1', 'Code 2', 'Code 3', 'Code 4'],
+                  selectionDescription: 'Select Course Code',
+                  setValue: (String? value) {
+                    courseCode = value!;
+                  },
+                ),
+                DropdownButtonWidget<String>(
+                  items: ['Name 1', 'Name 2', 'Name 3', 'Name 4'],
+                  selectionDescription: 'Select Course Name',
+                  setValue: (String? value) {
+                    courseName = value!;
+                  },
+                ),
+                DropdownButtonWidget<String>(
+                  items: [
+                    'Location 1',
+                    'Location 2',
+                    'Location 3',
+                    'Location 4'
+                  ],
+                  selectionDescription: 'Select Hall Location',
+                  setValue: (String? value) {
+                    hallLocation = value!;
+                  },
+                ),
+                DropdownButtonWidget<String>(
+                  items: [
+                    'Description 1',
+                    'Description 2',
+                    'Description 3',
+                    'Description 4'
+                  ],
+                  selectionDescription: 'Select Course Description',
+                  setValue: (String? value) {
+                    courseDescription = value!;
+                  },
                 ),
                 SizedBox(height: 16),
-                DropdownButton<String>(
-                  value: _selectTheTerm,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectTheTerm = newValue;
-                    });
-                  },
-                  items: <String>['Term 1', 'Term 2']
-                      .map<DropdownMenuItem<String>>(
-                        (String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    },
-                  ).toList(),
-                  hint: Text('Select Term'),
-                ),
-                SizedBox(height: 16),
-                Divider(color: Colors.black, thickness: 1,),
-                // Add a divider line
-
-                //  Divider(color: Colors.black,thickness: 5,), // Add a divider line
-                Text('Provide New Lecture Info:'),
-                TextButton(
-                  onPressed: () async {
-                    TimeOfDay? selectedTime = await showTimePicker(
-                      initialTime: TimeOfDay.now(),
-                      context: context,
-                    );
-
-                    if (selectedTime != null) {
-                      setState(() {
-                        _startTime = selectedTime.format(context);
-
-                      });
-                    }
-                  },
-                  child: Text(_startTime ?? 'Select Start Time'),
-                ),
-                TextButton(
-                  onPressed: () async {
-                    TimeOfDay? selectedTime = await showTimePicker(
-                      initialTime: TimeOfDay.now(),
-                      context: context,
-                    );
-
-                    if (selectedTime != null) {
-                      setState(() {
-                        _endTime = selectedTime.format(context);
-
-                      });
-                    }
-                  },
-                  child: Text(_endTime ?? 'Select End Time' ),
-                ),
-                TextField(
-                  onChanged: (value) {
-                    _instructorName = value;
-                  },
-                  decoration: InputDecoration(labelText: 'Instructor Name'),
-                ),
-                TextField(
-                  onChanged: (value) {
-                    _courseCode = value;
-                  },
-                  decoration: InputDecoration(labelText: 'Course Code'),
-                ),
-                TextField(
-                  onChanged: (value) {
-                    _courseName = value;
-                  },
-                  decoration: InputDecoration(labelText: 'Course Name'),
-                ),
-                TextField(
-                  onChanged: (value) {
-                    _hallLocation = value;
-                  },
-                  decoration: InputDecoration(labelText: 'Hall Location'),
-                ),
-                TextField(
-                  onChanged: (value) {
-                    _courseDescription = value;
-                  },
-                  decoration: InputDecoration(labelText: 'Course Description'),
-                ),
               ],
             ),
           ),
-
           actions: [
-
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -331,8 +220,8 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
             TextButton(
               onPressed: () {
                 // Do something with the entered data
-
-                Navigator.pop(context); // Close the dialog
+                //Navigator.pop(context); // Close the dialog
+                printVariables();
               },
               child: Text('Add  lecture'),
             ),
@@ -340,5 +229,58 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
         );
       },
     );
+  }
+
+  set endTime(String value) {
+    _endTime = value;
+  }
+
+  set hallLocation(String value) {
+    _hallLocation = value;
+  }
+
+  set courseName(String value) {
+    _courseName = value;
+  }
+
+  set term(String value) {
+    _term = value;
+  }
+
+  set groupName(String value) {
+    _groupName = value;
+  }
+
+  set instructorName(String value) {
+    _instructorName = value;
+  }
+
+  set courseDescription(String value) {
+    _courseDescription = value;
+  }
+
+  set department(String value) {
+    _department = value;
+  }
+
+  set courseCode(String value) {
+    _courseCode = value;
+  }
+
+  set startTime(String value) {
+    _startTime = value;
+  }
+
+  void printVariables() {
+    print('_courseCode: $_courseCode');
+    print('_startTime: $_startTime');
+    print('_endTime: $_endTime');
+    print('_hallLocation: $_hallLocation');
+    print('_courseName: $_courseName');
+    print('_term: $_term');
+    print('_groupName: $_groupName');
+    print('_instructorName: $_instructorName');
+    print('_courseDescription: $_courseDescription');
+    print('_department: $_department');
   }
 }

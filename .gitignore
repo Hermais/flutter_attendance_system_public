@@ -44,3 +44,4 @@ app.*.map.json
 /android/app/release
 /lib/z_tests/ignore__/
 /lib/z_tests/
+/required api end points.txt

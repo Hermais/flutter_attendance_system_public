@@ -97,6 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   decoration: const InputDecoration(
                     labelText: 'User Name',
+                    suffixText: '@eng.zu.edu.eg',
                     prefixIcon: Icon(
                       Icons.key,
                     ),
