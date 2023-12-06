@@ -75,6 +75,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
         onPageChanged: (index) {
           setState(() {
             _selectedIndex = index;
+            _isFloatingActionButtonVisible = _selectedIndex==0;
           });
         },
       ),
