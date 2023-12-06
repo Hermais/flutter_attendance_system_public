@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_attendance_system/qr_apis/qr_app.dart';
-import 'package:flutter_attendance_system/users_pages/utilities/custom_widgets/card_widget.dart';
+
+
+import '../../../widgets/card_widget.dart';
+import '../../qr_page/qr_app.dart';
 
 void temp() {}
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_attendance_system/shared_pref/load_last_theme_color.dart';
-import 'package:flutter_attendance_system/users_pages/utilities/temp_users_navigator.dart';
 
+import '../../../shared/shared_pref/load_last_theme_color.dart';
+import '../temp_users_nav/temp_users_navigator.dart';
 
 class LoginPage extends StatefulWidget {
   final Widget? appBarFlexibleSpace;
@@ -26,7 +26,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     MaterialColor selectedColor = Colors.red; // Default selected color
 
-
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: widget.appBarFlexibleSpace,
@@ -36,7 +35,11 @@ class _LoginPageState extends State<LoginPage> {
             margin: const EdgeInsets.only(right: 20),
             alignment: Alignment.centerRight,
             child: DropdownButton<MaterialColor>(
-              icon: Icon(Icons.color_lens_sharp,size: 50, color: Theme.of(context).primaryColorDark,),
+              icon: Icon(
+                Icons.color_lens_sharp,
+                size: 50,
+                color: Theme.of(context).primaryColorDark,
+              ),
               value: selectedColor,
               elevation: 0,
               underline: Container(
@@ -47,9 +50,9 @@ class _LoginPageState extends State<LoginPage> {
                 ManageLastThemeColor.saveLastThemeColor(newValue!);
                 widget.onColorChange(newValue);
               },
-              items: ManageLastThemeColor.materialColors.map((MaterialColor color) {
+              items: ManageLastThemeColor.materialColors
+                  .map((MaterialColor color) {
                 return DropdownMenuItem<MaterialColor>(
-
                   value: color,
                   child: Container(
                     color: color[500],

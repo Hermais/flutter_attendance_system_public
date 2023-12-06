@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_const_constructors_in_immutables, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:flutter_attendance_system/users_pages/utilities/custom_widgets/card_widget.dart';
 
+import '../../../widgets/card_widget.dart';
 import '../commons/student_info_popup.dart';
 
 

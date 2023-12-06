@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utilities/custom_widgets/card_widget.dart';
+import '../../../widgets/card_widget.dart';
 
 List<Widget> provideWidgetOptions() => <Widget>[
   SingleChildScrollView(

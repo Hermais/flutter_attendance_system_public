@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utilities/custom_widgets/card_widget.dart';
+import '../../../widgets/card_widget.dart';
 
 class StudentAndParentInfo extends StatelessWidget{
   final bool? isForStudent;

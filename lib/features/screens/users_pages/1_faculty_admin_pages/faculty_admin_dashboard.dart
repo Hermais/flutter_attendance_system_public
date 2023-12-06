@@ -1,10 +1,11 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_field
+// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_field, avoid_print
 
 
 import 'package:flutter/material.dart';
-import 'package:flutter_attendance_system/users_pages/1_faculty_admin_pages/pages_list.dart';
-import 'package:flutter_attendance_system/users_pages/utilities/custom_widgets/drop_down_button.dart';
-import 'package:flutter_attendance_system/users_pages/utilities/custom_widgets/text_button_clock_viewer.dart';
+import 'package:flutter_attendance_system/features/screens/users_pages/1_faculty_admin_pages/pages_list.dart';
+
+import '../../../widgets/drop_down_button.dart';
+import '../../../widgets/text_button_clock_viewer.dart';
 
 class FacultyAdminDashboard extends StatefulWidget {
   final String? userName;
