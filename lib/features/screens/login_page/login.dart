@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/shared_pref/load_last_theme_color.dart';
+import '../../../shared/shared_pref/shared_theme_colors.dart';
 import '../temp_users_nav/temp_users_navigator.dart';
 
 class LoginPage extends StatefulWidget {
