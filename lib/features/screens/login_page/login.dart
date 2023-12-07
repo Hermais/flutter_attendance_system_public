@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/features/widgets/app_bar_flexible_space.dart';
 
 import '../../../shared/shared_pref/shared_theme_colors.dart';
 import '../temp_users_nav/temp_users_navigator.dart';
 
 class LoginPage extends StatefulWidget {
-  final Widget? appBarFlexibleSpace;
 
   final Function onColorChange;
 
-  const LoginPage(
-      {super.key, this.appBarFlexibleSpace, required this.onColorChange});
+
+  LoginPage(
+      {super.key, required this.onColorChange});
 
   @override
   State<StatefulWidget> createState() {
@@ -22,13 +23,24 @@ class _LoginPageState extends State<LoginPage> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
 
+
   @override
   Widget build(BuildContext context) {
-    MaterialColor selectedColor = Colors.red; // Default selected color
+    late MaterialColor materialColor;
+    try{
+       materialColor = Theme.of(context).primaryColor as MaterialColor;
+    }
+    catch(e){
+      materialColor = Colors.cyan;
 
+    }
+    AppBarFlexibleSpace appBarFlexibleSpace = AppBarFlexibleSpace(
+      primarySwatchAppColor: materialColor ,
+    );
+     // Default selected color
     return Scaffold(
       appBar: AppBar(
-        flexibleSpace: widget.appBarFlexibleSpace,
+        flexibleSpace: appBarFlexibleSpace,
         title: const Text("Login to continue"),
         actions: [
           Container(
@@ -40,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                 size: 50,
                 color: Theme.of(context).primaryColorDark,
               ),
-              value: selectedColor,
+              value: materialColor,
               elevation: 0,
               underline: Container(
                 height: 0,
@@ -49,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
               onChanged: (MaterialColor? newValue) {
                 ManageLastThemeColor.saveLastThemeColor(newValue!);
                 widget.onColorChange(newValue);
+
               },
               items: ManageLastThemeColor.materialColors
                   .map((MaterialColor color) {
@@ -142,7 +155,9 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => NoLoginNavigation(
-                          appBarFlexibleSpace: widget.appBarFlexibleSpace,
+                          appBarFlexibleSpace: AppBarFlexibleSpace(
+                            primarySwatchAppColor: materialColor,
+                          ),
                         ),
                       ),
                     );
@@ -226,5 +241,6 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+
   }
 }

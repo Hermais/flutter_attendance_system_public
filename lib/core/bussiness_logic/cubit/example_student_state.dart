@@ -7,6 +7,7 @@ abstract class ExampleStudentState {}
 
 class ExampleStudentInitial extends ExampleStudentState {}
 
+/// This state is used to indicate that the data is loaded successfully.
 class ExampleStudentLoaded extends ExampleStudentState {
   final List<ExampleStudent> exampleStudents;
 

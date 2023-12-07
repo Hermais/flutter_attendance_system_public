@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_attendance_system/shared/constants_and_statics/shared_strings.dart';
+
+import '../../shared/constants_and_statics/shared_vars.dart';
 
 class ExampleStudentWebService {
   /// use late keyword to tell dart that we will initialize this variable later.
