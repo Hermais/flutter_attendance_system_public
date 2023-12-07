@@ -1,5 +1,6 @@
-import 'package:flutter_attendance_system/core/models/example_model.dart';
-import 'package:flutter_attendance_system/core/services/example_web_services.dart';
+
+import '../models/example_model.dart';
+import '../services/example_web_services.dart';
 
 class ExampleStudentRepository {
   final ExampleStudentWebService exampleStudentWebService;
