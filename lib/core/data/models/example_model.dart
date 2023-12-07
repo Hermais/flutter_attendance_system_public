@@ -17,6 +17,7 @@ class ExampleStudent {
 
 
   /// This named constructor is used to convert the json response from the api to a dart object.
+  /// The json response is a map, so we can access the values by using the keys.
   ExampleStudent.fromJson(Map<String, dynamic> json) {
     firstName = json['firstName'];
     lastName = json['lastName'];
