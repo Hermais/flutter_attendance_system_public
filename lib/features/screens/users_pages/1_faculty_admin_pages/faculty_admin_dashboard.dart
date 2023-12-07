@@ -3,6 +3,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/features/screens/users_pages/1_faculty_admin_pages/pages_list.dart';
+import 'package:flutter_attendance_system/features/widgets/drop_down_button_2.dart';
+import 'package:flutter_attendance_system/features/widgets/text_button_dateofbirth_viewer.dart';
 
 import '../../../widgets/drop_down_button.dart';
 import '../../../widgets/text_button_clock_viewer.dart';
@@ -32,6 +34,19 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
   String? _instructorName;
   String? _courseDescription;
   String? _department;
+  String? _studentDateOfBirth;
+  String? _studentFirstName;
+  String? _studentLastName;
+  String? _studentUniversityID;
+  String? _studentNationalID;
+  String? _studentAcademicYear;
+  String? _parentID;
+  String? _instructorDateOfBirth;
+  String? _instructorFirstName;
+  String? _instructorLastName;
+  String? _instructorUniversityID;
+  String? _instructorNationalID;
+  String? _instructorDepartment;
   bool? _isFloatingActionButtonVisible;
 
 
@@ -55,19 +70,9 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
           'Welcome, ${widget.userName ?? "Faculty Admin!"}',
         ),
       ),
-      floatingActionButton: Visibility(
-        visible: _isFloatingActionButtonVisible ?? true,
-        child: AnimatedOpacity(
-          opacity: _selectedIndex == 0 ? 1.0 : 0.0,
-          duration: Duration(milliseconds: 200),
-          onEnd: (){_isFloatingActionButtonVisible = _selectedIndex==0 ?true:false; setState(() {
-
-          });},// Adjust the duration as needed
-          child: FloatingActionButton(
-            onPressed: _showSettingsDialog,
-            child: Icon(Icons.settings_suggest),
-          ),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _selectedIndex ==0 ? _showTimetablesDialog : _showInstructorsDialog,
+        child: Icon(Icons.settings_suggest),
       ),
 
       body: PageView(
@@ -76,6 +81,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
         onPageChanged: (index) {
           setState(() {
             _selectedIndex = index;
+           // _isFloatingActionButtonVisible = _selectedIndex==0;
           });
         },
       ),
@@ -100,7 +106,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
     );
   }
 
-  Future<void> _showSettingsDialog() async {
+  Future<void> _showTimetablesDialog() async {
     return await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -225,6 +231,362 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                 printVariables();
               },
               child: Text('Add  lecture'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+  Future<void> _showInstructorsDialog() async {
+    return await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            key: _formKey,
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    height: 40,
+                    width: 115,
+                    color: Colors.grey,
+                    child: TextButton(
+                      onPressed: (){
+                        _showAddInstructorDialog();
+                      },
+                      child:Text(
+                        'Add Instructor',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  Container(
+                    height: 40,
+                    width: 115,
+                    color: Colors.grey,
+                    child: TextButton(
+                      onPressed: (){
+                        _showAddStudentDialog();
+                      },
+                      child:Text(
+                        'Add Student',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  Container(
+                    height: 40,
+                    width: 115,
+                    color: Colors.grey,
+                    child: TextButton(
+                      onPressed: (){
+                        Navigator.pop(context);
+                      },
+                      child:Text(
+                        'Cancel',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+    );
+  }
+  Future<void> _showAddInstructorDialog() async {
+    return await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          key: _formKey,
+          title: Text('Add Instructor',
+            style: TextStyle(
+                fontWeight: FontWeight.w500
+            ),),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.name,
+                      onFieldSubmitted: (String value) {
+
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'First Name',
+                        prefixIcon: Icon(
+                          Icons.text_format,
+                        ),
+                      ),
+                    )
+                ),
+                SizedBox(height: 10,),
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.name,
+                      onFieldSubmitted: (String value) {
+
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Last Name',
+                        prefixIcon: Icon(
+                          Icons.text_format,
+                        ),
+                      ),
+                    )
+                ),
+                SizedBox(height: 10,),
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      onFieldSubmitted: (String value) {
+
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'University ID',
+                        prefixIcon: Icon(
+                          Icons.numbers_sharp,
+                        ),
+                      ),
+                    )
+                ),
+                SizedBox(height: 10,),
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      onFieldSubmitted: (String value) {
+
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'National ID',
+                        prefixIcon: Icon(
+                          Icons.numbers_sharp,
+                        ),
+                      ),
+                    )
+                ),
+                SizedBox(height: 10,),
+                DatePickerButton(
+                  selectedDate: 'Select Date Of Birth',
+                  setChangedDate: (date) {
+                    setState(() {
+                      _studentDateOfBirth = date;
+                    });
+                  },
+                ),
+                SizedBox(height: 10,),
+                MultiSelectDropdownWidget<String>(
+                  items: [
+                    'math_1',
+                    'math_2',
+                    'math_3',
+                    'math_4',
+                    'math_5',
+                    'math_6',
+                    'math_7',
+                    'math_8',
+                  ],
+                  selectionDescription: 'Select Items',
+                  setValues: (List<String>? values) {
+
+                    print('Selected Values: $values');
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Do something with the entered data
+                //Navigator.pop(context); // Close the dialog
+              },
+              child: Text('Add Instructor'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+  Future<void> _showAddStudentDialog() async {
+    return await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          key: _formKey,
+          title: Text('Add Student',
+            style: TextStyle(
+                fontWeight: FontWeight.w500
+            ),),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.name,
+                      onFieldSubmitted: (String value) {
+
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'First Name',
+                        prefixIcon: Icon(
+                          Icons.text_format,
+                        ),
+                      ),
+                    )
+                ),
+                SizedBox(height: 10,),
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.name,
+                      onFieldSubmitted: (String value) {
+
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Last Name',
+                        prefixIcon: Icon(
+                          Icons.text_format,
+                        ),
+                      ),
+                    )
+                ),
+                SizedBox(height: 10,),
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      onFieldSubmitted: (String value) {
+
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'University ID',
+                        prefixIcon: Icon(
+                          Icons.numbers_sharp,
+                        ),
+                      ),
+                    )
+                ),
+                SizedBox(height: 10,),
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      onFieldSubmitted: (String value) {
+
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'National ID',
+                        prefixIcon: Icon(
+                          Icons.numbers_sharp,
+                        ),
+                      ),
+                    )
+                ),
+                SizedBox(height: 10,),
+                DatePickerButton(
+                  selectedDate: 'Select Date Of Birth',
+                  setChangedDate: (date) {
+                    setState(() {
+                      _instructorDateOfBirth = date;
+                    });
+                  },
+                ),
+                SizedBox(height: 10,),
+                DropdownButtonWidget<String>(
+                  items: [
+                    'CSE1',
+                    'CSE2',
+                    'CSE3',
+                    'CSE4',
+                    'prep',
+                    'Power1',
+                    'Power2',
+                    'Power3',
+                    'Power4'
+
+                  ],
+                  selectionDescription: 'Select Academic Year',
+                  setValue: (String? value) {
+                    groupName = value!;
+                  },
+                ),
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      onFieldSubmitted: (String value) {
+
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Parent ID',
+                        prefixIcon: Icon(
+                          Icons.numbers_sharp,
+                        ),
+                      ),
+                    )
+                ),
+                SizedBox(height: 10,),
+
+
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Do something with the entered data
+                //Navigator.pop(context); // Close the dialog
+              },
+              child: Text('Add Instructor'),
             ),
           ],
         );
