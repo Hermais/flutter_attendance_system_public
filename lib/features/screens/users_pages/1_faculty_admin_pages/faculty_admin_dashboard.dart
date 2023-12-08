@@ -46,7 +46,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
   String? _instructorLastName;
   String? _instructorUniversityID;
   String? _instructorNationalID;
-  String? _instructorDepartment;
+  List<String>? _instructorDepartment;
   bool? _isFloatingActionButtonVisible;
 
 
@@ -249,8 +249,8 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                 children: [
                   Container(
                     height: 40,
-                    width: 115,
-                    color: Colors.grey,
+                    width: 116,
+                    color: Colors.white,
                     child: TextButton(
                       onPressed: (){
                         _showAddInstructorDialog();
@@ -266,8 +266,8 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                   SizedBox(height: 10,),
                   Container(
                     height: 40,
-                    width: 115,
-                    color: Colors.grey,
+                    width: 116,
+                    color: Colors.white,
                     child: TextButton(
                       onPressed: (){
                         _showAddStudentDialog();
@@ -283,8 +283,8 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                   SizedBox(height: 10,),
                   Container(
                     height: 40,
-                    width: 115,
-                    color: Colors.grey,
+                    width: 116,
+                    color: Colors.white,
                     child: TextButton(
                       onPressed: (){
                         Navigator.pop(context);
@@ -325,7 +325,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                     child: TextFormField(
                       keyboardType: TextInputType.name,
                       onFieldSubmitted: (String value) {
-
+                        _instructorFirstName=value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'First Name',
@@ -343,7 +343,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                     child: TextFormField(
                       keyboardType: TextInputType.name,
                       onFieldSubmitted: (String value) {
-
+                        _instructorLastName=value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'Last Name',
@@ -361,7 +361,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (String value) {
-
+                        _instructorUniversityID=value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'University ID',
@@ -379,7 +379,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (String value) {
-
+                        _instructorNationalID=value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'National ID',
@@ -394,7 +394,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                   selectedDate: 'Select Date Of Birth',
                   setChangedDate: (date) {
                     setState(() {
-                      _studentDateOfBirth = date;
+                      _instructorDateOfBirth = date;
                     });
                   },
                 ),
@@ -410,10 +410,10 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                     'math_7',
                     'math_8',
                   ],
-                  selectionDescription: 'Select Items',
+                  selectionDescription: ' Courses Of instructor',
                   setValues: (List<String>? values) {
-
-                    print('Selected Values: $values');
+                    _instructorDepartment=values;
+                    //print('Selected Values: $values');
                   },
                 ),
               ],
@@ -459,7 +459,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                     child: TextFormField(
                       keyboardType: TextInputType.name,
                       onFieldSubmitted: (String value) {
-
+                        _studentFirstName=value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'First Name',
@@ -477,7 +477,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                     child: TextFormField(
                       keyboardType: TextInputType.name,
                       onFieldSubmitted: (String value) {
-
+                        _studentLastName=value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'Last Name',
@@ -495,7 +495,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (String value) {
-
+                        _studentUniversityID=value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'University ID',
@@ -513,7 +513,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (String value) {
-
+                        _studentNationalID=value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'National ID',
@@ -528,7 +528,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                   selectedDate: 'Select Date Of Birth',
                   setChangedDate: (date) {
                     setState(() {
-                      _instructorDateOfBirth = date;
+                      _studentDateOfBirth = date;
                     });
                   },
                 ),
@@ -544,11 +544,10 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                     'Power2',
                     'Power3',
                     'Power4'
-
                   ],
                   selectionDescription: 'Select Academic Year',
                   setValue: (String? value) {
-                    groupName = value!;
+                    _studentAcademicYear = value!;
                   },
                 ),
                 Padding(
@@ -558,7 +557,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (String value) {
-
+                        _parentID=value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'Parent ID',
@@ -569,8 +568,6 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                     )
                 ),
                 SizedBox(height: 10,),
-
-
               ],
             ),
           ),
@@ -586,7 +583,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                 // Do something with the entered data
                 //Navigator.pop(context); // Close the dialog
               },
-              child: Text('Add Instructor'),
+              child: Text('Add Student'),
             ),
           ],
         );
