@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/features/screens/users_pages/1_faculty_admin_pages/pages_list.dart';
-import 'package:flutter_attendance_system/features/widgets/drop_down_button_2.dart';
+import 'package:flutter_attendance_system/features/widgets/multi_drop_down_button.dart';
 import 'package:flutter_attendance_system/features/widgets/text_button_dateofbirth_viewer.dart';
 
 import '../../../widgets/drop_down_button.dart';
@@ -23,6 +23,8 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController(initialPage: 0);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey1 = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
 
   String? _courseCode;
   String? _startTime;
@@ -111,7 +113,6 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          key: _formKey,
           title: Text('Add Lecture'),
           content: SingleChildScrollView(
             child: Column(
@@ -242,7 +243,6 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            key: _formKey,
             content: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -309,7 +309,6 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          key: _formKey,
           title: Text('Add Instructor',
             style: TextStyle(
                 fontWeight: FontWeight.w500
@@ -443,7 +442,6 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          key: _formKey,
           title: Text('Add Student',
             style: TextStyle(
                 fontWeight: FontWeight.w500
