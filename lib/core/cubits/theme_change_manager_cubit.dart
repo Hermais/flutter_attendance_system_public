@@ -11,7 +11,7 @@ class ThemeChangeManagerCubit extends Cubit<ThemeChangeManagerState> {
 
   ThemeChangeManagerCubit(
       {required this.primarySwatchAppColor, required this.appBarFlexibleSpace})
-      : super(ThemeChangeManagerInitial(primarySwatchAppColor: Colors.cyan));
+      : super(ThemeChangeManagerInitial(primarySwatchAppColor: primarySwatchAppColor));
 
   void changeTheme(MaterialColor materialColor) {
     emit(ThemeChangeManagerChanged(primarySwatchAppColor: materialColor));

@@ -13,7 +13,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   MaterialColor primarySwatchColor =
-      (await ManageLastThemeColor.loadLastThemeColor());
+      (await ManageLastThemeColor().loadLastThemeColor());
   runApp(
     MainApp(
       primarySwatchAppColor: primarySwatchColor,
@@ -35,12 +35,14 @@ class MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     /// Provides the app with the theme change manager cubit, but only up to LoginPage().
     return BlocProvider(
+      /// Here, we are providing the cubit with the initial state.
       create: (context) => ThemeChangeManagerCubit(
         primarySwatchAppColor: widget.primarySwatchAppColor,
         appBarFlexibleSpace: AppBarFlexibleSpace(
           primarySwatchAppColor: widget.primarySwatchAppColor,
         ),
       ),
+      /// Here, we are providing the app with the theme change manager cubit.
       child: BlocBuilder<ThemeChangeManagerCubit, ThemeChangeManagerState>(
         builder: (context, state) {
           return MaterialApp(
@@ -49,7 +51,17 @@ class MainAppState extends State<MainApp> {
             theme: ThemeData(
               primarySwatch: state.primarySwatchAppColor,
               textTheme: appTextTheme,
-              appBarTheme: appBarTheme,
+              appBarTheme: AppBarTheme(
+                backgroundColor: state.primarySwatchAppColor,
+                elevation: 14,
+                shadowColor: state.primarySwatchAppColor[900],
+                shape: ContinuousRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10.0),
+                    bottomRight: Radius.circular(10.0),
+                  ),
+                ),
+              ),
             ),
             onGenerateRoute: AppRouter().onGenerateRoute,
           );

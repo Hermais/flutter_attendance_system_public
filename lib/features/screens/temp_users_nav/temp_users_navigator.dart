@@ -8,14 +8,12 @@ import '../users_pages/3_student_pages/student_dashboard.dart';
 import '../users_pages/4_parent_pages/parent_dashboard.dart';
 
 class NoLoginNavigation extends StatelessWidget {
-  final Widget? appBarFlexibleSpace;
 
-  const NoLoginNavigation({Key? key, this.appBarFlexibleSpace}) : super(key: key);
+  const NoLoginNavigation({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        flexibleSpace: appBarFlexibleSpace,
         title: const Text("Temp Public Navigator"),
       ),
       body: SingleChildScrollView(
@@ -26,7 +24,7 @@ class NoLoginNavigation extends StatelessWidget {
               cardTitle: "Developer Admin",
               isLectureCard: false,
               onTap: () {
-                _navigateToPage(context, DeveloperAdminDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
+                _navigateToPage(context, const DeveloperAdminDashboard());
               },
             ),
             InfoCard(
@@ -35,7 +33,7 @@ class NoLoginNavigation extends StatelessWidget {
               isLectureCard: false,
 
               onTap: () {
-                _navigateToPage(context, FacultyAdminDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
+                _navigateToPage(context, const FacultyAdminDashboard());
               },
             ),
             InfoCard(
@@ -43,7 +41,7 @@ class NoLoginNavigation extends StatelessWidget {
               cardTitle: "Instructor",
               isLectureCard: false,
               onTap: () {
-                _navigateToPage(context, InstructorDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
+                _navigateToPage(context, const InstructorDashboard());
               },
             ),
             InfoCard(
@@ -52,7 +50,7 @@ class NoLoginNavigation extends StatelessWidget {
               isLectureCard: false,
 
               onTap: () {
-                _navigateToPage(context, StudentDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
+                _navigateToPage(context, const StudentDashboard());
               },
             ),
             InfoCard(
@@ -61,7 +59,7 @@ class NoLoginNavigation extends StatelessWidget {
               isLectureCard: false,
 
               onTap: () {
-                _navigateToPage(context, ParentDashboard(appBarFlexibleSpace: appBarFlexibleSpace));
+                _navigateToPage(context, const ParentDashboard());
               },
             ),
           ],

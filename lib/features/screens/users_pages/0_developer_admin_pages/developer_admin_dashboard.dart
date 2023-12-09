@@ -1,12 +1,10 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 
 class DeveloperAdminDashboard extends StatefulWidget {
   final String? userName;
-  final Widget? appBarFlexibleSpace;
 
-  const DeveloperAdminDashboard({super.key, this.userName, this.appBarFlexibleSpace});
+  const DeveloperAdminDashboard({super.key, this.userName});
 
   @override
   DeveloperAdminDashboardState createState() => DeveloperAdminDashboardState();
@@ -18,15 +16,15 @@ class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
 
   List<Widget> provideWidgetOptions() =>
       <Widget>[
-        Center(child: Text('Tab 1 Content')),
-        Center(child: Text('Tab 2 Content')),
+        const Center(child: Text('Tab 1 Content')),
+        const Center(child: Text('Tab 2 Content')),
       ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
       _pageController.animateToPage(index,
-          duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+          duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
     });
   }
 
@@ -34,10 +32,10 @@ class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        flexibleSpace: widget.appBarFlexibleSpace,
-        elevation: 0,
+
+
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.filter_alt_sharp))
+          IconButton(onPressed: () {}, icon: const Icon(Icons.filter_alt_sharp))
         ],
         title: Text(
           'Welcome, ${widget.userName ?? "Developer!"}',
@@ -46,7 +44,7 @@ class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         tooltip: 'Modify a table.',
-        child: Icon(Icons.settings_suggest),
+        child: const Icon(Icons.settings_suggest),
       ),
       body: PageView(
         controller: _pageController,
@@ -61,7 +59,7 @@ class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
         selectedFontSize: 17,
         iconSize: 30,
         landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
-        items: <BottomNavigationBarItem>[
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.supervised_user_circle),
             label: 'All Users',

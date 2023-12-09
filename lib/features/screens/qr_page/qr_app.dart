@@ -23,7 +23,7 @@ class QRScannerWithScaffold extends StatelessWidget
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
+
         flexibleSpace: appBarFlexibleSpace,
 
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_attendance_system/features/widgets/app_bar_flexible_space.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/cubits/theme_change_manager_cubit.dart';
@@ -27,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-     // Default selected color
+     /// BlocBuilder receives emits from the cubit and rebuilds the widget tree.
     return BlocBuilder<ThemeChangeManagerCubit, ThemeChangeManagerState>(
   builder: (context, state) {
     MaterialColor materialColor = state.primarySwatchAppColor;
@@ -35,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       appBar: AppBar(
-        flexibleSpace: state.appBarFlexibleSpace,
+        // flexibleSpace: state.appBarFlexibleSpace,
         title: const Text("Login to continue"),
         actions: [
           Container(
@@ -54,11 +53,11 @@ class _LoginPageState extends State<LoginPage> {
                 color: Colors.transparent,
               ),
               onChanged: (MaterialColor? newValue) {
-                ManageLastThemeColor.saveLastThemeColor(newValue!);
+                ManageLastThemeColor().saveLastThemeColor(newValue!);
                 BlocProvider.of<ThemeChangeManagerCubit>(context).changeTheme(newValue);
 
               },
-              items: ManageLastThemeColor.materialColors
+              items: ManageLastThemeColor().materialColors
                   .map((MaterialColor color) {
                 return DropdownMenuItem<MaterialColor>(
                   value: color,
@@ -149,10 +148,8 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => NoLoginNavigation(
-                          appBarFlexibleSpace: AppBarFlexibleSpace(
-                            primarySwatchAppColor: materialColor,
-                          ),
+                        builder: (context) => const NoLoginNavigation(
+                          //appBarFlexibleSpace: state.appBarFlexibleSpace,
                         ),
                       ),
                     );

@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  multi_select_flutter: ^4.0.0
+  multi_select_flutter:
 
 
 
@@ -41,10 +41,10 @@ dependencies:
   google_fonts:
   dio:
   flutter_bloc:
-  cupertino_icons: ^1.0.2
-  http: ^1.1.0
-  intl: ^0.18.1
-  syncfusion_flutter_datagrid: ^23.1.41
+  cupertino_icons:
+  http:
+  intl:
+  syncfusion_flutter_datagrid:
   shared_preferences:
 
 dev_dependencies:

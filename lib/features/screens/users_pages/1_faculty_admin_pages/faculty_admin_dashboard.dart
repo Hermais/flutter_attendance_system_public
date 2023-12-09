@@ -1,12 +1,13 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_field, avoid_print
 
+
+// ignore_for_file: unused_field, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/features/screens/users_pages/1_faculty_admin_pages/pages_list.dart';
 import 'package:flutter_attendance_system/features/widgets/multi_drop_down_button.dart';
-import 'package:flutter_attendance_system/features/widgets/text_button_dateofbirth_viewer.dart';
 
 import '../../../widgets/drop_down_button.dart';
+import '../../../widgets/text_button_calendar_viewer.dart';
 import '../../../widgets/text_button_clock_viewer.dart';
 
 class FacultyAdminDashboard extends StatefulWidget {
@@ -58,7 +59,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
       _isFloatingActionButtonVisible = true;
       _selectedIndex = index;
       _pageController.animateToPage(index,
-          duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+          duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
     });
   }
 
@@ -66,15 +67,15 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        flexibleSpace: widget.appBarFlexibleSpace,
+
+
         title: Text(
           'Welcome, ${widget.userName ?? "Faculty Admin!"}',
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _selectedIndex ==0 ? _showTimetablesDialog : _showInstructorsDialog,
-        child: Icon(Icons.settings_suggest),
+        child: const Icon(Icons.settings_suggest),
       ),
 
       body: PageView(
@@ -91,7 +92,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
         selectedFontSize: 17,
         iconSize: 30,
         landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
-        items: <BottomNavigationBarItem>[
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month_rounded),
             label: 'Timetables',
@@ -113,21 +114,21 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add Lecture'),
+          title: const Text('Add Lecture'),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Specify Main Properties:'),
+                const Text('Specify Main Properties:'),
                 DropdownButtonWidget<String>(
-                  items: ['CSE', 'Mechanics', 'Power'],
+                  items: const ['CSE', 'Mechanics', 'Power'],
                   selectionDescription: 'Select Department',
                   setValue: (String? value) {
                     department = value!;
                   },
                 ),
                 DropdownButtonWidget<String>(
-                  items: [
+                  items: const [
                     'Group 1',
                     'Group 2',
                     'Group 3',
@@ -140,18 +141,18 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                   },
                 ),
                 DropdownButtonWidget<String>(
-                  items: ['Term 1', 'Term 2'],
+                  items: const ['Term 1', 'Term 2'],
                   selectionDescription: 'Select Term',
                   setValue: (String? value) {
                     term = value!;
                   },
                 ),
-                SizedBox(height: 16),
-                Divider(
+                const SizedBox(height: 16),
+                const Divider(
                   color: Colors.black,
                   thickness: 1,
                 ),
-                Text('Select Lecture Details:'),
+                const Text('Select Lecture Details:'),
                 ClockViewerTextButton(
                   setChangedTime: (String? value) {
                     startTime = value!;
@@ -165,7 +166,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                   selectedTime: 'Select a start time',
                 ),
                 DropdownButtonWidget<String>(
-                  items: [
+                  items: const [
                     'Instructor 1',
                     'Instructor 2',
                     'Instructor 3',
@@ -177,21 +178,21 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                   },
                 ),
                 DropdownButtonWidget<String>(
-                  items: ['Code 1', 'Code 2', 'Code 3', 'Code 4'],
+                  items: const ['Code 1', 'Code 2', 'Code 3', 'Code 4'],
                   selectionDescription: 'Select Course Code',
                   setValue: (String? value) {
                     courseCode = value!;
                   },
                 ),
                 DropdownButtonWidget<String>(
-                  items: ['Name 1', 'Name 2', 'Name 3', 'Name 4'],
+                  items: const ['Name 1', 'Name 2', 'Name 3', 'Name 4'],
                   selectionDescription: 'Select Course Name',
                   setValue: (String? value) {
                     courseName = value!;
                   },
                 ),
                 DropdownButtonWidget<String>(
-                  items: [
+                  items: const [
                     'Location 1',
                     'Location 2',
                     'Location 3',
@@ -203,7 +204,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                   },
                 ),
                 DropdownButtonWidget<String>(
-                  items: [
+                  items: const [
                     'Description 1',
                     'Description 2',
                     'Description 3',
@@ -214,7 +215,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                     courseDescription = value!;
                   },
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
               ],
             ),
           ),
@@ -223,7 +224,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
@@ -231,7 +232,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                 //Navigator.pop(context); // Close the dialog
                 printVariables();
               },
-              child: Text('Add  lecture'),
+              child: const Text('Add  lecture'),
             ),
           ],
         );
@@ -255,7 +256,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                       onPressed: (){
                         _showAddInstructorDialog();
                       },
-                      child:Text(
+                      child:const Text(
                         'Add Instructor',
                         style: TextStyle(
                             fontWeight: FontWeight.w600
@@ -263,7 +264,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   Container(
                     height: 40,
                     width: 116,
@@ -272,7 +273,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                       onPressed: (){
                         _showAddStudentDialog();
                       },
-                      child:Text(
+                      child:const Text(
                         'Add Student',
                         style: TextStyle(
                             fontWeight: FontWeight.w600
@@ -280,7 +281,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   Container(
                     height: 40,
                     width: 116,
@@ -289,7 +290,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                       onPressed: (){
                         Navigator.pop(context);
                       },
-                      child:Text(
+                      child:const Text(
                         'Cancel',
                         style: TextStyle(
                             fontWeight: FontWeight.w600
@@ -309,7 +310,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add Instructor',
+          title: const Text('Add Instructor',
             style: TextStyle(
                 fontWeight: FontWeight.w500
             ),),
@@ -334,7 +335,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                       ),
                     )
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
@@ -352,7 +353,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                       ),
                     )
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
@@ -370,7 +371,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                       ),
                     )
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
@@ -388,7 +389,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                       ),
                     )
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 DatePickerButton(
                   selectedDate: 'Select Date Of Birth',
                   setChangedDate: (date) {
@@ -397,9 +398,9 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                     });
                   },
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 MultiSelectDropdownWidget<String>(
-                  items: [
+                  items: const [
                     'math_1',
                     'math_2',
                     'math_3',
@@ -423,14 +424,14 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
                 // Do something with the entered data
                 //Navigator.pop(context); // Close the dialog
               },
-              child: Text('Add Instructor'),
+              child: const Text('Add Instructor'),
             ),
           ],
         );
@@ -442,7 +443,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add Student',
+          title: const Text('Add Student',
             style: TextStyle(
                 fontWeight: FontWeight.w500
             ),),
@@ -467,7 +468,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                       ),
                     )
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
@@ -485,7 +486,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                       ),
                     )
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
@@ -503,7 +504,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                       ),
                     )
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
@@ -521,7 +522,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                       ),
                     )
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 DatePickerButton(
                   selectedDate: 'Select Date Of Birth',
                   setChangedDate: (date) {
@@ -530,9 +531,9 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                     });
                   },
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 DropdownButtonWidget<String>(
-                  items: [
+                  items: const [
                     'CSE1',
                     'CSE2',
                     'CSE3',
@@ -565,7 +566,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                       ),
                     )
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
               ],
             ),
           ),
@@ -574,14 +575,14 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
                 // Do something with the entered data
                 //Navigator.pop(context); // Close the dialog
               },
-              child: Text('Add Student'),
+              child: const Text('Add Student'),
             ),
           ],
         );

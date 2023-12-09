@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ManageLastThemeColor {
-  static List<MaterialColor> materialColors = [
+   List<MaterialColor> materialColors = [
     Colors.red,
     Colors.blue,
     Colors.green,
@@ -23,7 +23,7 @@ class ManageLastThemeColor {
 
   ];
 
-  static Map<String, MaterialColor> colorMap = {
+   Map<String, MaterialColor> colorMap = {
     'red': Colors.red,
     'blue': Colors.blue,
     'green': Colors.green,
@@ -43,7 +43,7 @@ class ManageLastThemeColor {
     'deepPurple': Colors.deepPurple,
   };
 
-  static Future<MaterialColor> loadLastThemeColor() async {
+   Future<MaterialColor> loadLastThemeColor() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? color = prefs.getString('themeColor');
     MaterialColor materialColor = colorMap[color] ?? Colors.cyan;
@@ -51,7 +51,7 @@ class ManageLastThemeColor {
     return materialColor;
   }
 
-  static Future<void> saveLastThemeColor(MaterialColor materialColor) async {
+   Future<void> saveLastThemeColor(MaterialColor materialColor) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String correspondingMaterialColor = colorMap.keys.firstWhere((element) => colorMap[element] == materialColor);
 
@@ -60,7 +60,7 @@ class ManageLastThemeColor {
 
   }
 
-  static MaterialColor getMaterialColor(Color color) {
+   MaterialColor getMaterialColor(Color color) {
     final int red = color.red;
     final int green = color.green;
     final int blue = color.blue;

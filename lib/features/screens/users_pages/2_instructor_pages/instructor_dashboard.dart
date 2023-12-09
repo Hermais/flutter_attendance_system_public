@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 
@@ -103,7 +102,7 @@ class InstructorDashboardState extends State<InstructorDashboard> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      _pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+      _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
 
     });
   }
@@ -112,8 +111,8 @@ class InstructorDashboardState extends State<InstructorDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-flexibleSpace: widget.appBarFlexibleSpace,
+
+
         title: Text(
           'Welcome, ${widget.userName ?? "Instructor!"}',
         ),
@@ -122,13 +121,13 @@ flexibleSpace: widget.appBarFlexibleSpace,
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => QRScannerWithScaffold(appBarFlexibleSpace: widget.appBarFlexibleSpace,
+              builder: (context) => const QRScannerWithScaffold(
                 storeScanResult: temp,
               ),
             ),
           );
         },
-        child: Icon(Icons.qr_code_scanner),
+        child: const Icon(Icons.qr_code_scanner),
       ),
       body: PageView(
         controller: _pageController,
@@ -144,7 +143,7 @@ flexibleSpace: widget.appBarFlexibleSpace,
         selectedFontSize: 17,
         iconSize: 30,
         landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
-        items: <BottomNavigationBarItem>[
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard_rounded),
             label: 'Lectures',
@@ -169,8 +168,8 @@ Future<void> showLectureStartConfirmationPopup() async {
     barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text("Lecture Start Confirmation"),
-        content: SingleChildScrollView(
+        title: const Text("Lecture Start Confirmation"),
+        content: const SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
               Text("Are you sure you want to start this lecture? "
@@ -180,13 +179,13 @@ Future<void> showLectureStartConfirmationPopup() async {
         ),
         actions: <Widget>[
           TextButton(
-            child: Text("Confirm"),
+            child: const Text("Confirm"),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
           TextButton(
-            child: Text("Cancel"),
+            child: const Text("Cancel"),
             onPressed: () {
               Navigator.of(context).pop();
             },

@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -55,7 +54,7 @@ class StudentDashboardState extends State<StudentDashboard> {
               isButtonVisible: false,
               isTopLeftBorderMaxRadius: false,
               cardHeight: 100,
-              cardThumbnail: Icon(Icons.person),
+              cardThumbnail: const Icon(Icons.person),
               cardDescription: "The whereabouts of the instructor will be here.",
               cardTitle: "Instructor 1",
             ),
@@ -64,7 +63,7 @@ class StudentDashboardState extends State<StudentDashboard> {
               isButtonVisible: false,
               isTopLeftBorderMaxRadius: false,
               cardHeight: 100,
-              cardThumbnail: Icon(Icons.person),
+              cardThumbnail: const Icon(Icons.person),
               cardDescription: "The whereabouts of the instructor will be here.",
               cardTitle: "Instructor 2",
             ),
@@ -73,7 +72,7 @@ class StudentDashboardState extends State<StudentDashboard> {
               isButtonVisible: false,
               isTopLeftBorderMaxRadius: false,
               cardHeight: 100,
-              cardThumbnail: Icon(Icons.person),
+              cardThumbnail: const Icon(Icons.person),
               cardDescription: "The whereabouts of the instructor will be here.",
               cardTitle: "Instructor 3",
             ),
@@ -82,7 +81,7 @@ class StudentDashboardState extends State<StudentDashboard> {
               isButtonVisible: false,
               isTopLeftBorderMaxRadius: false,
               cardHeight: 100,
-              cardThumbnail: Icon(Icons.person),
+              cardThumbnail: const Icon(Icons.person),
               cardDescription: "The whereabouts of the instructor will be here.",
               cardTitle: "Instructor 4",
             ),
@@ -101,37 +100,37 @@ class StudentDashboardState extends State<StudentDashboard> {
                 isLectureCard: false,
                 cardTitle: "Sunday",
                 cardDescription: "No lectures today.",
-                cardThumbnail: Icon(Icons.table_chart)),
+                cardThumbnail: const Icon(Icons.table_chart)),
             InfoCard(
                 isButtonVisible: false,
                 isLectureCard: false,
                 cardTitle: "Monday",
                 cardDescription: "No lectures today.",
-                cardThumbnail: Icon(Icons.table_chart)),
+                cardThumbnail: const Icon(Icons.table_chart)),
             InfoCard(
                 isButtonVisible: false,
                 isLectureCard: false,
                 cardTitle: "Tuesday",
                 cardDescription: "No lectures today.",
-                cardThumbnail: Icon(Icons.table_chart)),
+                cardThumbnail: const Icon(Icons.table_chart)),
             InfoCard(
                 isButtonVisible: false,
                 isLectureCard: false,
                 cardTitle: "Wednesday",
                 cardDescription: "No lectures today.",
-                cardThumbnail: Icon(Icons.table_chart)),
+                cardThumbnail: const Icon(Icons.table_chart)),
             InfoCard(
                 isButtonVisible: false,
                 isLectureCard: false,
                 cardTitle: "Thursday",
                 cardDescription: "No lectures today.",
-                cardThumbnail: Icon(Icons.table_chart)),
+                cardThumbnail: const Icon(Icons.table_chart)),
             InfoCard(
                 isButtonVisible: false,
                 isLectureCard: false,
                 cardTitle: "Saturday",
                 cardDescription: "No lectures today.",
-                cardThumbnail: Icon(Icons.table_chart)),
+                cardThumbnail: const Icon(Icons.table_chart)),
           ],
         ),
       ),
@@ -141,7 +140,7 @@ class StudentDashboardState extends State<StudentDashboard> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      _pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+      _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
 
     });
   }
@@ -150,15 +149,15 @@ class StudentDashboardState extends State<StudentDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        flexibleSpace: widget.appBarFlexibleSpace,
+
+
         title: Text(
           'Welcome, ${widget.userName ?? "Student!"}',
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {StudentAndParentInfo(isForStudent: true).studentInfoPopup(context: context);},
-        child: Icon(Icons.question_mark),
+        onPressed: () {const StudentAndParentInfo(isForStudent: true).studentInfoPopup(context: context);},
+        child: const Icon(Icons.question_mark),
       ),
       body: PageView(
         controller: _pageController,
@@ -174,7 +173,7 @@ class StudentDashboardState extends State<StudentDashboard> {
         selectedFontSize: 17,
         iconSize: 30,
         landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
-        items: <BottomNavigationBarItem>[
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard_rounded),
             label: 'Lectures',
