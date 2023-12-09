@@ -69,6 +69,8 @@ class ParentDashboardState extends State<ParentDashboard> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
+
         onPressed: () {const StudentAndParentInfo().studentInfoPopup(context: context);},
         child: const Icon(Icons.question_mark),
       ),

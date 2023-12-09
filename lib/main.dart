@@ -49,7 +49,9 @@ class MainAppState extends State<MainApp> {
             initialRoute: '/',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
+              primaryColor: state.primarySwatchAppColor,
               primarySwatch: state.primarySwatchAppColor,
+
               textTheme: appTextTheme,
               appBarTheme: AppBarTheme(
                 backgroundColor: state.primarySwatchAppColor,

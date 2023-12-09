@@ -1,38 +1,39 @@
-class ExampleStudent {
+class User {
+  final int id;
+  final String name;
+  final String username;
+  final String email;
+  final String phone;
+  final String website;
 
-  late String firstName;
-  late String lastName;
-  late String email;
-  late String password;
-  late String phoneNumber;
-  late String profilePicture;
-  late String studentId;
-  late String department;
-  late String level;
-  late String section;
-  late String group;
-  late String term;
-  late String academicYear;
-  late String birthDate;
+  User({
+    required this.id,
+    required this.name,
+    required this.username,
+    required this.email,
+    required this.phone,
+    required this.website,
+  });
 
-
-  /// This named constructor is used to convert the json response from the api to a dart object.
-  /// The json response is a map, so we can access the values by using the keys.
-  ExampleStudent.fromJson(Map<String, dynamic> json) {
-    firstName = json['firstName'];
-    lastName = json['lastName'];
-    email = json['email'];
-    password = json['password'];
-    phoneNumber = json['phoneNumber'];
-    profilePicture = json['profilePicture'];
-    studentId = json['studentId'];
-    department = json['department'];
-    level = json['level'];
-    section = json['section'];
-    group = json['group'];
-    term = json['term'];
-    academicYear = json['academicYear'];
-    birthDate = json['birthDate'];
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      name: json['name'],
+      username: json['username'],
+      email: json['email'],
+      phone: json['phone'],
+      website: json['website'],
+    );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'username': username,
+      'email': email,
+      'phone': phone,
+      'website': website,
+    };
+  }
 }

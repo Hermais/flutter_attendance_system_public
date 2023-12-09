@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 void main() {
   void store() {}
@@ -109,6 +108,10 @@ class _QRScannerState extends State<QRScanner> {
                 Container(
                   margin: const EdgeInsets.all(8),
                   child: FilledButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
                     onPressed: () async {
                       await controller?.toggleFlash();
                       setState(() {});
@@ -127,6 +130,10 @@ class _QRScannerState extends State<QRScanner> {
                 Container(
                   margin: const EdgeInsets.all(8),
                   child: FilledButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
                     onPressed: () async {
                       await controller?.flipCamera();
                       setState(() {});
@@ -136,9 +143,9 @@ class _QRScannerState extends State<QRScanner> {
                       builder: (context, snapshot) {
                         if (snapshot.data != null) {
                           //return Text('Camera\'s facing ${describeEnum(snapshot.data!)}');
-                          return Icon(describeEnum(snapshot.data!) == 'front'
+                          return Icon((snapshot.data!.name == 'front'
                               ? Icons.camera_rear
-                              : Icons.camera_front);
+                              : Icons.camera_front));
                         } else {
                           return const Text('loading');
                         }

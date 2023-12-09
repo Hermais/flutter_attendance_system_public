@@ -3,11 +3,11 @@ import 'package:dio/dio.dart';
 import '../../../shared/constants_and_statics/shared_vars.dart';
 
 
-class ExampleStudentWebService {
+class UserWebService {
   /// use late keyword to tell dart that we will initialize this variable later.
   late Dio dio;
 
-  ExampleStudentWebService() {
+  UserWebService() {
     /// BaseOptions is a class that contains the base url, timeout, etc. This is a
     /// configuration class for Dio.
     BaseOptions options = BaseOptions(
@@ -23,10 +23,10 @@ class ExampleStudentWebService {
   }
 
   /// list type must be dynamic because it can be a list of strings or a list of maps.
-  Future<List<dynamic>> getExampleStudentData() async {
+  Future<List<dynamic>> getUserData() async {
     try {
       /// here we type in the endpoint of the api, without the base url.
-      Response response = await dio.get('/getAllStudents');
+      Response response = await dio.get('/users');
       /// in flutter http response.body, here response.data
       return response.data;
     } catch (e) {

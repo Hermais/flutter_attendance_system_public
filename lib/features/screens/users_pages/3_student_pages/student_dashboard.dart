@@ -53,7 +53,7 @@ class StudentDashboardState extends State<StudentDashboard> {
               isLectureCard: false,
               isButtonVisible: false,
               isTopLeftBorderMaxRadius: false,
-              cardHeight: 100,
+
               cardThumbnail: const Icon(Icons.person),
               cardDescription: "The whereabouts of the instructor will be here.",
               cardTitle: "Instructor 1",
@@ -62,7 +62,7 @@ class StudentDashboardState extends State<StudentDashboard> {
               isLectureCard: false,
               isButtonVisible: false,
               isTopLeftBorderMaxRadius: false,
-              cardHeight: 100,
+
               cardThumbnail: const Icon(Icons.person),
               cardDescription: "The whereabouts of the instructor will be here.",
               cardTitle: "Instructor 2",
@@ -71,7 +71,7 @@ class StudentDashboardState extends State<StudentDashboard> {
               isLectureCard: false,
               isButtonVisible: false,
               isTopLeftBorderMaxRadius: false,
-              cardHeight: 100,
+
               cardThumbnail: const Icon(Icons.person),
               cardDescription: "The whereabouts of the instructor will be here.",
               cardTitle: "Instructor 3",
@@ -80,7 +80,7 @@ class StudentDashboardState extends State<StudentDashboard> {
               isLectureCard: false,
               isButtonVisible: false,
               isTopLeftBorderMaxRadius: false,
-              cardHeight: 100,
+
               cardThumbnail: const Icon(Icons.person),
               cardDescription: "The whereabouts of the instructor will be here.",
               cardTitle: "Instructor 4",
@@ -156,6 +156,8 @@ class StudentDashboardState extends State<StudentDashboard> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
+
         onPressed: () {const StudentAndParentInfo(isForStudent: true).studentInfoPopup(context: context);},
         child: const Icon(Icons.question_mark),
       ),

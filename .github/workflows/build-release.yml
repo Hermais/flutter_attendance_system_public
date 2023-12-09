@@ -25,7 +25,7 @@ jobs:
       - name: Setup Flutter Actions
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.13.9'
+          flutter-version: '3.16.3'
 
 
       - name: Get Branch Name # This is only required for multiple branches. We are doing it anyways...

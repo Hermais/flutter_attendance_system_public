@@ -144,7 +144,14 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 79),
-                child: FilledButton(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: materialColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -153,8 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     );
-                    print(emailController.text);
-                    print(passwordController.text);
+
                   },
                   child: const Row(
                     mainAxisSize: MainAxisSize.min,
@@ -180,7 +186,13 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 45),
-                child: FilledButton(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: materialColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                   onPressed: () {},
                   child: const Row(
                     mainAxisSize: MainAxisSize.min,
@@ -223,7 +235,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     onPressed: () {
-                      print("click On create");
                     },
                   )
                 ],

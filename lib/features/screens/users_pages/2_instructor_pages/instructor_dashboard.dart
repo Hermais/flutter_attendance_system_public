@@ -57,7 +57,7 @@ class InstructorDashboardState extends State<InstructorDashboard> {
             isLectureCard: false,
             isButtonVisible: false,
             isTopLeftBorderMaxRadius: false,
-            cardHeight: 100,
+
             cardThumbnail: const Icon(Icons.person),
             cardDescription: "Info about the student's attendance will be here (Attending "
                 "now or not).",
@@ -67,7 +67,7 @@ class InstructorDashboardState extends State<InstructorDashboard> {
             isLectureCard: false,
             isButtonVisible: false,
             isTopLeftBorderMaxRadius: false,
-            cardHeight: 100,
+
             cardThumbnail: const Icon(Icons.person),
             cardDescription: "Info about the student's attendance will be here (Attending "
                 "now or not).",
@@ -77,7 +77,7 @@ class InstructorDashboardState extends State<InstructorDashboard> {
             isLectureCard: false,
             isButtonVisible: false,
             isTopLeftBorderMaxRadius: false,
-            cardHeight: 100,
+
             cardThumbnail: const Icon(Icons.person),
             cardDescription: "Info about the student's attendance will be here (Attending "
                 "now or not).",
@@ -87,7 +87,7 @@ class InstructorDashboardState extends State<InstructorDashboard> {
             isLectureCard: false,
             isButtonVisible: false,
             isTopLeftBorderMaxRadius: false,
-            cardHeight: 100,
+
             cardThumbnail: const Icon(Icons.person),
             cardDescription: "Info about the student's attendance will be here (Attending "
                 "now or not).",
@@ -118,6 +118,8 @@ class InstructorDashboardState extends State<InstructorDashboard> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
+
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(

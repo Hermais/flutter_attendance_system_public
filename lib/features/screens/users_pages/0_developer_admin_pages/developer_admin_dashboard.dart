@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class DeveloperAdminDashboard extends StatefulWidget {
@@ -14,8 +13,7 @@ class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController(initialPage: 0);
 
-  List<Widget> provideWidgetOptions() =>
-      <Widget>[
+  List<Widget> provideWidgetOptions() => <Widget>[
         const Center(child: Text('Tab 1 Content')),
         const Center(child: Text('Tab 2 Content')),
       ];
@@ -32,8 +30,6 @@ class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
-
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.filter_alt_sharp))
         ],
@@ -44,6 +40,7 @@ class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         tooltip: 'Modify a table.',
+        backgroundColor: Theme.of(context).primaryColor,
         child: const Icon(Icons.settings_suggest),
       ),
       body: PageView(
@@ -70,9 +67,7 @@ class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Theme
-            .of(context)
-            .primaryColor,
+        selectedItemColor: Theme.of(context).primaryColor,
         onTap: _onItemTapped,
       ),
     );
@@ -83,5 +78,4 @@ class DeveloperAdminDashboardState extends State<DeveloperAdminDashboard> {
 // The faculty table is chosen by week from a dropdown menu.
 // Then we can choose to add, modify, or delete a lecture.
 // If we choose to add a lecture, we can choose the day, time, and room.
-
 }

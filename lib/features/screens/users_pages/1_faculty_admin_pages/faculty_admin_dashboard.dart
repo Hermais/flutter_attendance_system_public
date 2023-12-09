@@ -74,6 +74,8 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
+
         onPressed: _selectedIndex ==0 ? _showTimetablesDialog : _showInstructorsDialog,
         child: const Icon(Icons.settings_suggest),
       ),
