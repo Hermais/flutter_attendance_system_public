@@ -14,7 +14,7 @@ class InstructorDashboard extends StatefulWidget {
   final Widget? appBarFlexibleSpace;
 
 
-  InstructorDashboard({super.key, this.userName, this.appBarFlexibleSpace});
+  const InstructorDashboard({super.key, this.userName, this.appBarFlexibleSpace});
 
   @override
   InstructorDashboardState createState() => InstructorDashboardState();

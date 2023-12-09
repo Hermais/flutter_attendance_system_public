@@ -12,7 +12,7 @@ class StudentDashboard extends StatefulWidget {
   final String? userName;
   final Widget? appBarFlexibleSpace;
 
-  StudentDashboard({super.key, this.userName, this.appBarFlexibleSpace});
+  const StudentDashboard({super.key, this.userName, this.appBarFlexibleSpace});
 
   @override
   StudentDashboardState createState() => StudentDashboardState();

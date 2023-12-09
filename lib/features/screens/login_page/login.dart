@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/features/widgets/app_bar_flexible_space.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/cubits/theme_change_manager_cubit.dart';
 import '../../../shared/shared_pref/shared_theme_colors.dart';
 import '../temp_users_nav/temp_users_navigator.dart';
 
 class LoginPage extends StatefulWidget {
 
-  final Function onColorChange;
 
 
-  LoginPage(
-      {super.key, required this.onColorChange});
+  const LoginPage(
+      {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -26,21 +27,15 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    late MaterialColor materialColor;
-    try{
-       materialColor = Theme.of(context).primaryColor as MaterialColor;
-    }
-    catch(e){
-      materialColor = Colors.cyan;
-
-    }
-    AppBarFlexibleSpace appBarFlexibleSpace = AppBarFlexibleSpace(
-      primarySwatchAppColor: materialColor ,
-    );
      // Default selected color
+    return BlocBuilder<ThemeChangeManagerCubit, ThemeChangeManagerState>(
+  builder: (context, state) {
+    MaterialColor materialColor = state.primarySwatchAppColor;
+
+
     return Scaffold(
       appBar: AppBar(
-        flexibleSpace: appBarFlexibleSpace,
+        flexibleSpace: state.appBarFlexibleSpace,
         title: const Text("Login to continue"),
         actions: [
           Container(
@@ -60,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               onChanged: (MaterialColor? newValue) {
                 ManageLastThemeColor.saveLastThemeColor(newValue!);
-                widget.onColorChange(newValue);
+                BlocProvider.of<ThemeChangeManagerCubit>(context).changeTheme(newValue);
 
               },
               items: ManageLastThemeColor.materialColors
@@ -241,6 +236,8 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  },
+);
 
   }
 }

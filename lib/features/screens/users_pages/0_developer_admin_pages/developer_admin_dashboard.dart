@@ -6,7 +6,7 @@ class DeveloperAdminDashboard extends StatefulWidget {
   final String? userName;
   final Widget? appBarFlexibleSpace;
 
-  DeveloperAdminDashboard({super.key, this.userName, this.appBarFlexibleSpace});
+  const DeveloperAdminDashboard({super.key, this.userName, this.appBarFlexibleSpace});
 
   @override
   DeveloperAdminDashboardState createState() => DeveloperAdminDashboardState();

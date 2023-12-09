@@ -14,7 +14,7 @@ class ParentDashboard extends StatefulWidget {
   final String? userName;
   final Widget? appBarFlexibleSpace;
 
-  ParentDashboard({super.key, this.userName, this.appBarFlexibleSpace});
+  const ParentDashboard({super.key, this.userName, this.appBarFlexibleSpace});
   @override
   _ParentDashboardState createState() => _ParentDashboardState();
 }

@@ -13,7 +13,7 @@ class FacultyAdminDashboard extends StatefulWidget {
   final String? userName;
   final Widget? appBarFlexibleSpace;
 
-  FacultyAdminDashboard({super.key, this.userName, this.appBarFlexibleSpace});
+  const FacultyAdminDashboard({super.key, this.userName, this.appBarFlexibleSpace});
 
   @override
   FacultyAdminDashboardState createState() => FacultyAdminDashboardState();
