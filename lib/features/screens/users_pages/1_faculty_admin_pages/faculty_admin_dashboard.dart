@@ -76,7 +76,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
 
-        onPressed: _selectedIndex ==0 ? _showTimetablesDialog : _showInstructorsDialog,
+        onPressed: _selectedIndex ==0 ? _showTimetablesDialog : _showAddEntitiesDialog,
         child: const Icon(Icons.settings_suggest),
       ),
 
@@ -241,7 +241,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
       },
     );
   }
-  Future<void> _showInstructorsDialog() async {
+  Future<void> _showAddEntitiesDialog() async {
     return await showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -312,6 +312,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+
           title: const Text('Add Instructor',
             style: TextStyle(
                 fontWeight: FontWeight.w500
