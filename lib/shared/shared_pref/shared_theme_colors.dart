@@ -21,6 +21,7 @@ class ManageLastThemeColor {
     Colors.deepOrange,
     Colors.deepPurple,
 
+
   ];
 
    Map<String, MaterialColor> colorMap = {

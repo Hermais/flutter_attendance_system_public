@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../shared/constants_and_statics/shared_vars.dart';
 import '../../widgets/card_widget.dart';
-import '../users_pages/0_developer_admin_pages/developer_admin_dashboard.dart';
-import '../users_pages/1_faculty_admin_pages/faculty_admin_dashboard.dart';
-import '../users_pages/2_instructor_pages/instructor_dashboard.dart';
-import '../users_pages/3_student_pages/student_dashboard.dart';
-import '../users_pages/4_parent_pages/parent_dashboard.dart';
 
 class NoLoginNavigation extends StatelessWidget {
 
@@ -24,7 +20,7 @@ class NoLoginNavigation extends StatelessWidget {
               cardTitle: "Developer Admin",
               isLectureCard: false,
               onTap: () {
-                _navigateToPage(context, const DeveloperAdminDashboard());
+                Navigator.of(context).pushNamed(developerAdmin);
               },
             ),
             InfoCard(
@@ -33,7 +29,8 @@ class NoLoginNavigation extends StatelessWidget {
               isLectureCard: false,
 
               onTap: () {
-                _navigateToPage(context, const FacultyAdminDashboard());
+
+                Navigator.of(context).pushNamed(facultyAdmin);
               },
             ),
             InfoCard(
@@ -41,7 +38,7 @@ class NoLoginNavigation extends StatelessWidget {
               cardTitle: "Instructor",
               isLectureCard: false,
               onTap: () {
-                _navigateToPage(context, const InstructorDashboard());
+                Navigator.of(context).pushNamed(instructor);
               },
             ),
             InfoCard(
@@ -50,7 +47,7 @@ class NoLoginNavigation extends StatelessWidget {
               isLectureCard: false,
 
               onTap: () {
-                _navigateToPage(context, const StudentDashboard());
+                Navigator.of(context).pushNamed(student);
               },
             ),
             InfoCard(
@@ -59,7 +56,7 @@ class NoLoginNavigation extends StatelessWidget {
               isLectureCard: false,
 
               onTap: () {
-                _navigateToPage(context, const ParentDashboard());
+                Navigator.of(context).pushNamed(parent);
               },
             ),
           ],
@@ -68,22 +65,22 @@ class NoLoginNavigation extends StatelessWidget {
     );
   }
 
-  void _navigateToPage(BuildContext context, Widget page) {
-    Navigator.of(context).push(PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => page,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(0.0, 1.0);
-        const end = Offset.zero;
-        const curve = Curves.easeInOut;
-        var curveTween = CurveTween(curve: curve);
-        var tween = Tween(begin: begin, end: end).chain(curveTween);
-        var offsetAnimation = animation.drive(tween);
-
-        return SlideTransition(
-          position: offsetAnimation,
-          child: child,
-        );
-      },
-    ));
-  }
+  // void _navigateToPage(BuildContext context, Widget page) {
+  //   Navigator.of(context).push(PageRouteBuilder(
+  //     pageBuilder: (context, animation, secondaryAnimation) => page,
+  //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+  //       const begin = Offset(0.0, 1.0);
+  //       const end = Offset.zero;
+  //       const curve = Curves.easeInOut;
+  //       var curveTween = CurveTween(curve: curve);
+  //       var tween = Tween(begin: begin, end: end).chain(curveTween);
+  //       var offsetAnimation = animation.drive(tween);
+  //
+  //       return SlideTransition(
+  //         position: offsetAnimation,
+  //         child: child,
+  //       );
+  //     },
+  //   ));
+  // }
 }
