@@ -7,7 +7,7 @@ class LectureRepository {
 
   LectureRepository ({required this.lectureWebServices});
 
-  Future<List<Lecture>> getLectureData() async {
+  Future<List<Lecture>> getLecture() async {
     /// This is an implicit list of maps, to store our data from the web
     /// service (Example Students).
     final lecture =
