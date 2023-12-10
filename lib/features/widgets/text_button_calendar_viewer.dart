@@ -31,7 +31,7 @@ class DatePickerButtonState extends State<DatePickerButton> {
           });
         }
       },
-      child: Text(localSelectedDate ?? 'Select Date of Birth'),
+      child: Text(localSelectedDate ?? widget.selectedDate ?? "Select Date"),
     );
   }
 }

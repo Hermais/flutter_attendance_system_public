@@ -14,9 +14,13 @@ class FacultyAdminCubit extends Cubit<FacultyAdminState> {
 
 
 
-  void loadParent() {
+  void loadFacultyAdmin() {
     facultyAdminRepository.getFacultyAdminData().then((facultyAdmin) {
       emit(FacultyAdminLoaded(facultyAdmin: facultyAdmin));
     });
+  }
+
+  void addLecture() {
+
   }
 }

@@ -51,6 +51,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
   String? _instructorNationalID;
   List<String>? _instructorDepartment;
   bool? _isFloatingActionButtonVisible;
+  String? _lectureStartDate;
 
 
 
@@ -131,41 +132,40 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                 ),
                 DropdownButtonWidget<String>(
                   items: const [
-                    'Group 1',
-                    'Group 2',
-                    'Group 3',
-                    'Group 4',
-                    'Group 5'
+                    'Preparatory',
+                    'First Year',
+                    'Second Year',
+                    'Third Year',
+                    'Fourth Year'
                   ],
-                  selectionDescription: 'Select Group',
+                  selectionDescription: 'Academic Year',
                   setValue: (String? value) {
                     groupName = value!;
                   },
                 ),
-                DropdownButtonWidget<String>(
-                  items: const ['Term 1', 'Term 2'],
-                  selectionDescription: 'Select Term',
-                  setValue: (String? value) {
-                    term = value!;
-                  },
-                ),
+
                 const SizedBox(height: 16),
                 const Divider(
                   color: Colors.black,
                   thickness: 1,
                 ),
                 const Text('Select Lecture Details:'),
+                DatePickerButton(selectedDate: "Select Start Date",
+
+                setChangedDate: (String? value) {
+                  _lectureStartDate = value!;
+                },),
                 ClockViewerTextButton(
                   setChangedTime: (String? value) {
                     startTime = value!;
                   },
-                  selectedTime: 'Select a start time',
+                  selectedTime: 'Select Start Time',
                 ),
                 ClockViewerTextButton(
                   setChangedTime: (String? value) {
                     endTime = value!;
                   },
-                  selectedTime: 'Select a start time',
+                  selectedTime: 'Select End Time',
                 ),
                 DropdownButtonWidget<String>(
                   items: const [
@@ -186,13 +186,13 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                     courseCode = value!;
                   },
                 ),
-                DropdownButtonWidget<String>(
-                  items: const ['Name 1', 'Name 2', 'Name 3', 'Name 4'],
-                  selectionDescription: 'Select Course Name',
-                  setValue: (String? value) {
-                    courseName = value!;
-                  },
-                ),
+                // DropdownButtonWidget<String>(
+                //   items: const ['Name 1', 'Name 2', 'Name 3', 'Name 4'],
+                //   selectionDescription: 'Select Course Name',
+                //   setValue: (String? value) {
+                //     courseName = value!;
+                //   },
+                // ),
                 DropdownButtonWidget<String>(
                   items: const [
                     'Location 1',
@@ -205,18 +205,18 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
                     hallLocation = value!;
                   },
                 ),
-                DropdownButtonWidget<String>(
-                  items: const [
-                    'Description 1',
-                    'Description 2',
-                    'Description 3',
-                    'Description 4'
-                  ],
-                  selectionDescription: 'Select Course Description',
-                  setValue: (String? value) {
-                    courseDescription = value!;
-                  },
-                ),
+                // DropdownButtonWidget<String>(
+                //   items: const [
+                //     'Description 1',
+                //     'Description 2',
+                //     'Description 3',
+                //     'Description 4'
+                //   ],
+                //   selectionDescription: 'Select Course Description',
+                //   setValue: (String? value) {
+                //     courseDescription = value!;
+                //   },
+                // ),
                 const SizedBox(height: 16),
               ],
             ),

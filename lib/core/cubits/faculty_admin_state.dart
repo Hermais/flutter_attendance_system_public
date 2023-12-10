@@ -13,3 +13,4 @@ class FacultyAdminLoaded extends FacultyAdminState {
   FacultyAdminLoaded({required this.facultyAdmin});
 
 }
+
