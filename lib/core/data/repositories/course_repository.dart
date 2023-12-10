@@ -7,7 +7,7 @@ class CourseRepository {
 
   CourseRepository ({required this.courseWebServices});
 
-  Future<List<Course>> getCourseData() async {
+  Future<List<Course>> getCourse() async {
   /// This is an implicit list of maps, to store our data from the web
   /// service (Example Students).
   final course =
