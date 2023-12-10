@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../widgets/card_widget.dart';
+import '../3_student_pages/pages_list.dart';
 import '../commons/student_info_popup.dart';
 
 
@@ -22,32 +23,6 @@ class ParentDashboardState extends State<ParentDashboard> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController(initialPage: 0);
 
-
-  List<Widget> provideWidgetOptions() => <Widget>[
-    SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          InfoCard(cardTitle: "Week 1", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: const Icon(Icons.check),),
-          InfoCard(cardTitle: "Week 2",isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: const Icon(Icons.check),),
-          InfoCard(cardTitle: "Week 3", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: const Icon(Icons.check),),
-          InfoCard(cardTitle: "Week 4", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: const Icon(Icons.check),),
-          InfoCard(cardTitle: "Week 5", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: const Icon(Icons.check),),
-          InfoCard(cardTitle: "Week 6", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: const Icon(Icons.check),),
-          InfoCard(cardTitle: "Week 7", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: const Icon(Icons.check),),
-          InfoCard(cardTitle: "Week 8", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: const Icon(Icons.check),),
-          InfoCard(cardTitle: "Week 9", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: const Icon(Icons.check),),
-          InfoCard(cardTitle: "Week 10", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: const Icon(Icons.check),),
-          InfoCard(cardTitle: "Week 11", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: const Icon(Icons.check),),
-          InfoCard(cardTitle: "Week 12", isLectureCard: false, isButtonVisible: false, cardDescription: "",cardThumbnail: const Icon(Icons.check),),
-      
-        ],
-      ),
-    ),
-    const Center(child: Text('Gives information of the whereabouts of the student.')),
-  ];
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -60,11 +35,6 @@ class ParentDashboardState extends State<ParentDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
-
-
-
-
         title: Text('Welcome, ${widget.userName ?? "Parent!"}',
         ),
       ),
@@ -76,7 +46,7 @@ class ParentDashboardState extends State<ParentDashboard> {
       ),
       body: PageView(
         controller: _pageController,
-        children: provideWidgetOptions(),
+        children: provideWidgetOptions(context),
         onPageChanged: (index) {
           setState(() {
             _selectedIndex = index;
