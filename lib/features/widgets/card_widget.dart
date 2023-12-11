@@ -69,32 +69,35 @@ class InfoCard extends StatelessWidget {
       this.cardColor,
       this.borderRadii, this.isTextVisible, this.cardBorder});
 
+
   InfoCard.blank(
       {super.key,
-      this.bordersVisible,
-      this.isBasicTheme,
-      this.isButtonVisible = false,
-      this.isLectureCard = false,
-      this.isTopLeftBorderMaxRadius = false,
-      this.cardHeight,
-      this.thumbnailRadius = 40,
-      this.buttonText,
-      this.cardDescription,
-      this.cardTitle,
-      this.lectureEndsAt,
-      this.lectureStartsAt,
-      this.onTap,
-      this.cardThumbnail,
-      this.lecturePlace,
-      this.titleFontSize = 18,
-      this.descriptionFontSize,
-      this.buildContext,
-      this.margin = 0.5,
-      this.cardWidth,
-      this.onButtonTap,
-      this.descriptionMaxLines = 1,
-      this.cardColor,
-      this.borderRadii=5, this.isTextVisible, this.cardBorder});
+        this.bordersVisible,
+        this.isBasicTheme,
+        this.isButtonVisible = false,
+        this.isLectureCard = false,
+        this.isTopLeftBorderMaxRadius = false,
+        this.cardHeight,
+        this.thumbnailRadius = 40,
+        this.buttonText,
+        this.cardDescription,
+        this.cardTitle,
+        this.lectureEndsAt,
+        this.lectureStartsAt,
+        this.onTap,
+        this.cardThumbnail,
+        this.lecturePlace,
+        this.titleFontSize = 18,
+        this.descriptionFontSize,
+        this.buildContext,
+        this.margin = 5,
+        this.cardWidth,
+        this.onButtonTap,
+        this.descriptionMaxLines = 1,
+        this.cardColor,
+        this.borderRadii=5, this.isTextVisible, this.cardBorder});
+
+
 
   @override
   Widget build(BuildContext context) {
