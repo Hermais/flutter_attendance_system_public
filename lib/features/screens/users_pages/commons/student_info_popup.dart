@@ -12,34 +12,34 @@ class StudentAndParentInfo extends StatelessWidget{
     return Column(
       children: [
         // Create a card with title "Student Info".
-        InfoCard.blank(
+        InfoCard.bland(
           cardThumbnail: const Icon(Icons.info),
           cardTitle: "Student Info",
           cardDescription: "",
         ),
-        InfoCard.blank(
+        InfoCard.bland(
           cardThumbnail: const Icon(Icons.drive_file_rename_outline),
           cardTitle: "Name",
           cardDescription: "Sheldon Lee Cooper",
         ),
-        InfoCard.blank(
+        InfoCard.bland(
           cardThumbnail: const Icon(Icons.person),
           cardTitle: "ID",
           cardDescription: "123456789",
         ),
-        InfoCard.blank(
+        InfoCard.bland(
           cardThumbnail: const Icon(Icons.email),
           cardTitle: "Email",
           cardDescription: "example@domain.com",
         ),
-        InfoCard.blank(
+        InfoCard.bland(
           cardThumbnail: const Icon(Icons.phone),
           cardTitle: "Phone Number",
           cardDescription: "0591234567",
         ),
         Visibility(
           visible: isForStudent ?? false,
-          child: InfoCard.blank(
+          child: InfoCard.bland(
             cardThumbnail: const Icon(Icons.person),
             cardTitle: "User Name",
             cardDescription: "StudentUserName",
@@ -47,14 +47,14 @@ class StudentAndParentInfo extends StatelessWidget{
         ),
         Visibility(
           visible: isForStudent ?? false ,
-          child: InfoCard.blank(
+          child: InfoCard.bland(
             cardThumbnail: const Icon(Icons.lock),
             cardTitle: "Password",
             cardDescription: "StudentPassword",
           ),
         ),
 
-        InfoCard.blank(
+        InfoCard.bland(
           cardThumbnail: const Icon(Icons.calendar_today),
           cardTitle: "Academic Year",
           cardDescription: "2021-2022 CSE 2",

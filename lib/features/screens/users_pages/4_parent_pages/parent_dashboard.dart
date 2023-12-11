@@ -1,8 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../widgets/card_widget.dart';
-import '../3_student_pages/pages_list.dart';
+import '../4_parent_pages/pages_list.dart';
 import '../commons/student_info_popup.dart';
 
 

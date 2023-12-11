@@ -5,11 +5,9 @@ const maxDuration = Duration(seconds: 20);
 const exampleBaseURL = 'https://jsonplaceholder.typicode.com';
 
 const developerAdmin = '/developerAdmin';
+
 const facultyAdmin = '/facultyAdmin';
-const instructor = '/instructor';
-const student = '/student';
-const parent = '/parent';
-const adminTimetables = '/facultyAdmin/preparatoryTimetable';
+const adminTimetables = '/facultyAdmin/adminTimetables';
 const prepYear = 'Preparatory';
 const year1 = 'Year 1';
 const year2 = 'Year 2';
@@ -22,6 +20,13 @@ const yearMap = {
   year3: 3,
   year4: 4,
 };
+
+
+const instructor = '/instructor';
+const instructorStudentsByApplicableCourses = '/instructor/studentsByApplicableCourses';
+const student = '/student';
+const parent = '/parent';
+
 
 /// Theme constants
 final appTextTheme = GoogleFonts.latoTextTheme();

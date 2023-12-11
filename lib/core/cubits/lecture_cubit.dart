@@ -19,4 +19,8 @@ class LectureCubit extends Cubit<LectureState> {
       emit(LectureLoaded(lecture: lecture));
     });
   }
+
+  void loadDefault() {
+    emit(LectureDefault());
+  }
 }
