@@ -15,13 +15,16 @@ class NoLoginNavigation extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            InfoCard(
-              cardThumbnail: const Icon(Icons.developer_mode),
-              cardTitle: "Developer Admin",
-              isLectureCard: false,
-              onTap: () {
-                Navigator.of(context).pushNamed(developerAdmin);
-              },
+            Visibility(
+              visible: false,
+              child: InfoCard(
+                cardThumbnail: const Icon(Icons.developer_mode),
+                cardTitle: "Developer Admin",
+                isLectureCard: false,
+                onTap: () {
+                  Navigator.of(context).pushNamed(developerAdmin);
+                },
+              ),
             ),
             InfoCard(
               cardThumbnail: const Icon(Icons.admin_panel_settings),

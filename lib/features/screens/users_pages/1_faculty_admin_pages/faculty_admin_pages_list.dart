@@ -30,8 +30,8 @@ List<Widget> provideWidgetOptions(BuildContext context) {
     /// This widget will show the instructors and some info about them. NOTHING ELSE DAMMIT.
     SingleChildScrollView(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           BlocProvider(
             create: (context) => UserCubit(

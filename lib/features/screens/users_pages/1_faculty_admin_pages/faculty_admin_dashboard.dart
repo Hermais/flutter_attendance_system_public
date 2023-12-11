@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/features/screens/users_pages/1_faculty_admin_pages/faculty_admin_popups.dart';
-import 'package:flutter_attendance_system/features/screens/users_pages/1_faculty_admin_pages/pages_list.dart';
+import 'faculty_admin_pages_list.dart';
 
 class FacultyAdminDashboard extends StatefulWidget {
   final String? userName;
