@@ -1,5 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/features/screens/users_pages/1_faculty_admin_pages/faculty_admin_timetable.dart';
+import 'package:flutter_attendance_system/shared/constants_and_statics/shared_vars.dart';
 import '../../../widgets/drop_down_button.dart';
 import '../../../widgets/multi_drop_down_button.dart';
 import '../../../widgets/text_button_calendar_viewer.dart';
@@ -27,6 +29,7 @@ class FacultyAdminPopups {
   String? _parentID;
   String? _parentFirstName;
   String? _parentLAstName;
+  String? _parentDateOfBirth;
   String? _instructorDateOfBirth;
   String? _instructorFirstName;
   String? _instructorLastName;
@@ -52,12 +55,15 @@ class FacultyAdminPopups {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text('Specify Main Properties:'),
-                DropdownButtonWidget<String>(
-                  items: const ['CSE', 'Mechanics', 'Power'],
-                  selectionDescription: 'Select Department',
-                  setValue: (String? value) {
-                    _department = value!;
-                  },
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DropdownButtonWidget<String>(
+                    items: departments,
+                    selectionDescription: 'Select Department',
+                    setValue: (String? value) {
+                      _department = value!;
+                    },
+                  ),
                 ),
                 DropdownButtonWidget<String>(
                   items: const [
@@ -499,25 +505,10 @@ class FacultyAdminPopups {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: DropdownButtonWidget<String>(
-                    items: const [
-                      'Preparatory',
-                      'Physics and Engineering Mathematics',
-                      'Mechanical Design and Manufacturing',
-                      'Industrial Engineering',
-                      'Materials Engineering',
-                      'Computer and Systems Engineering',
-                      'Environmental Engineering',
-                      'Electronics and Electrical Communications Engineering',
-                      'Power Engineering and Electrical Machines',
-                      'Mechanical Power Engineering',
-                      'Construction and Facilities Engineering',
-                      'Water Engineering and Water Facilities',
-                      'Architecture',
-                      'Structural Engineering'
-                    ],
+                    items: departments,
                     selectionDescription: 'Select Department',
                     setValue: (String? value) {
-                      _studentAcademicYear = value!;
+                      _studentDepartment = value!;
                     },
                   ),
                 ),
@@ -578,6 +569,15 @@ class FacultyAdminPopups {
                         ),
                       ),
                     )
+                ),
+                const SizedBox(height: 10,),
+                DatePickerButton(
+                  selectedDate: 'Select Date Of Birth',
+                  setChangedDate: (date) {
+                    setState(() {
+                      _parentDateOfBirth = date;
+                    });
+                  },
                 ),
                 const SizedBox(height: 10,),
               ],
