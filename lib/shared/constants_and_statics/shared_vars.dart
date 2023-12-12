@@ -22,6 +22,31 @@ const yearMap = {
 };
 
 
+List<String> days = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Saturday'
+];
+
+List<String> departments = [
+  'Physics and Engineering Mathematics',
+  'Mechanical Design and Manufacturing',
+  'Industrial Engineering',
+  'Materials Engineering',
+  'Computer and Systems Engineering',
+  'Environmental Engineering',
+  'Electronics and Electrical Communications Engineering',
+  'Power Engineering and Electrical Machines',
+  'Mechanical Power Engineering',
+  'Construction and Facilities Engineering',
+  'Water Engineering and Water Facilities',
+  'Architecture',
+  'Structural Engineering'
+];
+
 const instructor = '/instructor';
 const instructorStudentsByApplicableCourses = '/instructor/studentsByApplicableCourses';
 const student = '/student';

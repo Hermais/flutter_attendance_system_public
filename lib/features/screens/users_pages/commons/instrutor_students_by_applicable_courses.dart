@@ -14,31 +14,35 @@ class InstructorCourses extends StatelessWidget {
       appBar: AppBar(
         title: Text('Students of $routeName'),
       ),
-      body: ListView.builder(
-        itemCount: 74,
-          itemBuilder: (context, index) {
-        return InfoCard(
-          isLectureCard: false,
-          isButtonVisible: false,
-          isTopLeftBorderMaxRadius: false,
-          cardThumbnail: const Icon(Icons.person),
-          cardDescription:
-              "Students of $routeName will be shown here.",
-          cardTitle: "Student ${index + 1}",
-          onTap: () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => returnStudentsAttendanceWeeks(
-                  studentName: "Student ${index + 1}"
-                ))
-            );
-          },
-        );
-      }),
+      body: assignedCoursesStudents()
     );
   }
 
-  Widget returnStudentsAttendanceWeeks({required String studentName, bool sendListViewOnly=false }) {
-    if(sendListViewOnly) {
+  Widget assignedCoursesStudents(){
+    return ListView.builder(
+        itemCount: 74,
+        itemBuilder: (context, index) {
+          return InfoCard(
+            isLectureCard: false,
+            isButtonVisible: false,
+            isTopLeftBorderMaxRadius: false,
+            cardThumbnail: const Icon(Icons.person),
+            cardDescription:
+            "Students of $routeName will be shown here.",
+            cardTitle: "Student ${index + 1}",
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => returnStudentsAttendanceWeeks(
+                      studentName: "Student ${index + 1}"
+                  ))
+              );
+            },
+          );
+        });
+  }
+
+  Widget returnStudentsAttendanceWeeks({required String studentName }) {
+
       return ListView.builder(
           itemCount: 12,
           itemBuilder: (context, index) {
@@ -59,43 +63,13 @@ class InstructorCourses extends StatelessWidget {
               },
             );
           });
-    }
-    else{
-      return Scaffold(
-        appBar: AppBar(
-          title: Text('Weeks of $studentName'),
-        ),
-        body: ListView.builder(
-            itemCount: 12,
-            itemBuilder: (context, index) {
-              return InfoCard(
-                isLectureCard: false,
-                isButtonVisible: false,
-                isTopLeftBorderMaxRadius: false,
-                cardThumbnail: const Icon(Icons.person),
-                cardDescription:
-                "Students of $routeName will be shown here.",
-                cardTitle: "Week ${index + 1}",
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => showStudentsAttendance(
-                          studentName: studentName, week: "Week ${index + 1}"
-                      ))
-                  );
-                },
-              );
-            }),
-      );
-    }
+
 
   }
 
   Widget showStudentsAttendance({required String studentName, required String week}) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Attendance of $studentName'),
-      ),
-      body: ListView.builder(
+
+      return ListView.builder(
           itemCount: 4,
           itemBuilder: (context, index) {
             return InfoCard(
@@ -108,7 +82,5 @@ class InstructorCourses extends StatelessWidget {
               cardTitle: "CSE30${index + 1}",
 
             );
-          }),
-    );
-  }
-}
+          });
+}}
