@@ -9,19 +9,18 @@ import '../../../widgets/card_widget.dart';
 
 List<Widget> provideWidgetOptions(BuildContext context) {
   const margin = 5.0;
-  List<String> years = [prepYear, year1, year2, year3, year4];
 
   return <Widget>[
     ListView.builder(
-      itemCount: years.length,
+      itemCount: academicYears.length,
       itemBuilder: (context, index) {
         return InfoCard.blank(
-          cardTitle: years[index],
+          cardTitle: academicYears[index],
           cardThumbnail: const Icon(Icons.account_box),
           margin: margin,
           onTap: () {
             Navigator.pushNamed(context, adminTimetables,
-                arguments: years[index]);
+                arguments: academicYears[index]);
           },
         );
       },

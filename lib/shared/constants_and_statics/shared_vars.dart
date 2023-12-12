@@ -13,6 +13,7 @@ const year1 = 'Year 1';
 const year2 = 'Year 2';
 const year3 = 'Year 3';
 const year4 = 'Year 4';
+
 const yearMap = {
   prepYear: 0,
   year1: 1,
@@ -21,8 +22,7 @@ const yearMap = {
   year4: 4,
 };
 
-
-List<String> days = [
+const days = [
   'Sunday',
   'Monday',
   'Tuesday',
@@ -31,7 +31,9 @@ List<String> days = [
   'Saturday'
 ];
 
-List<String> departments = [
+const academicYears = [prepYear, year1, year2, year3, year4];
+
+const departments = [
   'Physics and Engineering Mathematics',
   'Mechanical Design and Manufacturing',
   'Industrial Engineering',
@@ -48,13 +50,10 @@ List<String> departments = [
 ];
 
 const instructor = '/instructor';
-const instructorStudentsByApplicableCourses = '/instructor/studentsByApplicableCourses';
+const instructorStudentsByApplicableCourses =
+    '/instructor/studentsByApplicableCourses';
 const student = '/student';
 const parent = '/parent';
 
-
 /// Theme constants
 final appTextTheme = GoogleFonts.latoTextTheme();
-
-
-

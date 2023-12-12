@@ -1,7 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_attendance_system/features/screens/users_pages/1_faculty_admin_pages/faculty_admin_timetable.dart';
 import 'package:flutter_attendance_system/shared/constants_and_statics/shared_vars.dart';
+
 import '../../../widgets/drop_down_button.dart';
 import '../../../widgets/multi_drop_down_button.dart';
 import '../../../widgets/text_button_calendar_viewer.dart';
@@ -121,13 +121,6 @@ class FacultyAdminPopups {
                     _courseCode = value!;
                   },
                 ),
-                // DropdownButtonWidget<String>(
-                //   items: const ['Name 1', 'Name 2', 'Name 3', 'Name 4'],
-                //   selectionDescription: 'Select Course Name',
-                //   setValue: (String? value) {
-                //     courseName = value!;
-                //   },
-                // ),
                 DropdownButtonWidget<String>(
                   items: const [
                     'Location 1',
@@ -140,18 +133,7 @@ class FacultyAdminPopups {
                     _hallLocation = value!;
                   },
                 ),
-                // DropdownButtonWidget<String>(
-                //   items: const [
-                //     'Description 1',
-                //     'Description 2',
-                //     'Description 3',
-                //     'Description 4'
-                //   ],
-                //   selectionDescription: 'Select Course Description',
-                //   setValue: (String? value) {
-                //     courseDescription = value!;
-                //   },
-                // ),
+
                 const SizedBox(height: 16),
               ],
             ),
@@ -346,7 +328,7 @@ class FacultyAdminPopups {
                 ),
                 const SizedBox(height: 10,),
                 DatePickerButton(
-                  selectedDate: 'Select Date Of Birth',
+                  selectedDate: 'Select Date of Birth',
                   setChangedDate: (date) {
                     setState(() {
                       _instructorDateOfBirth = date;
@@ -365,7 +347,7 @@ class FacultyAdminPopups {
                     'math_7',
                     'math_8',
                   ],
-                  selectionDescription: ' Courses Of instructor',
+                  selectionDescription: ' Assign Instructor courses',
                   setValues: (List<String>? values) {
                     _instructorDepartment=values;
                     //print('Selected Values: $values');
@@ -480,7 +462,7 @@ class FacultyAdminPopups {
                 ),
                 const SizedBox(height: 10,),
                 DatePickerButton(
-                  selectedDate: 'Select Date Of Birth',
+                  selectedDate: 'Select Date of Birth',
                   setChangedDate: (date) {
                     setState(() {
                       _studentDateOfBirth = date;
@@ -489,13 +471,7 @@ class FacultyAdminPopups {
                 ),
                 const SizedBox(height: 10,),
                 DropdownButtonWidget<String>(
-                  items: const [
-                    'Preparatory',
-                    'First Year',
-                    'Second Year',
-                    'Third Year',
-                    'Fourth Year'
-                  ],
+                  items: academicYears,
                   selectionDescription: 'Select Academic Year',
                   setValue: (String? value) {
                     _studentAcademicYear = value!;
@@ -572,7 +548,7 @@ class FacultyAdminPopups {
                 ),
                 const SizedBox(height: 10,),
                 DatePickerButton(
-                  selectedDate: 'Select Date Of Birth',
+                  selectedDate: 'Select Date of Birth',
                   setChangedDate: (date) {
                     setState(() {
                       _parentDateOfBirth = date;
