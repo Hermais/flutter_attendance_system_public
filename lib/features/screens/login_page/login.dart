@@ -30,8 +30,6 @@ class _LoginPageState extends State<LoginPage> {
     return BlocBuilder<ThemeChangeManagerCubit, ThemeChangeManagerState>(
   builder: (context, state) {
     MaterialColor materialColor = state.primarySwatchAppColor;
-
-
     return Scaffold(
       appBar: AppBar(
         // flexibleSpace: state.appBarFlexibleSpace,
