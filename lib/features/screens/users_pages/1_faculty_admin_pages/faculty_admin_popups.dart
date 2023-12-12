@@ -1,4 +1,6 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/shared/constants_and_statics/shared_vars.dart';
 
 import '../../../widgets/drop_down_button.dart';
 import '../../../widgets/multi_drop_down_button.dart';
@@ -23,7 +25,11 @@ class FacultyAdminPopups {
   String? _studentUniversityID;
   String? _studentNationalID;
   String? _studentAcademicYear;
+  String? _studentDepartment;
   String? _parentID;
+  String? _parentFirstName;
+  String? _parentLAstName;
+  String? _parentDateOfBirth;
   String? _instructorDateOfBirth;
   String? _instructorFirstName;
   String? _instructorLastName;
@@ -33,8 +39,6 @@ class FacultyAdminPopups {
   bool? _isFloatingActionButtonVisible;
   String? _lectureStartDate;
   Function setState;
-
-
 
   FacultyAdminPopups({required this.context, required this.setState});
 
@@ -51,12 +55,15 @@ class FacultyAdminPopups {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text('Specify Main Properties:'),
-                DropdownButtonWidget<String>(
-                  items: const ['CSE', 'Mechanics', 'Power'],
-                  selectionDescription: 'Select Department',
-                  setValue: (String? value) {
-                    _department = value!;
-                  },
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DropdownButtonWidget<String>(
+                    items: departments,
+                    selectionDescription: 'Select Department',
+                    setValue: (String? value) {
+                      _department = value!;
+                    },
+                  ),
                 ),
                 DropdownButtonWidget<String>(
                   items: const [
@@ -114,13 +121,6 @@ class FacultyAdminPopups {
                     _courseCode = value!;
                   },
                 ),
-                // DropdownButtonWidget<String>(
-                //   items: const ['Name 1', 'Name 2', 'Name 3', 'Name 4'],
-                //   selectionDescription: 'Select Course Name',
-                //   setValue: (String? value) {
-                //     courseName = value!;
-                //   },
-                // ),
                 DropdownButtonWidget<String>(
                   items: const [
                     'Location 1',
@@ -133,18 +133,7 @@ class FacultyAdminPopups {
                     _hallLocation = value!;
                   },
                 ),
-                // DropdownButtonWidget<String>(
-                //   items: const [
-                //     'Description 1',
-                //     'Description 2',
-                //     'Description 3',
-                //     'Description 4'
-                //   ],
-                //   selectionDescription: 'Select Course Description',
-                //   setValue: (String? value) {
-                //     courseDescription = value!;
-                //   },
-                // ),
+
                 const SizedBox(height: 16),
               ],
             ),
@@ -179,8 +168,8 @@ class FacultyAdminPopups {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    height: 40,
-                    width: 116,
+                    height: MediaQuery.of(context).size.width * 0.1,
+                    width: MediaQuery.of(context).size.width * 0.5,
                     color: Colors.white,
                     child: TextButton(
                       onPressed: (){
@@ -196,8 +185,8 @@ class FacultyAdminPopups {
                   ),
                   const SizedBox(height: 10,),
                   Container(
-                    height: 40,
-                    width: 116,
+                    height: MediaQuery.of(context).size.width * 0.1,
+                    width: MediaQuery.of(context).size.width * 0.5,
                     color: Colors.white,
                     child: TextButton(
                       onPressed: (){
@@ -213,8 +202,25 @@ class FacultyAdminPopups {
                   ),
                   const SizedBox(height: 10,),
                   Container(
-                    height: 40,
-                    width: 116,
+                    height: MediaQuery.of(context).size.width * 0.1,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    color: Colors.white,
+                    child: TextButton(
+                      onPressed: (){
+                        pickExcelFile();
+                      },
+                      child:const Text(
+                        'Add By Excel',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10,),
+                  Container(
+                    height: MediaQuery.of(context).size.width * 0.1,
+                    width: MediaQuery.of(context).size.width * 0.5,
                     color: Colors.white,
                     child: TextButton(
                       onPressed: (){
@@ -322,7 +328,7 @@ class FacultyAdminPopups {
                 ),
                 const SizedBox(height: 10,),
                 DatePickerButton(
-                  selectedDate: 'Select Date Of Birth',
+                  selectedDate: 'Select Date of Birth',
                   setChangedDate: (date) {
                     setState(() {
                       _instructorDateOfBirth = date;
@@ -341,7 +347,7 @@ class FacultyAdminPopups {
                     'math_7',
                     'math_8',
                   ],
-                  selectionDescription: ' Courses Of instructor',
+                  selectionDescription: ' Assign Instructor courses',
                   setValues: (List<String>? values) {
                     _instructorDepartment=values;
                     //print('Selected Values: $values');
@@ -382,6 +388,7 @@ class FacultyAdminPopups {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                const Text('Select Student Details:'),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
@@ -455,7 +462,7 @@ class FacultyAdminPopups {
                 ),
                 const SizedBox(height: 10,),
                 DatePickerButton(
-                  selectedDate: 'Select Date Of Birth',
+                  selectedDate: 'Select Date of Birth',
                   setChangedDate: (date) {
                     setState(() {
                       _studentDateOfBirth = date;
@@ -464,21 +471,63 @@ class FacultyAdminPopups {
                 ),
                 const SizedBox(height: 10,),
                 DropdownButtonWidget<String>(
-                  items: const [
-                    'CSE1',
-                    'CSE2',
-                    'CSE3',
-                    'CSE4',
-                    'prep',
-                    'Power1',
-                    'Power2',
-                    'Power3',
-                    'Power4'
-                  ],
+                  items: academicYears,
                   selectionDescription: 'Select Academic Year',
                   setValue: (String? value) {
                     _studentAcademicYear = value!;
                   },
+                ),
+                const SizedBox(height: 10,),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DropdownButtonWidget<String>(
+                    items: departments,
+                    selectionDescription: 'Select Department',
+                    setValue: (String? value) {
+                      _studentDepartment = value!;
+                    },
+                  ),
+                ),
+                const SizedBox(height:6),
+                const Divider(
+                  color: Colors.black,
+                  thickness: 1,
+                ),
+                const Text('Select Parent Details:'),
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.name,
+                      onFieldSubmitted: (String value) {
+                        _studentFirstName=value;
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'First Name',
+                        prefixIcon: Icon(
+                          Icons.text_format,
+                        ),
+                      ),
+                    )
+                ),
+                const SizedBox(height: 10,),
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.name,
+                      onFieldSubmitted: (String value) {
+                        _studentLastName=value;
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Last Name',
+                        prefixIcon: Icon(
+                          Icons.text_format,
+                        ),
+                      ),
+                    )
                 ),
                 Padding(
                     padding: const EdgeInsets.symmetric(
@@ -498,6 +547,15 @@ class FacultyAdminPopups {
                     )
                 ),
                 const SizedBox(height: 10,),
+                DatePickerButton(
+                  selectedDate: 'Select Date of Birth',
+                  setChangedDate: (date) {
+                    setState(() {
+                      _parentDateOfBirth = date;
+                    });
+                  },
+                ),
+                const SizedBox(height: 10,),
               ],
             ),
           ),
@@ -510,8 +568,6 @@ class FacultyAdminPopups {
             ),
             TextButton(
               onPressed: () {
-                // Do something with the entered data
-                //Navigator.pop(context); // Close the dialog
               },
               child: const Text('Add Student'),
             ),
@@ -519,6 +575,15 @@ class FacultyAdminPopups {
         );
       },
     );
+  }
+  void pickExcelFile() async {
+     FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      String filePath = result.files.single.path!;
+      print("Selected file path: $filePath");
+    } else {
+      print("No file selected.");
+    }
   }
 
   void printVariables() {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/core/cubits/lecture_cubit.dart';
-import 'package:flutter_attendance_system/core/data/repositories/lectuer_repository.dart';
+import 'package:flutter_attendance_system/core/data/repositories/lecture_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/data/services/lecture_web_services.dart';
