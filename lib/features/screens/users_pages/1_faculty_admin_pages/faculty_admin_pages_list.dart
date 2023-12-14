@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/cubits/user_cubit.dart';
 import '../../../../shared/constants_and_statics/shared_vars.dart';
 import '../../../widgets/card_widget.dart';
+import '../../../widgets/icons_widget.dart';
 
 List<Widget> provideWidgetOptions(BuildContext context) {
   const margin = 5.0;
@@ -16,7 +17,7 @@ List<Widget> provideWidgetOptions(BuildContext context) {
       itemBuilder: (context, index) {
         return InfoCard.blank(
           cardTitle: academicYears[index],
-          cardThumbnail: const Icon(Icons.account_box),
+          cardThumbnail: const CustomIcon(icon: Icons.account_box),
           margin: margin,
           onTap: () {
             Navigator.pushNamed(context, adminTimetables,

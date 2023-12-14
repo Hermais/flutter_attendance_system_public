@@ -26,15 +26,18 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    const buttonTextIconsColor = Colors.white;
      /// BlocBuilder receives emits from the cubit and rebuilds the widget tree.
     return BlocBuilder<ThemeChangeManagerCubit, ThemeChangeManagerState>(
   builder: (context, state) {
     MaterialColor materialColor = state.primarySwatchAppColor;
+    final buttonsColor = materialColor.withAlpha(100);
+
     return Scaffold(
       appBar: AppBar(
         // flexibleSpace: state.appBarFlexibleSpace,
         title: const Text("Login to continue"),
-        actions: [
+        actions:  [
           Container(
             margin: const EdgeInsets.only(right: 20),
             alignment: Alignment.centerRight,
@@ -42,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
               icon: Icon(
                 Icons.color_lens_sharp,
                 size: 50,
-                color: Theme.of(context).primaryColorDark,
+                color: materialColor[500]!.withAlpha(150),
               ),
               value: materialColor,
               elevation: 0,
@@ -80,18 +83,16 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                Icon(
-                  Icons.lock,
-                  color: Theme.of(context).primaryColor,
-                  size: 100,
+                const FlutterLogo(
+                  size: 200,
                 ),
                 const SizedBox(
                   height: 30,
                 ),
-                const Text(
-                  'Welcome!',
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-                ),
+                // const Text(
+                //   'Hello!',
+                //   style: TextStyle(fontSize: 25, color:  buttonTextIconsColor,fontWeight: FontWeight.w500),
+                // ),
                 const SizedBox(
                   height: 40,
                 ),
@@ -154,6 +155,8 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 79),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: buttonsColor,
+
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -176,13 +179,13 @@ class _LoginPageState extends State<LoginPage> {
                           padding: EdgeInsets.all(8.0),
                           child: Icon(
                             Icons.login,
-                            color: Colors.white,
+                            color: buttonTextIconsColor,
                             size: 30,
                           ),
                         ),
                         Text(
                           'Login',
-                          style: TextStyle(color: Colors.white, fontSize: 25),
+                          style: TextStyle(color: buttonTextIconsColor , fontSize: 25),
                         ),
                       ],
                     ),
@@ -195,25 +198,26 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 45),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: buttonsColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     onPressed: () {},
-                    child: const Row(
+                    child:  const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Icon(
                             Icons.qr_code_scanner,
-                            color: Colors.white,
+                            color: buttonTextIconsColor,
                             size: 30,
                           ),
                         ),
                         Text(
                           'Scan to Login',
-                          style: TextStyle(color: Colors.white, fontSize: 25),
+                          style: TextStyle(color: buttonTextIconsColor, fontSize: 25),
                         ),
                       ],
                     ),
@@ -222,30 +226,30 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 7,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Don\'t have an account?',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                      ),
-                    ),
-                    MaterialButton(
-                      child:  Text(
-                        'Create',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Theme.of(context).primaryColor,
-        
-                        ),
-                      ),
-                      onPressed: () {
-                      },
-                    )
-                  ],
-                )
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     const Text(
+                //       'Don\'t have an account?',
+                //       style: TextStyle(
+                //         fontSize: 16,
+                //         color: Colors.black,
+                //       ),
+                //     ),
+                //     MaterialButton(
+                //       child:  Text(
+                //         'Create',
+                //         style: TextStyle(
+                //           fontSize: 20,
+                //           color: Theme.of(context).primaryColor,
+                //
+                //         ),
+                //       ),
+                //       onPressed: () {
+                //       },
+                //     )
+                //   ],
+                // )
               ],
             ),
           ),

@@ -48,22 +48,15 @@ class MainAppState extends State<MainApp> {
           return MaterialApp(
             initialRoute: '/',
             debugShowCheckedModeBanner: false,
+
             theme: ThemeData(
-              useMaterial3: false,
+              // useMaterial3: false,
               primaryColor: state.primarySwatchAppColor,
-              primarySwatch: state.primarySwatchAppColor,
 
               textTheme: appTextTheme,
               appBarTheme: AppBarTheme(
-                backgroundColor: state.primarySwatchAppColor,
-                elevation: 14,
-                shadowColor: state.primarySwatchAppColor[900],
-                shape: ContinuousRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(10.0),
-                    bottomRight: Radius.circular(10.0),
-                  ),
-                ),
+                backgroundColor: state.primarySwatchAppColor.withAlpha(50),
+
               ),
             ),
             onGenerateRoute: AppRouter().onGenerateRoute,

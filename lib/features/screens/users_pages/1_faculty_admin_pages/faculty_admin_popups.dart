@@ -167,70 +167,50 @@ class FacultyAdminPopups {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    height: MediaQuery.of(context).size.width * 0.1,
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    color: Colors.white,
-                    child: TextButton(
-                      onPressed: (){
-                        showAddInstructorDialog();
-                      },
-                      child:const Text(
-                        'Add Instructor',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600
-                        ),
+                  TextButton(
+                    onPressed: (){
+                      showAddInstructorDialog();
+                    },
+                    child:const Text(
+                      'Add Instructor',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600
                       ),
                     ),
                   ),
                   const SizedBox(height: 10,),
-                  Container(
-                    height: MediaQuery.of(context).size.width * 0.1,
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    color: Colors.white,
-                    child: TextButton(
-                      onPressed: (){
-                        showAddStudentDialog();
-                      },
-                      child:const Text(
-                        'Add Student',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600
-                        ),
+                  TextButton(
+                    onPressed: (){
+                      showAddStudentDialog();
+                    },
+                    child:const Text(
+                      'Add Student',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600
                       ),
                     ),
                   ),
                   const SizedBox(height: 10,),
-                  Container(
-                    height: MediaQuery.of(context).size.width * 0.1,
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    color: Colors.white,
-                    child: TextButton(
-                      onPressed: (){
-                        pickExcelFile();
-                      },
-                      child:const Text(
-                        'Add By Excel',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600
-                        ),
+                  TextButton(
+                    onPressed: (){
+                      pickExcelFile();
+                    },
+                    child:const Text(
+                      'Add By Excel',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600
                       ),
                     ),
                   ),
                   const SizedBox(height: 10,),
-                  Container(
-                    height: MediaQuery.of(context).size.width * 0.1,
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    color: Colors.white,
-                    child: TextButton(
-                      onPressed: (){
-                        Navigator.pop(context);
-                      },
-                      child:const Text(
-                        'Cancel',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600
-                        ),
+                  TextButton(
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
+                    child:const Text(
+                      'Cancel',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600
                       ),
                     ),
                   ),

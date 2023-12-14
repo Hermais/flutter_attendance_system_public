@@ -1,9 +1,9 @@
 
+import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/features/screens/users_pages/3_student_pages/pages_list.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
-import '../../../widgets/card_widget.dart';
+import '../../../widgets/bottom_navigation_bar.dart';
 import '../commons/student_info_popup.dart';
 
 void temp() {}
@@ -56,27 +56,23 @@ class StudentDashboardState extends State<StudentDashboard> {
         },
       ),
 
-      bottomNavigationBar: BottomNavigationBar(
-        selectedFontSize: 17,
-        iconSize: 30,
-        landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard_rounded),
-            label: 'Lectures',
+      bottomNavigationBar: CustomBottomNavigationBar(
+        items: <FlashyTabBarItem>[
+          FlashyTabBarItem(
+            icon: const Icon(Icons.dashboard_rounded),
+            title: const Text('Lectures'),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.supervisor_account),
-            label: 'Instructors',
+          FlashyTabBarItem(
+            icon: const Icon(Icons.supervisor_account),
+            title: const Text('Instructors'),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month_rounded),
-            label: 'My Timetable',
+          FlashyTabBarItem(
+            icon: const Icon(Icons.calendar_month_rounded),
+            title: const Text('My Timetable'),
           ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Theme.of(context).primaryColor,
-        onTap: _onItemTapped,
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
       ),
     );
   }

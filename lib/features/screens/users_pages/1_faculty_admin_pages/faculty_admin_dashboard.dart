@@ -1,7 +1,9 @@
 // ignore_for_file: unused_field, avoid_print
 
+import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/features/screens/users_pages/1_faculty_admin_pages/faculty_admin_popups.dart';
+import 'package:flutter_attendance_system/features/widgets/bottom_navigation_bar.dart';
 import 'faculty_admin_pages_list.dart';
 
 class FacultyAdminDashboard extends StatefulWidget {
@@ -86,23 +88,20 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
           });
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedFontSize: 17,
-        iconSize: 30,
-        landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month_rounded),
-            label: 'Timetables',
+      bottomNavigationBar: CustomBottomNavigationBar(
+        onItemTapped: _onItemTapped,
+        selectedIndex: _selectedIndex,
+        items:  <FlashyTabBarItem>[
+          FlashyTabBarItem(
+            icon: const Icon(Icons.calendar_month_rounded),
+            title: const Text('Timetables'),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.supervisor_account),
-            label: 'Instructors',
+          FlashyTabBarItem(
+            icon: const Icon(Icons.supervisor_account),
+title: const Text('Instructors'),
           ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Theme.of(context).primaryColor,
-        onTap: _onItemTapped,
+
       ),
     );
   }

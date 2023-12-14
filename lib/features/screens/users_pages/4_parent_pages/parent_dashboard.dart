@@ -1,5 +1,7 @@
 
+import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/features/widgets/bottom_navigation_bar.dart';
 
 import '../4_parent_pages/pages_list.dart';
 import '../commons/student_info_popup.dart';
@@ -52,27 +54,23 @@ class ParentDashboardState extends State<ParentDashboard> {
           });
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedFontSize: 17,
-        iconSize: 30,
-        landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
+      bottomNavigationBar: CustomBottomNavigationBar(
+        items:  <FlashyTabBarItem>[
+          FlashyTabBarItem(
 
 
-            icon: Icon(Icons.checklist),
-            label: 'Attendance Record',
+            icon: const Icon(Icons.checklist),
+            title: const Text('Attendance Record'),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.pin_drop_rounded),
-            label: 'Student Whereabouts',
+          FlashyTabBarItem(
+            icon: const Icon(Icons.pin_drop_rounded),
+            title: const Text('Student Whereabouts'),
           ),
 
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Theme.of(context).primaryColor,
-        onTap: _onItemTapped,
-      ),
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
+      )
     );
   }
 }

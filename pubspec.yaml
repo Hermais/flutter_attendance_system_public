@@ -47,6 +47,7 @@ dependencies:
   intl:
   syncfusion_flutter_datagrid:
   shared_preferences:
+  flashy_tab_bar2: ^0.0.6
 
 dev_dependencies:
   flutter_test:

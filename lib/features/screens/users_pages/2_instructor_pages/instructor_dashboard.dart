@@ -1,4 +1,6 @@
+import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/features/widgets/bottom_navigation_bar.dart';
 
 import '../../qr_page/qr_app.dart';
 import 'instructor_pages_list.dart';
@@ -59,24 +61,20 @@ class InstructorDashboardState extends State<InstructorDashboard> {
           });
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedFontSize: 17,
-        iconSize: 30,
-        landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard_rounded),
-            label: 'Lectures',
+      bottomNavigationBar: CustomBottomNavigationBar(
+        items:  <FlashyTabBarItem>[
+          FlashyTabBarItem(
+            icon: const Icon(Icons.dashboard_rounded),
+            title: const Text('Lectures'),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            label: 'Students',
+          FlashyTabBarItem(
+            icon: const Icon(Icons.people),
+            title: const Text('Students'),
           ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Theme.of(context).primaryColor,
-        onTap: _onItemTapped,
-      ),
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
+      )
     );
   }
 
