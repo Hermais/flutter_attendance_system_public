@@ -121,6 +121,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.65.0"
+  flashy_tab_bar2:
+    dependency: "direct main"
+    description:
+      name: flashy_tab_bar2
+      sha256: "895affd69b757ae2a1461ddc42a3c04954a5bb4e2292373697e40c377e836153"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.6"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -545,10 +553,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_windows
-      sha256: "7754a1ad30ee896b265f8d14078b0513a4dba28d358eabb9d5f339886f4a1adc"
+      sha256: ecf9725510600aa2bb6d7ddabe16357691b6d2805f66216a97d1b881e21beff7
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "3.1.1"
   vector_math:
     dependency: transitive
     description:
