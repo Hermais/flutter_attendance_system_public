@@ -6,7 +6,7 @@ class StudentRepository {
 
   StudentRepository({required this.studentWebServices});
 
-  Future<List<Student>> getExampleStudentData() async {
+  Future<List<Student>> getStudentData() async {
     /// This is an implicit list of maps, to store our data from the web
     /// service (Example Students).
     final students =
