@@ -584,13 +584,13 @@ class FacultyAdminPopups {
         print("Selected file is an Excel file.");
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: message ? Text(' successfully loaded add student') :Text(' successfully loaded add instructor'),
-            duration: Duration(seconds: 4),
+            content: message ? const Text(' successfully loaded add student') :const Text(' successfully loaded add instructor'),
+            duration: const Duration(seconds: 4),
           ),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text(  "Selected file is not a valid Excel file."),
             duration: Duration(seconds: 3),
           ),
@@ -598,7 +598,7 @@ class FacultyAdminPopups {
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text("No file selected."),
           duration: Duration(seconds: 3),
         ),

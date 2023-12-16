@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/core/data/repositories/example_repository.dart';
 import 'package:flutter_attendance_system/core/data/services/example_web_services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:motion/motion.dart';
 
 import '../../../../core/cubits/user_cubit.dart';
 import '../../../../shared/constants_and_statics/shared_vars.dart';

@@ -48,6 +48,7 @@ dependencies:
   syncfusion_flutter_datagrid:
   shared_preferences:
   flashy_tab_bar2: ^0.0.6
+  motion: ^1.4.0
 
 dev_dependencies:
   flutter_test:
