@@ -5,12 +5,14 @@ import 'package:flutter_attendance_system/core/cubits/theme_change_manager_cubit
 import 'package:flutter_attendance_system/shared/constants_and_statics/shared_vars.dart';
 import 'package:flutter_attendance_system/shared/shared_pref/shared_theme_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:motion/motion.dart';
 
 import 'app_router.dart';
 import 'features/widgets/app_bar_flexible_space.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Motion.instance.initialize();
 
   MaterialColor primarySwatchColor =
       (await ManageLastThemeColor().loadLastThemeColor());

@@ -37,6 +37,7 @@ class FacultyAdminPopups {
   String? _instructorNationalID;
   List<String>? _instructorDepartment;
   bool? _isFloatingActionButtonVisible;
+  bool? _typeMessage;
   String? _lectureStartDate;
   Function setState;
 
@@ -193,18 +194,6 @@ class FacultyAdminPopups {
                   const SizedBox(height: 10,),
                   TextButton(
                     onPressed: (){
-                      pickExcelFile();
-                    },
-                    child:const Text(
-                      'Add By Excel',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10,),
-                  TextButton(
-                    onPressed: (){
                       Navigator.pop(context);
                     },
                     child:const Text(
@@ -337,18 +326,29 @@ class FacultyAdminPopups {
             ),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                // Do something with the entered data
-                //Navigator.pop(context); // Close the dialog
-              },
-              child: const Text('Add Instructor'),
+            Row(
+              children: [
+
+                TextButton(
+                  onPressed: () {
+                  },
+                  child: const Text('Add Instructor',style: TextStyle(fontSize: 11),),
+                ),
+                TextButton(
+                  onPressed: () {
+                    _typeMessage=false;
+                    pickExcelFile(_typeMessage!);
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Add By Excel',style: TextStyle(fontSize: 11),),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Cancel',style: TextStyle(fontSize: 11),),
+                ),
+              ],
             ),
           ],
         );
@@ -540,29 +540,69 @@ class FacultyAdminPopups {
             ),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-              },
-              child: const Text('Add Student'),
-            ),
+            Row(
+                children: [
+
+                  TextButton(
+                    onPressed: () {
+                    },
+                    child: const Text('Add Student',style: TextStyle(fontSize: 12),),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      _typeMessage=true;
+                      pickExcelFile(_typeMessage!);
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Add By Excel',style: TextStyle(fontSize: 12),),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                ],
+              ),
           ],
         );
       },
     );
   }
-  void pickExcelFile() async {
-     FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+  void pickExcelFile(bool message) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['xlsx', 'xls'],
+    );
+
     if (result != null) {
       String filePath = result.files.single.path!;
       print("Selected file path: $filePath");
+      // Check if the selected file has a valid Excel extension
+      if (filePath.toLowerCase().endsWith('.xlsx') || filePath.toLowerCase().endsWith('.xls')) {
+        print("Selected file is an Excel file.");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: message ? const Text(' successfully loaded add student') :const Text(' successfully loaded add instructor'),
+            duration: const Duration(seconds: 4),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(  "Selected file is not a valid Excel file."),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
     } else {
-      print("No file selected.");
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("No file selected."),
+          duration: Duration(seconds: 3),
+        ),
+      );
     }
   }
 

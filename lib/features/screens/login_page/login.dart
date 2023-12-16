@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:motion/motion.dart';
 
 import '../../../core/cubits/theme_change_manager_cubit.dart';
 import '../../../shared/shared_pref/shared_theme_colors.dart';
@@ -81,8 +82,11 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(
                 height: 10,
               ),
-              const FlutterLogo(
-                size: 130,
+              const Motion(
+                shadow: null,
+                child: FlutterLogo(
+                  size: 200,
+                ),
               ),
               const SizedBox(
                 height: 30,
