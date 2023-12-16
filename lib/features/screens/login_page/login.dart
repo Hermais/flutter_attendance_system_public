@@ -74,184 +74,179 @@ class _LoginPageState extends State<LoginPage> {
       ),
 
       /// AHMED SALEM - put the body here after removing the container.
-      body: Theme(
-        data: Theme.of(context),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 10,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              const FlutterLogo(
+                size: 130,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              // const Text(
+              //   'Hello!',
+              //   style: TextStyle(fontSize: 25, color:  buttonTextIconsColor,fontWeight: FontWeight.w500),
+              // ),
+              const SizedBox(
+                height: 40,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 25,
                 ),
-                const FlutterLogo(
-                  size: 200,
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                // const Text(
-                //   'Hello!',
-                //   style: TextStyle(fontSize: 25, color:  buttonTextIconsColor,fontWeight: FontWeight.w500),
-                // ),
-                const SizedBox(
-                  height: 40,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 25,
-                  ),
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: emailController,
-                    onFieldSubmitted: (String value) {
-                      print(value);
-                    },
-                    decoration:  InputDecoration(
-                      labelText: 'User Name',
-                      suffixText: '@eng.zu.edu.eg',
-                      prefixIcon: Icon(
-                        Icons.key,
-                        color: Theme.of(context).primaryColor,
-        
-        
-        
-                      ),
-                      border: const OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 25,
-                  ),
-                  child: TextFormField(
-                    keyboardType: TextInputType.visiblePassword,
-                    controller: passwordController,
-                    obscureText: true,
-                    onFieldSubmitted: (String value) {
-                      print(value);
-                    },
-                    decoration:  InputDecoration(
-                      labelText: 'Password',
-                      prefixIcon: Icon(
-                        Icons.lock,
-                        color: Theme.of(context).primaryColor,
-        
-                      ),
-                      suffixIcon: Icon(Icons.remove_red_eye,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      border: const OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 79),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: buttonsColor,
+                child: TextFormField(
 
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-        
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const NoLoginNavigation(
-                            //appBarFlexibleSpace: state.appBarFlexibleSpace,
-                          ),
-                        ),
-                      );
-        
-                    },
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.login,
-                            color: buttonTextIconsColor,
-                            size: 30,
-                          ),
-                        ),
-                        Text(
-                          'Login',
-                          style: TextStyle(color: buttonTextIconsColor , fontSize: 25),
-                        ),
-                      ],
-                    ),
+                  keyboardType: TextInputType.emailAddress,
+                  controller: emailController,
+                  onFieldSubmitted: (String value) {
+                    print(value);
+                  },
+                  decoration:  InputDecoration(
+                    labelText: 'User Name',
+                    suffixText: '@eng.zu.edu.eg',
+                    prefixIcon: Icon(
+                      Icons.key,
+                      color: Theme.of(context).primaryColor,),
+
+                    border: const OutlineInputBorder(),
                   ),
                 ),
-                const SizedBox(
-                  height: 7,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 25,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 45),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: buttonsColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+                child: TextFormField(
+                  keyboardType: TextInputType.visiblePassword,
+                  controller: passwordController,
+                  obscureText: true,
+                  onFieldSubmitted: (String value) {
+                    print(value);
+                  },
+                  decoration:  InputDecoration(
+                    labelText: 'Password',
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: Theme.of(context).primaryColor,
+
                     ),
-                    onPressed: () {},
-                    child:  const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.qr_code_scanner,
-                            color: buttonTextIconsColor,
-                            size: 30,
-                          ),
-                        ),
-                        Text(
-                          'Scan to Login',
-                          style: TextStyle(color: buttonTextIconsColor, fontSize: 25),
-                        ),
-                      ],
+                    suffixIcon: Icon(Icons.remove_red_eye,
+                      color: Theme.of(context).primaryColor,
                     ),
+                    border: const OutlineInputBorder(),
                   ),
                 ),
-                const SizedBox(
-                  height: 7,
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 79),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: buttonsColor,
+
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const NoLoginNavigation(
+                          //appBarFlexibleSpace: state.appBarFlexibleSpace,
+                        ),
+                      ),
+                    );
+
+                  },
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.login,
+                          color: buttonTextIconsColor,
+                          size: 30,
+                        ),
+                      ),
+                      Text(
+                        'Login',
+                        style: TextStyle(color: buttonTextIconsColor , fontSize: 25),
+                      ),
+                    ],
+                  ),
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     const Text(
-                //       'Don\'t have an account?',
-                //       style: TextStyle(
-                //         fontSize: 16,
-                //         color: Colors.black,
-                //       ),
-                //     ),
-                //     MaterialButton(
-                //       child:  Text(
-                //         'Create',
-                //         style: TextStyle(
-                //           fontSize: 20,
-                //           color: Theme.of(context).primaryColor,
-                //
-                //         ),
-                //       ),
-                //       onPressed: () {
-                //       },
-                //     )
-                //   ],
-                // )
-              ],
-            ),
+              ),
+              const SizedBox(
+                height: 7,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 45),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: buttonsColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child:  const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.qr_code_scanner,
+                          color: buttonTextIconsColor,
+                          size: 30,
+                        ),
+                      ),
+                      Text(
+                        'Scan to Login',
+                        style: TextStyle(color: buttonTextIconsColor, fontSize: 25),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 7,
+              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     const Text(
+              //       'Don\'t have an account?',
+              //       style: TextStyle(
+              //         fontSize: 16,
+              //         color: Colors.black,
+              //       ),
+              //     ),
+              //     MaterialButton(
+              //       child:  Text(
+              //         'Create',
+              //         style: TextStyle(
+              //           fontSize: 20,
+              //           color: Theme.of(context).primaryColor,
+              //
+              //         ),
+              //       ),
+              //       onPressed: () {
+              //       },
+              //     )
+              //   ],
+              // )
+            ],
           ),
         ),
       ),

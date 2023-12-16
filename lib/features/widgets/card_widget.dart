@@ -142,7 +142,7 @@ class InfoCard extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.all(cardBorder ?? 2),
         child: InkWell(
-          splashColor: cardColor!.withAlpha(200),
+          splashColor: cardColor!.withAlpha(50),
           borderRadius: borderRadius,
           onTap: () {
             if (onTap != null) {
