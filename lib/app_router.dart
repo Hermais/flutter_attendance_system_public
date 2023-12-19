@@ -6,7 +6,6 @@ import 'features/screens/users_pages/0_developer_admin_pages/developer_admin_das
 import 'features/screens/users_pages/1_faculty_admin_pages/faculty_admin_dashboard.dart';
 import 'features/screens/users_pages/1_faculty_admin_pages/faculty_admin_timetable.dart';
 import 'features/screens/users_pages/2_instructor_pages/instructor_dashboard.dart';
-import 'features/screens/users_pages/commons/instructor_students_by_applicable_courses.dart';
 import 'features/screens/users_pages/3_student_pages/student_dashboard.dart';
 import 'features/screens/users_pages/4_parent_pages/parent_dashboard.dart';
 
@@ -33,11 +32,6 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (context) => FacultyAdminTimetables(
                   academicYear: settings.arguments as String,
-                ));
-      case instructorStudentsByApplicableCourses:
-        return MaterialPageRoute(
-            builder: (context) => InstructorCourses(
-                  routeName: settings.arguments as String,
                 ));
       default:
         return null;

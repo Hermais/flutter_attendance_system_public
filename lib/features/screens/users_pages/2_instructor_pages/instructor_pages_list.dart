@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/core/cubits/lecture_cubit.dart';
 import 'package:flutter_attendance_system/core/data/repositories/lecture_repository.dart';
+import 'package:flutter_attendance_system/features/screens/users_pages/2_instructor_pages/student_attendance_for_instructor.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/data/services/lecture_web_services.dart';
 import '../../../../shared/constants_and_statics/shared_vars.dart';
 import '../../../widgets/card_widget.dart';
+import 'instructor_students.dart';
 
 List<Widget> provideWidgetOptions(BuildContext context) => <Widget>[
       /// Lectures Tab:
@@ -56,13 +58,36 @@ List<Widget> provideWidgetOptions(BuildContext context) => <Widget>[
                 "that students of that course.",
             cardTitle: "Instructor's Assigned Course ${index + 1}",
             onTap: () {
-              Navigator.of(context).pushNamed(
-                  instructorStudentsByApplicableCourses,
-                  arguments: "Instructor's Assigned Course ${index + 1}");
-            },
+              Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                return InstructorStudents(courseName: "Instructor's Assigned Course ${index + 1}",);
+              }));
+            }
           );
         },
       ),
+
+
+  ListView.builder(
+    itemCount: 10,
+    itemBuilder: (context, index) {
+      return InfoCard(
+        isLectureCard: false,
+        isButtonVisible: false,
+        isTopLeftBorderMaxRadius: false,
+        cardThumbnail: const Icon(Icons.person),
+        cardDescription:
+        "This will be the course that the instructor is assigned to. And when"
+            " it is tapped on it show the page of the students of "
+            "that students of that course.",
+        cardTitle: "Instructor's Assigned Course ${index + 1}",
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context){
+            return ShowWeeks();
+          }));
+        }
+      );
+    },
+  ),
     ];
 
 Future<void> showLectureStartConfirmationPopup(BuildContext context) async {

@@ -34,14 +34,15 @@ const days = [
 const academicYears = [prepYear, year1, year2, year3, year4];
 
 const departments = [
+  'Preparatory'
   'Physics and Engineering Mathematics',
   'Mechanical Design and Manufacturing',
   'Industrial Engineering',
   'Materials Engineering',
-  'Computer and Systems Engineering',
+  'Computer and Systems',
   'Environmental Engineering',
-  'Electronics and Electrical Communications Engineering',
-  'Power Engineering and Electrical Machines',
+  'Electronics and Electrical Communications',
+  'Electrical Power',
   'Mechanical Power Engineering',
   'Construction and Facilities Engineering',
   'Water Engineering and Water Facilities',
@@ -52,7 +53,7 @@ const departments = [
 
 
 const instructor = '/instructor';
-const instructorStudentsByApplicableCourses =
+const showStudentsOfInstructor =
     '/instructor/studentsByApplicableCourses';
 const student = '/student';
 const parent = '/parent';

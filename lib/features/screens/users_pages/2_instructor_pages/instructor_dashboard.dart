@@ -70,6 +70,9 @@ class InstructorDashboardState extends State<InstructorDashboard> {
           FlashyTabBarItem(
             icon: const Icon(Icons.people),
             title: const Text('Students'),
+          ),FlashyTabBarItem(
+            icon: const Icon(Icons.checklist),
+            title: const Text('Attendance'),
           ),
         ],
         selectedIndex: _selectedIndex,
