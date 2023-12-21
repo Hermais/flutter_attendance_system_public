@@ -18,7 +18,6 @@ class FacultyAdminPopups {
   String? _groupName;
   String? _instructorName;
   String? _courseDescription;
-  String? _department;
   String? _studentDateOfBirth;
   String? _studentFirstName;
   String? _studentLastName;
@@ -35,7 +34,8 @@ class FacultyAdminPopups {
   String? _instructorLastName;
   String? _instructorUniversityID;
   String? _instructorNationalID;
-  List<String>? _instructorDepartment;
+  String? _instructorDepartment;
+  List<String>? _instructorCourses;
   bool? _isFloatingActionButtonVisible;
   bool? _typeMessage;
   String? _lectureStartDate;
@@ -56,16 +56,6 @@ class FacultyAdminPopups {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text('Specify Main Properties:'),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: DropdownButtonWidget<String>(
-                    items: departments,
-                    selectionDescription: 'Select Department',
-                    setValue: (String? value) {
-                      _department = value!;
-                    },
-                  ),
-                ),
                 DropdownButtonWidget<String>(
                   items: const [
                     'Preparatory',
@@ -304,6 +294,16 @@ class FacultyAdminPopups {
                     });
                   },
                 ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DropdownButtonWidget<String>(
+                    items: departments,
+                    selectionDescription: 'Select Department',
+                    setValue: (String? value) {
+                      _instructorDepartment = value!;
+                    },
+                  ),
+                ),
                 const SizedBox(height: 10,),
                 MultiSelectDropdownWidget<String>(
                   items: const [
@@ -318,7 +318,7 @@ class FacultyAdminPopups {
                   ],
                   selectionDescription: ' Assign Instructor courses',
                   setValues: (List<String>? values) {
-                    _instructorDepartment=values;
+                    _instructorCourses=values;
                     //print('Selected Values: $values');
                   },
                 ),
@@ -616,6 +616,5 @@ class FacultyAdminPopups {
     print('_groupName: $_groupName');
     print('_instructorName: $_instructorName');
     print('_courseDescription: $_courseDescription');
-    print('_department: $_department');
   }
 }
