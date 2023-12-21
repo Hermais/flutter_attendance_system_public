@@ -4,10 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 const maxDuration = Duration(seconds: 20);
 const exampleBaseURL = 'https://jsonplaceholder.typicode.com';
 
-const developerAdmin = '/developerAdmin';
 
-const facultyAdmin = '/facultyAdmin';
-const adminTimetables = '/facultyAdmin/adminTimetables';
 const prepYear = 'Preparatory';
 const year1 = 'Year 1';
 const year2 = 'Year 2';
@@ -34,7 +31,7 @@ const days = [
 const academicYears = [prepYear, year1, year2, year3, year4];
 
 const departments = [
-  'Preparatory'
+  'Preparatory',
   'Physics and Engineering Mathematics',
   'Mechanical Design and Manufacturing',
   'Industrial Engineering',
@@ -57,6 +54,9 @@ const showStudentsOfInstructor =
     '/instructor/studentsByApplicableCourses';
 const student = '/student';
 const parent = '/parent';
+const developerAdmin = '/developerAdmin';
+const facultyAdmin = '/facultyAdmin';
+const adminTimetables = '/facultyAdmin/adminTimetables';
 
 /// Theme constants
 final appTextTheme = GoogleFonts.latoTextTheme();
