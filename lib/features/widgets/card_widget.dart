@@ -11,6 +11,7 @@ class InfoCard extends StatelessWidget {
   final bool? isLectureCard;
   final bool? isTopLeftBorderMaxRadius;
   final bool? isTextVisible;
+  final bool? isButtonDisabled;
 
 // Doubles
   final double? cardHeight;
@@ -67,7 +68,7 @@ class InfoCard extends StatelessWidget {
       this.onButtonTap,
       this.descriptionMaxLines,
       this.cardColor,
-      this.borderRadii, this.isTextVisible, this.cardBorder});
+      this.borderRadii, this.isTextVisible, this.cardBorder, this.isButtonDisabled});
 
 
   InfoCard.blank(
@@ -95,7 +96,7 @@ class InfoCard extends StatelessWidget {
         this.onButtonTap,
         this.descriptionMaxLines = 1,
         this.cardColor,
-        this.borderRadii=5, this.isTextVisible, this.cardBorder});
+        this.borderRadii=5, this.isTextVisible, this.cardBorder, this.isButtonDisabled});
 
   InfoCard.bland(
       {super.key,
@@ -122,7 +123,7 @@ class InfoCard extends StatelessWidget {
         this.onButtonTap,
         this.descriptionMaxLines = 1,
         this.cardColor,
-        this.borderRadii=5, this.isTextVisible, this.cardBorder=0.4});
+        this.borderRadii=5, this.isTextVisible, this.cardBorder=0.4, this.isButtonDisabled});
 
 
 
@@ -331,11 +332,13 @@ class InfoCard extends StatelessWidget {
                           child: Visibility(
                             visible: isButtonVisible ?? true,
                             child: TextButton(
-                                onPressed: () {
-                                  if (onButtonTap != null) {
-                                    onButtonTap!();
-                                  }
-                                },
+                                onPressed: isButtonDisabled ?? false
+                                    ? null
+                                    : () {
+                                        if (onButtonTap != null) {
+                                          onButtonTap!();
+                                        }
+                                      },
                                 child: Text(
                                   buttonText ?? "Go to page",
                                   style: const TextStyle(color: Colors.black38, fontWeight: FontWeight.bold

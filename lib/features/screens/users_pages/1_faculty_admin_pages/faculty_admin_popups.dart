@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/shared/constants_and_statics/shared_vars.dart';
@@ -582,6 +585,8 @@ class FacultyAdminPopups {
       // Check if the selected file has a valid Excel extension
       if (filePath.toLowerCase().endsWith('.xlsx') || filePath.toLowerCase().endsWith('.xls')) {
         print("Selected file is an Excel file.");
+        File selectedFile = File(filePath);
+        await sendFile(selectedFile);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: message ? const Text(' successfully loaded add student') :const Text(' successfully loaded add instructor'),
@@ -603,6 +608,37 @@ class FacultyAdminPopups {
           duration: Duration(seconds: 3),
         ),
       );
+    }
+  }
+
+  Future<void> sendFile(File file) async {
+    var url = 'https://example.com/upload';
+
+    try {
+      Dio dio = Dio();
+
+      // Create a FormData object to send the file
+      FormData formData = FormData.fromMap({
+        'file': await MultipartFile.fromFile(
+          file.path,
+          filename: file.path.split('/').last,
+        ),
+      });
+
+      // Send the POST request with the FormData
+      Response response = await dio.post(
+        url,
+        data: formData,
+      );
+
+      // Check the response status
+      if (response.statusCode == 200) {
+        print('File uploaded successfully');
+      } else {
+        print('File upload failed with status: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error uploading file: $error');
     }
   }
 
