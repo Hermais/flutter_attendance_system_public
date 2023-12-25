@@ -3,7 +3,9 @@ import 'package:flutter_attendance_system/core/cubits/lecture_cubit.dart';
 import 'package:flutter_attendance_system/core/data/repositories/lecture_repository.dart';
 import 'package:flutter_attendance_system/features/screens/users_pages/2_instructor_pages/student_attendance_for_instructor.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
+import '../../../../core/cubits/lecture_manager_cubit.dart';
 import '../../../../core/data/services/lecture_web_services.dart';
 import '../../../../shared/constants_and_statics/shared_vars.dart';
 import '../../../widgets/card_widget.dart';
@@ -11,37 +13,72 @@ import 'instructor_students.dart';
 
 List<Widget> provideWidgetOptions(BuildContext context) => <Widget>[
       /// Lectures Tab:
+  MultiBlocProvider(
+    providers: [
       BlocProvider(
         create: (context) => LectureCubit(
             lectureRepository:
-                LectureRepository(lectureWebServices: LectureWebServices())),
-        child: BlocBuilder<LectureCubit, LectureState>(
-          builder: (context, state) {
-            if (state is LectureDefault) {
-              BlocProvider.of<LectureCubit>(context).loadDefault();
-
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return ListView.builder(itemBuilder: (context, index) {
-              return InfoCard(
-                isLectureCard: true,
-                isButtonVisible: true,
-                isTopLeftBorderMaxRadius: true,
-                cardThumbnail: const Icon(Icons.account_box),
-                cardDescription: "Description of the lecture will be here.",
-                cardTitle: "Lecture ${index + 1}",
-                buttonText: "Start Lecture",
-                onButtonTap: () {
-                  // this method will be updated to take a lecture id as a parameter.
-                  showLectureStartConfirmationPopup(context);
-                },
-              );
-            });
-          },
-        ),
+            LectureRepository(lectureWebServices: LectureWebServices()))..loadDefault(),
       ),
+      BlocProvider(
+        create: (context) => LectureManagerCubit(),
+      ),
+    ],
+    child: BlocListener<LectureManagerCubit, LectureManagerState>(
+      listener: (context, state) {
+        if (state is LectureInSession) {
+          showLectureStartConfirmationPopup(context);
+        } else if (state is LectureManagerFailed){
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("This lecture is not in session."),
+              duration: Duration(seconds: 1),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },
+      child: BlocBuilder<LectureCubit, LectureState>(
+        builder: (context, state) {
+          if (state is LectureInitial) {
+
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (state is LectureLoaded || state is LectureDefault)
+          {
+            print(DateTime.now().timeZoneName);
+            return ListView.builder(
+                itemCount:
+                state
+                    .lectureList
+                    .length,
+                itemBuilder: (context, index) {
+                  return InfoCard(
+                    cardThumbnail: const Icon(Icons.book),
+
+                    cardTitle: state.lectureList[index].courseCourseCode,
+                    lectureStartsAt: DateFormat("hh:mm a").format(state.lectureList[index].startTime),
+                    lectureEndsAt: DateFormat("hh:mm a" ).format(state.lectureList[index].endTime),
+                    lecturePlace: state.lectureList[index].hallLocation.toString(),
+                    buttonText: "Attend",
+                    onButtonTap: () {
+                      BlocProvider.of<LectureManagerCubit>(context)
+                          .checkLectureToStart(
+                          state
+                              .lectureList[index]);
+                    },
+                  );
+                });
+          }
+          return const Center(
+            child: Text("Error"),
+          );
+        },
+      ),
+    ),
+  ),
 
       /// Students Tab:
       ListView.builder(
