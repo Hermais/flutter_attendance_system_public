@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_nullable_for_final_variable_declarations, must_be_immutable
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/core/cubits/internet_cubit.dart';
 import 'package:flutter_attendance_system/core/cubits/theme_change_manager_cubit.dart';
 import 'package:flutter_attendance_system/shared/constants_and_statics/shared_vars.dart';
 import 'package:flutter_attendance_system/shared/shared_pref/shared_theme_colors.dart';
@@ -15,7 +17,7 @@ void main() async {
   await Motion.instance.initialize();
 
   MaterialColor primarySwatchColor =
-      (await ManageLastThemeColor().loadLastThemeColor());
+  (await ManageLastThemeColor().loadLastThemeColor());
   runApp(
     MainApp(
       primarySwatchAppColor: primarySwatchColor,
@@ -36,15 +38,25 @@ class MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     /// Provides the app with the theme change manager cubit, but only up to LoginPage().
-    return BlocProvider(
-      /// Here, we are providing the cubit with the initial state.
-      create: (context) => ThemeChangeManagerCubit(
-        primarySwatchAppColor: widget.primarySwatchAppColor,
-        appBarFlexibleSpace: AppBarFlexibleSpace(
-          primarySwatchAppColor: widget.primarySwatchAppColor,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+
+          /// Here, we are providing the cubit with the initial state.
+          create: (context) =>
+              ThemeChangeManagerCubit(
+                primarySwatchAppColor: widget.primarySwatchAppColor,
+                appBarFlexibleSpace: AppBarFlexibleSpace(
+                  primarySwatchAppColor: widget.primarySwatchAppColor,
+                ),
+              ),
+
+          /// Here, we are providing the app with the theme change manager cubit.
         ),
-      ),
-      /// Here, we are providing the app with the theme change manager cubit.
+        BlocProvider(
+          create: (context) => InternetCubit(connectivity: Connectivity()),
+        ),
+      ],
       child: BlocBuilder<ThemeChangeManagerCubit, ThemeChangeManagerState>(
         builder: (context, state) {
           return MaterialApp(

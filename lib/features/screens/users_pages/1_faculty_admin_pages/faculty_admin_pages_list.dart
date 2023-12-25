@@ -1,8 +1,9 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/core/cubits/internet_cubit.dart';
 import 'package:flutter_attendance_system/core/data/repositories/example_repository.dart';
 import 'package:flutter_attendance_system/core/data/services/example_web_services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:motion/motion.dart';
 
 import '../../../../core/cubits/user_cubit.dart';
 import '../../../../shared/constants_and_statics/shared_vars.dart';
@@ -29,41 +30,52 @@ List<Widget> provideWidgetOptions(BuildContext context) {
     ),
 
     /// This widget will show the instructors and some info about them. NOTHING ELSE DAMMIT.
-    SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          BlocProvider(
-            create: (context) => UserCubit(
-                userRepository:
-                    UserRepository(userWebService: UserWebService()))
-              ..loadUsers,
-            child: BlocBuilder<UserCubit, UserState>(
-              builder: (context, state) {
-                if (state is UserInitial) {
-                  BlocProvider.of<UserCubit>(context).loadUsers();
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+          UserCubit(
+              userRepository:
+              UserRepository(userWebService: UserWebService()))
+            ..loadUsers,
+        ),
+        BlocProvider(
+          create: (context) => InternetCubit(connectivity: Connectivity()),
+        ),
+      ],
+      child: BlocConsumer<UserCubit, UserState>(
+        listener: (context, state) {
 
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                if (state is UserLoaded) {
-                  return Column(children: [
-                    for (var user in state.users)
-                      InfoCard.blank(
-                        cardTitle: "Instructor ${user.name}",
-                        cardDescription: user.email,
-                      ),
-                  ]);
-                }
-                return const Center(
-                  child: Text('Something went wrong!'),
+        },
+        builder: (context, state) {
+          if (state is UserInitial) {
+            BlocProvider.of<UserCubit>(context).loadUsers();
+
+            return Center(
+              child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),
+            );
+          }
+          if (state is UserLoaded) {
+            return ListView.builder(
+              itemCount: state.users.length,
+              itemBuilder: (context, index) {
+                return InfoCard.blank(
+                  cardTitle: 'Dr. ${state.users[index].name}',
+                  cardThumbnail: const CustomIcon(icon: Icons.account_box),
+                  margin: margin,
+                  cardDescription: 'Email: ${state.users[index].email}\n'
+                      'Phone: ${state.users[index].phone}\n',
+                  descriptionMaxLines: 2,
+
+
                 );
               },
-            ),
-          ),
-        ],
+            );
+          }
+          return const Center(
+            child: Text('Something went wrong!'),
+          );
+        },
       ),
     ),
   ];

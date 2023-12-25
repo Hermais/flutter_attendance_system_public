@@ -34,7 +34,7 @@ dependencies:
   file_picker: ^4.0.0
 
 
-
+  connectivity_plus:
   url_launcher:
   qr_code_scanner:
   qr_flutter:
