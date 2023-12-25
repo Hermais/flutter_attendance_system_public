@@ -16,7 +16,7 @@ class LectureCubit extends Cubit<LectureState> {
 
   void loadLecture() {
     lectureRepository.getLecture().then((lecture) {
-      emit(LectureLoaded(lecture: lecture));
+      emit(LectureLoaded(lectureList: lecture));
     });
   }
 

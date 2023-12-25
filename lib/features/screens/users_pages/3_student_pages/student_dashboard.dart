@@ -1,7 +1,7 @@
 
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_attendance_system/features/screens/users_pages/3_student_pages/pages_list.dart';
+import 'package:flutter_attendance_system/features/screens/users_pages/3_student_pages/student_pages_list.dart';
 
 import '../../../widgets/bottom_navigation_bar.dart';
 import '../commons/student_info_popup.dart';
