@@ -27,4 +27,13 @@ class LectureManagerCubit extends Cubit<LectureManagerState> {
   loadLecture() {
     emit(LectureManagerLoaded(lecture: lecture));
   }
+
+  Lecture getCurrentLecture() {
+    return lecture;
+  }
+
+  String getCurrentLectureName() {
+    return lecture.courseCourseCode;
+  }
+
 }

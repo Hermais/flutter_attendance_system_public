@@ -2,6 +2,7 @@ import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/features/widgets/bottom_navigation_bar.dart';
 
+import '../../../../core/cubits/lecture_manager_cubit.dart';
 import '../../qr_page/qr_app.dart';
 import 'instructor_pages_list.dart';
 
@@ -37,13 +38,27 @@ class InstructorDashboardState extends State<InstructorDashboard> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const QRScannerWithScaffold(
-                    storeScanResult: temp,
+              if (instructorLectureManagerCubit.state is LectureInSession) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+
+                      builder: (context) {
+
+                        return const QRScannerWithScaffold(
+                          storeScanResult: temp,
+                        );}
                   ),
-                ),
-              );
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("No lecture is selected."),
+                    duration: Duration(seconds: 1),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              }
+
             },
             icon: const Icon(Icons.qr_code_scanner),
           ),

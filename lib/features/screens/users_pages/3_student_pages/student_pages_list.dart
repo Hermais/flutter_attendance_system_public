@@ -64,7 +64,7 @@ List<Widget> provideWidgetOptions(BuildContext mainContext) {
                         lectureStartsAt: DateFormat("hh:mm a").format(state.lectureList[index].startTime),
                         lectureEndsAt: DateFormat("hh:mm a" ).format(state.lectureList[index].endTime),
                         lecturePlace: state.lectureList[index].hallLocation.toString(),
-                        buttonText: "Start",
+                        buttonText: "Attend",
                         onButtonTap: () {
                           BlocProvider.of<LectureManagerCubit>(context)
                               .checkLectureToStart(

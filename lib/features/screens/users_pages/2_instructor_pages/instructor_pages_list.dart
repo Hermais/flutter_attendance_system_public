@@ -11,7 +11,10 @@ import '../../../../shared/constants_and_statics/shared_vars.dart';
 import '../../../widgets/card_widget.dart';
 import 'instructor_students.dart';
 
-List<Widget> provideWidgetOptions(BuildContext context) => <Widget>[
+LectureManagerCubit instructorLectureManagerCubit = LectureManagerCubit();
+
+List<Widget> provideWidgetOptions(BuildContext context) {
+  return <Widget>[
       /// Lectures Tab:
   MultiBlocProvider(
     providers: [
@@ -21,14 +24,14 @@ List<Widget> provideWidgetOptions(BuildContext context) => <Widget>[
             LectureRepository(lectureWebServices: LectureWebServices()))..loadDefault(),
       ),
       BlocProvider(
-        create: (context) => LectureManagerCubit(),
+        create: (context) => instructorLectureManagerCubit,
       ),
     ],
     child: BlocListener<LectureManagerCubit, LectureManagerState>(
-      listener: (context, state) {
-        if (state is LectureInSession) {
+      listener: (context, lectureManagerState) {
+        if (lectureManagerState is LectureInSession) {
           showLectureStartConfirmationPopup(context);
-        } else if (state is LectureManagerFailed){
+        } else if (lectureManagerState is LectureManagerFailed){
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text("This lecture is not in session."),
@@ -39,34 +42,35 @@ List<Widget> provideWidgetOptions(BuildContext context) => <Widget>[
         }
       },
       child: BlocBuilder<LectureCubit, LectureState>(
-        builder: (context, state) {
-          if (state is LectureInitial) {
+        builder: (context, lectureState) {
+          print(lectureState);
+          if (lectureState is LectureInitial) {
 
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          if (state is LectureLoaded || state is LectureDefault)
+          if (lectureState is LectureLoaded || lectureState is LectureDefault)
           {
             print(DateTime.now().timeZoneName);
             return ListView.builder(
                 itemCount:
-                state
+                lectureState
                     .lectureList
                     .length,
                 itemBuilder: (context, index) {
                   return InfoCard(
                     cardThumbnail: const Icon(Icons.book),
 
-                    cardTitle: state.lectureList[index].courseCourseCode,
-                    lectureStartsAt: DateFormat("hh:mm a").format(state.lectureList[index].startTime),
-                    lectureEndsAt: DateFormat("hh:mm a" ).format(state.lectureList[index].endTime),
-                    lecturePlace: state.lectureList[index].hallLocation.toString(),
-                    buttonText: "Attend",
+                    cardTitle: lectureState.lectureList[index].courseCourseCode,
+                    lectureStartsAt: DateFormat("hh:mm a").format(lectureState.lectureList[index].startTime),
+                    lectureEndsAt: DateFormat("hh:mm a" ).format(lectureState.lectureList[index].endTime),
+                    lecturePlace: lectureState.lectureList[index].hallLocation.toString(),
+                    buttonText: "Start",
                     onButtonTap: () {
                       BlocProvider.of<LectureManagerCubit>(context)
                           .checkLectureToStart(
-                          state
+                          lectureState
                               .lectureList[index]);
                     },
                   );
@@ -125,7 +129,7 @@ List<Widget> provideWidgetOptions(BuildContext context) => <Widget>[
       );
     },
   ),
-    ];
+    ];}
 
 Future<void> showLectureStartConfirmationPopup(BuildContext context) async {
   return showDialog<void>(
