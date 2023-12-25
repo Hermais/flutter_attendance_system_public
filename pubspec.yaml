@@ -45,7 +45,6 @@ dependencies:
   cupertino_icons:
   http:
   intl:
-  syncfusion_flutter_datagrid:
   shared_preferences:
   flashy_tab_bar2: ^0.0.6
   motion: ^1.4.0

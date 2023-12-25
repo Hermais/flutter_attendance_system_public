@@ -32,10 +32,11 @@ class FacultyAdminPopups {
   String? _parentFirstName;
   String? _parentLAstName;
   String? _parentDateOfBirth;
+  String? _adminID;
   String? _instructorDateOfBirth;
   String? _instructorFirstName;
   String? _instructorLastName;
-  String? _instructorUniversityID;
+  String? _instructorEmailID;
   String? _instructorNationalID;
   String? _instructorDepartment;
   List<String>? _instructorCourses;
@@ -222,6 +223,24 @@ class FacultyAdminPopups {
                       horizontal: 25,
                     ),
                     child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      onFieldSubmitted: (String value) {
+                        _instructorNationalID=value;
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Admin ID',
+                        prefixIcon: Icon(
+                          Icons.numbers_sharp,
+                        ),
+                      ),
+                    )
+                ),
+                const SizedBox(height: 10,),
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                    ),
+                    child: TextFormField(
                       keyboardType: TextInputType.name,
                       onFieldSubmitted: (String value) {
                         _instructorFirstName=value;
@@ -258,14 +277,14 @@ class FacultyAdminPopups {
                       horizontal: 25,
                     ),
                     child: TextFormField(
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.emailAddress,
                       onFieldSubmitted: (String value) {
-                        _instructorUniversityID=value;
+                        _instructorLastName=value;
                       },
                       decoration: const InputDecoration(
-                        labelText: 'University ID',
+                        labelText: 'Email ID',
                         prefixIcon: Icon(
-                          Icons.numbers_sharp,
+                          Icons.text_format,
                         ),
                       ),
                     )
@@ -319,7 +338,7 @@ class FacultyAdminPopups {
                     'math_7',
                     'math_8',
                   ],
-                  selectionDescription: ' Assign Instructor courses',
+                  selectionDescription: 'Instructor courses',
                   setValues: (List<String>? values) {
                     _instructorCourses=values;
                     //print('Selected Values: $values');
