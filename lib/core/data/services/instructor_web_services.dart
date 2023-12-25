@@ -34,4 +34,14 @@ class InstructorWebServices {
       return [];
     }
   }
+  Future<void> postData(Map<String, dynamic> instructorData) async {
+    try {
+      Response response = await dio.post('/instructor', data: instructorData);
+      if (response.statusCode != 201) {
+        throw Exception('Failed to post instructor: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to post instructor: $e');
+    }
+  }
 }
