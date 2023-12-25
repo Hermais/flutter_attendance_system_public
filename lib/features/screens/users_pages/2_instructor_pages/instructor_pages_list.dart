@@ -7,13 +7,12 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/cubits/lecture_manager_cubit.dart';
 import '../../../../core/data/services/lecture_web_services.dart';
-import '../../../../shared/constants_and_statics/shared_vars.dart';
 import '../../../widgets/card_widget.dart';
 import 'instructor_students.dart';
 
-LectureManagerCubit instructorLectureManagerCubit = LectureManagerCubit();
 
-List<Widget> provideWidgetOptions(BuildContext context) {
+
+List<Widget> provideWidgetOptions(BuildContext context, LectureManagerCubit instructorLectureManagerCubit) {
   return <Widget>[
       /// Lectures Tab:
   MultiBlocProvider(
@@ -29,7 +28,7 @@ List<Widget> provideWidgetOptions(BuildContext context) {
     ],
     child: BlocListener<LectureManagerCubit, LectureManagerState>(
       listener: (context, lectureManagerState) {
-        if (lectureManagerState is LectureInSession) {
+        if (lectureManagerState is LectureManagerInSession) {
           showLectureStartConfirmationPopup(context);
         } else if (lectureManagerState is LectureManagerFailed){
           ScaffoldMessenger.of(context).showSnackBar(

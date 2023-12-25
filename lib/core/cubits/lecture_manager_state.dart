@@ -11,8 +11,8 @@ class LectureManagerLoaded extends LectureManagerState {
   LectureManagerLoaded({required this.lecture});
 }
 class LectureManagerFailed extends LectureManagerState {}
-class LectureInSession extends LectureManagerState {
+class LectureManagerInSession extends LectureManagerState {
   final Lecture lecture;
-  LectureInSession({required this.lecture});
+  LectureManagerInSession({required this.lecture});
 
 }

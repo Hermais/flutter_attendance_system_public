@@ -28,7 +28,7 @@ List<Widget> provideWidgetOptions(BuildContext mainContext) {
       ],
       child: BlocListener<LectureManagerCubit, LectureManagerState>(
         listener: (context, state) {
-          if (state is LectureInSession) {
+          if (state is LectureManagerInSession) {
             showQRCodePopup(context);
           } else if (state is LectureManagerFailed){
             ScaffoldMessenger.of(context).showSnackBar(

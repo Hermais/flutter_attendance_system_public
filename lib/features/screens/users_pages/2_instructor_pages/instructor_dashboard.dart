@@ -1,6 +1,7 @@
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/features/widgets/bottom_navigation_bar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/cubits/lecture_manager_cubit.dart';
 import '../../qr_page/qr_app.dart';
@@ -11,6 +12,7 @@ void temp() {}
 class InstructorDashboard extends StatefulWidget {
   final String? userName;
   final Widget? appBarFlexibleSpace;
+
 
   const InstructorDashboard(
       {super.key, this.userName, this.appBarFlexibleSpace});
@@ -33,12 +35,13 @@ class InstructorDashboardState extends State<InstructorDashboard> {
 
   @override
   Widget build(BuildContext context) {
+    final LectureManagerCubit instructorLectureManagerCubit = LectureManagerCubit();
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
             onPressed: () {
-              if (instructorLectureManagerCubit.state is LectureInSession) {
+              if (instructorLectureManagerCubit.state is LectureManagerInSession) {
                 Navigator.of(context).push(
                   MaterialPageRoute(
 
@@ -69,7 +72,7 @@ class InstructorDashboardState extends State<InstructorDashboard> {
       ),
       body: PageView(
         controller: _pageController,
-        children: provideWidgetOptions(context),
+        children: provideWidgetOptions(context, instructorLectureManagerCubit),
         onPageChanged: (index) {
           setState(() {
             _selectedIndex = index;
