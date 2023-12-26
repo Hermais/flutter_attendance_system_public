@@ -42,7 +42,7 @@ class Student {
     return {
       'firstName': firstName,
       'lastName': lastName,
-      'dateOfBirth': dateOfBirth!.toIso8601String(),
+      'dateOfBirth': dateOfBirth!.toIso8601String().substring(0, 10),
       'nationalId': nationalId,
       'department': department,
       'studyYear': studyYear,

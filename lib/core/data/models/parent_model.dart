@@ -29,7 +29,7 @@ class Parent {
       'lastName': lastName,
       'emailId': emailId,
       'nationalId': nationalId,
-      'dateOfBirth': dateOfBirth!.toIso8601String(),
+      'dateOfBirth': dateOfBirth!.toIso8601String().substring(0, 10),
     };
   }
 }

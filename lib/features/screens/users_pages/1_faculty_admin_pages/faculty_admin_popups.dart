@@ -229,13 +229,16 @@ class FacultyAdminPopups {
                 onPressed: () {
                   printVariables();
                   //lectureCubit.postLecture();
-                  print(Lecture(
+                  Lecture lecture = Lecture(
                     firstDate: _lectureStartDate,
                     startTime: _startTime,
                     endTime: _endTime,
                     courseCode: _courseCode,
-                    hallLocation: int.parse(_hallLocation!),
-                  ).toJson());
+                    hallLocation: int.parse(_hallLocation!));
+                  print(lecture.toJson());
+                  lectureCubit.postLecture(lecture);
+
+
                 },
                 child: const Text('Add  lecture'),
               ),

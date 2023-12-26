@@ -23,8 +23,10 @@ class LectureCubit extends Cubit<LectureState> {
   void postLecture(Lecture lecture) {
     lectureRepository.postLecture(lecture).then((_) {
       emit(LectureSuccessState(message: "Lecture posted successfully"));
+      print("Lecture posted successfully");
     }).catchError((error) {
       emit(LectureErrorState(error: "Failed to post lecture"));
+      print("Failed to post lecture");
     });
   }
 
