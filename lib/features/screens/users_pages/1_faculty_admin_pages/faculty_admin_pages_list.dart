@@ -1,20 +1,18 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/core/cubits/instructor_cubit.dart';
 import 'package:flutter_attendance_system/core/cubits/internet_cubit.dart';
 import 'package:flutter_attendance_system/core/data/repositories/example_repository.dart';
 import 'package:flutter_attendance_system/core/data/services/example_web_services.dart';
+import 'package:flutter_attendance_system/features/widgets/loading_progress_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/cubits/user_cubit.dart';
+import '../../../../core/data/repositories/instructor_repository.dart';
+import '../../../../core/data/services/instructor_web_services.dart';
 import '../../../../shared/constants_and_statics/shared_vars.dart';
 import '../../../widgets/card_widget.dart';
 import '../../../widgets/icons_widget.dart';
-UserCubit myUserCubit =  UserCubit(
-    userRepository:
-    UserRepository(userWebService: UserWebService()))
-  ..loadUsers();
-
-
 
 List<Widget> provideWidgetOptions(BuildContext context) {
   const margin = 5.0;
@@ -39,35 +37,33 @@ List<Widget> provideWidgetOptions(BuildContext context) {
     MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-          myUserCubit,),
+            create: (context) => InstructorCubit(
+                instructorRepository: InstructorRepository(
+                    instructorWebServices: InstructorWebServices()))
+              ..loadInstructor()),
         BlocProvider(
           create: (context) => InternetCubit(connectivity: Connectivity()),
         ),
       ],
-      child: BlocConsumer<UserCubit, UserState>(
-        listener: (context, state) {
+      child: BlocConsumer<InstructorCubit, InstructorState>(
+        listener: (context, state) {},
+        builder: (context, instructorState) {
+          if (instructorState is InstructorInitial) {
 
-        },
-        builder: (context, state) {
-          if (state is UserInitial) {
-            return Center(
-              child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),
-            );
+            return const Center(child: LoadingIndicator());
           }
-          if (state is UserLoaded) {
+          if (instructorState is InstructorLoaded) {
             return ListView.builder(
-              itemCount: state.users.length,
+              itemCount: instructorState.instructors.length,
               itemBuilder: (context, index) {
                 return InfoCard.blank(
-                  cardTitle: 'Dr. ${state.users[index].name}',
+                  cardTitle: 'Dr. ${instructorState.instructors[index].firstName}'
+                      ' ${instructorState.instructors[index].lastName}',
                   cardThumbnail: const CustomIcon(icon: Icons.account_box),
                   margin: margin,
-                  cardDescription: 'Email: ${state.users[index].email}\n'
-                      'Phone: ${state.users[index].phone}\n',
+                  cardDescription: 'Email: ${instructorState.instructors[index].emailId}\n'
+                  'Department: ${instructorState.instructors[index].department}\n',
                   descriptionMaxLines: 2,
-
-
                 );
               },
             );

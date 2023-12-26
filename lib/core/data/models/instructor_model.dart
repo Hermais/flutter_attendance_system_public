@@ -1,39 +1,34 @@
 class Instructor {
-  int instructorId;
+  int adminId;
+  String department;
+  String firstName;
   String lastName;
   String emailId;
   String nationalId;
-  DateTime dateOfBirth;
-  int adminId;
+  String dateOfBirth;
+  int instructorId;
 
   Instructor({
-    required this.instructorId,
+    required this.adminId,
+    required this.department,
+    required this.firstName,
     required this.lastName,
     required this.emailId,
     required this.nationalId,
     required this.dateOfBirth,
-    required this.adminId,
+    required this.instructorId,
   });
 
   factory Instructor.fromJson(Map<String, dynamic> json) {
     return Instructor(
-      instructorId: json['instructorId'],
-      lastName: json['lastName'],
-      emailId: json['emailId'],
-      nationalId: json['nationalId'],
-      dateOfBirth: DateTime.parse(json['dateOfBirth']),
-      adminId: json['adminId'],
+      adminId: json['adminId'] as int,
+      department: json['department'] as String,
+      firstName: json['firstName'] as String,
+      lastName: json['lastName'] as String,
+      emailId: json['emailId'] as String,
+      nationalId: json['nationalId'] as String,
+      dateOfBirth: json['dateOfBirth'] as String,
+      instructorId: json['instructorId'] as int,
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'instructorId': instructorId,
-      'lastName': lastName,
-      'emailId': emailId,
-      'nationalId': nationalId,
-      'dateOfBirth': dateOfBirth.toIso8601String(),
-      'adminId': adminId,
-    };
   }
 }
