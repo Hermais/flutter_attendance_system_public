@@ -7,7 +7,7 @@ class FacultyAdminRepository {
 
   FacultyAdminRepository({required this. facultyAdminWebServices});
 
-  Future<List<FacultyAdmin>> getFacultyAdminData() async {
+   Future<List<FacultyAdmin>> getFacultyAdminData() async {
     /// This is an implicit list of maps, to store our data from the web
     /// service (Example Students).
     final  facultyAdmin =

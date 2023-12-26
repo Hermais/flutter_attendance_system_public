@@ -7,24 +7,21 @@ import '../../../../core/data/repositories/lecture_repository.dart';
 import '../../../../core/data/services/lecture_web_services.dart';
 import '../../../../shared/constants_and_statics/shared_vars.dart';
 
-
 /// This class manages all of the timetables of the faculty admin.
 /// It is also used by the student to show their timetable, with the method
 /// getLecturesByDay().
 class FacultyAdminTimetables extends StatelessWidget {
   // routeName variable decides which page to show of academic years.
   final String academicYear;
-  final LectureRepository lectureRepository = LectureRepository(
-      lectureWebServices: LectureWebServices());
+  final LectureRepository lectureRepository =
+      LectureRepository(lectureWebServices: LectureWebServices());
 
   FacultyAdminTimetables({super.key, required this.academicYear});
 
-   String? globalDepartment;
+  String? globalDepartment;
 
   @override
   Widget build(BuildContext context) {
-
-
     /// Both showDepartments() and showDaysToSelect() will be wrapped by a
     /// BlocProvider to provide the lectures respectively.
     if (academicYear == prepYear) {
@@ -53,7 +50,7 @@ class FacultyAdminTimetables extends StatelessWidget {
           return InfoCard.blank(
             cardTitle: departments[index],
             cardDescription:
-            'Tap here to go to select days for ${departments[index]}',
+                'Tap here to go to select days for ${departments[index]}',
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                 globalDepartment = departments[index];
@@ -77,7 +74,7 @@ class FacultyAdminTimetables extends StatelessWidget {
           return InfoCard.blank(
             cardTitle: days[index],
             cardDescription:
-            'Tap here to go to select lectures for ${days[index]}',
+                'Tap here to go to select lectures for ${days[index]}',
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => getLecturesByDay(days[index])));
@@ -106,20 +103,37 @@ class FacultyAdminTimetables extends StatelessWidget {
       appBar: AppBar(
         title: Text(day),
       ),
-      body: ListView.builder(
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return InfoCard(
-              isButtonVisible: false,
-              cardTitle: 'Lecture ${index + 1}',
-              cardDescription:
-              'Lecture Description is probably provided.',
-              onTap: () {
-                // Navigator.of(context).push(MaterialPageRoute(
-                //     builder: (context) => _getLecturesByDay(days[index])));
-              },
-            );
-          }),
+      body: BlocProvider(
+        create: (context) => LectureCubit(lectureRepository: lectureRepository)..loadLecture(),
+        child: BlocBuilder<LectureCubit, LectureState>(
+          builder: (context, Lecturestate) {
+            if (Lecturestate is LectureInitial) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: Theme.of(context).primaryColor,
+                ),
+              );
+            }
+            if (Lecturestate is LectureLoaded) {
+              return ListView.builder(
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return InfoCard(
+                      isButtonVisible: false,
+                      cardTitle: 'Lecture ${index + 1}',
+                      cardDescription:
+                          'Lecture Description is probably provided.',
+                      onTap: () {
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (context) => _getLecturesByDay(days[index])));
+                      },
+                    );
+                  });
+            }
+            return Placeholder();
+          },
+        ),
+      ),
     );
   }
 }
