@@ -40,7 +40,7 @@ dependencies:
   qr_flutter:
   fl_chart:
   google_fonts:
-  dio:
+  dio: ^5.4.0
   flutter_bloc:
   cupertino_icons:
   http:

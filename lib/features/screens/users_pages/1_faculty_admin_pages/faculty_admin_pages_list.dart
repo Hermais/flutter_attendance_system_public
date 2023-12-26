@@ -9,6 +9,12 @@ import '../../../../core/cubits/user_cubit.dart';
 import '../../../../shared/constants_and_statics/shared_vars.dart';
 import '../../../widgets/card_widget.dart';
 import '../../../widgets/icons_widget.dart';
+UserCubit myUserCubit =  UserCubit(
+    userRepository:
+    UserRepository(userWebService: UserWebService()))
+  ..loadUsers();
+
+
 
 List<Widget> provideWidgetOptions(BuildContext context) {
   const margin = 5.0;
@@ -34,11 +40,7 @@ List<Widget> provideWidgetOptions(BuildContext context) {
       providers: [
         BlocProvider(
           create: (context) =>
-          UserCubit(
-              userRepository:
-              UserRepository(userWebService: UserWebService()))
-            ..loadUsers,
-        ),
+          myUserCubit,),
         BlocProvider(
           create: (context) => InternetCubit(connectivity: Connectivity()),
         ),
@@ -49,8 +51,6 @@ List<Widget> provideWidgetOptions(BuildContext context) {
         },
         builder: (context, state) {
           if (state is UserInitial) {
-            BlocProvider.of<UserCubit>(context).loadUsers();
-
             return Center(
               child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),
             );

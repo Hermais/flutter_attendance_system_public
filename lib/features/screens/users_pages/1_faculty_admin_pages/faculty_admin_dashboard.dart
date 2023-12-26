@@ -2,8 +2,10 @@
 
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/core/cubits/faculty_admin_cubit.dart';
 import 'package:flutter_attendance_system/features/screens/users_pages/1_faculty_admin_pages/faculty_admin_popups.dart';
 import 'package:flutter_attendance_system/features/widgets/bottom_navigation_bar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'faculty_admin_pages_list.dart';
 
 class FacultyAdminDashboard extends StatefulWidget {
@@ -61,7 +63,27 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return //BlocConsumer<FacultyAdminCubit,FacultyAdminState>(
+    //     listener: (context,State){},
+    //     builder:(context,State){
+    //   return if (state is! FacultyAdminLoaded){
+      //
+      //  Column(children: [
+      //     for (var facultyAdmin in state.facultyAdmin)
+      //                       InfoCard.blank(
+      //                         cardTitle: "${day.name}",
+      //                       ),
+      //                   ]);
+      //
+      //
+      //
+      //
+      //
+      //   }
+    //
+    // })
+
+      Scaffold(
       appBar: AppBar(
         title: Text(
           'Welcome, ${widget.userName ?? "Faculty Admin!"}',
