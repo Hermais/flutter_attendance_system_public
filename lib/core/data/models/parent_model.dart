@@ -1,9 +1,9 @@
 class Parent {
-  late String firstName;
-  late String lastName;
-  late String emailId;
-  late String nationalId;
-  late DateTime dateOfBirth;
+   String? firstName;
+   String? lastName;
+   String? emailId;
+   String? nationalId;
+   DateTime? dateOfBirth;
 
   Parent({
     required this.firstName,
@@ -29,7 +29,7 @@ class Parent {
       'lastName': lastName,
       'emailId': emailId,
       'nationalId': nationalId,
-      'dateOfBirth': dateOfBirth.toIso8601String(),
+      'dateOfBirth': dateOfBirth!.toIso8601String(),
     };
   }
 }

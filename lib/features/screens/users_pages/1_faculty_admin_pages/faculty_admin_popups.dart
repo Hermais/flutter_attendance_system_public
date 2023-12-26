@@ -27,7 +27,7 @@ class FacultyAdminPopups {
   String? _groupName;
   String? _instructorName;
   String? _courseDescription;
-  String? _studentDateOfBirth;
+  DateTime? _studentDateOfBirth;
   String? _studentFirstName;
   String? _studentLastName;
   String? _studentEmailID;
@@ -38,7 +38,7 @@ class FacultyAdminPopups {
   String? _parentFirstName;
   String? _parentLastName;
   String? _parentNationalID;
-  String? _parentDateOfBirth;
+  DateTime? _parentDateOfBirth;
   String? _adminID;
   String? _instructorDateOfBirth;
   String? _instructorFirstName;
@@ -49,7 +49,7 @@ class FacultyAdminPopups {
   List<String>? _instructorCourses;
   bool? _isFloatingActionButtonVisible;
   bool? _typeMessage;
-  String? _lectureStartDate;
+  DateTime? _lectureStartDate;
   Function setState;
 
   FacultyAdminPopups({required this.context, required this.setState});
@@ -85,8 +85,8 @@ class FacultyAdminPopups {
                 ),
                 const Text('Select Lecture Details:'),
                 DatePickerButton(
-                  selectedDate: "Select Start Date",
-                  setChangedDate: (String? value) {
+                  initialText: 'Select Start Date',
+                  setChangedDate: (value) {
                     _lectureStartDate = value!;
                   },
                 ),
@@ -315,7 +315,7 @@ class FacultyAdminPopups {
                   height: 10,
                 ),
                 DatePickerButton(
-                  selectedDate: 'Select Date of Birth',
+                  initialText: 'Select Date of Birth',
                   setChangedDate: (date) {
                     setState(() {
                       _instructorDateOfBirth = date;
@@ -393,7 +393,9 @@ class FacultyAdminPopups {
     );
   }
 
+  /// ##################################################################33
   Future<void> showAddStudentDialog() async {
+    final _firstNameFormKey = GlobalKey<FormState>();
     return await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -406,38 +408,24 @@ class FacultyAdminPopups {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 25,
-                    ),
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      onFieldSubmitted: (String value) {
-                        _instructorNationalID = value;
-                      },
-                      decoration: const InputDecoration(
-                        labelText: 'Admin ID',
-                        prefixIcon: Icon(
-                          Icons.numbers_sharp,
-                        ),
-                      ),
-                    )),
-                const SizedBox(height: 6),
-                const Divider(
-                  color: Colors.black,
-                  thickness: 1,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
                 const Text('Select Student Details:'),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
                     ),
                     child: TextFormField(
+                      key: _firstNameFormKey,
                       keyboardType: TextInputType.name,
-                      onFieldSubmitted: (String value) {
+                      // onFieldSubmitted: (String value) {
+                      //   _studentFirstName = value;
+                      // },
+                      validator: (String? value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                      onSaved: (String? value) {
                         _studentFirstName = value;
                       },
                       decoration: const InputDecoration(
@@ -508,7 +496,7 @@ class FacultyAdminPopups {
                   height: 10,
                 ),
                 DatePickerButton(
-                  selectedDate: 'Select Date of Birth',
+                  initialText: 'Select Date of Birth',
                   setChangedDate: (date) {
                     setState(() {
                       _studentDateOfBirth = date;
@@ -618,7 +606,7 @@ class FacultyAdminPopups {
                       ),
                     )),
                 DatePickerButton(
-                  selectedDate: 'Select Date of Birth',
+                  initialText: 'Select Date of Birth',
                   setChangedDate: (date) {
                     setState(() {
                       _parentDateOfBirth = date;
@@ -635,28 +623,36 @@ class FacultyAdminPopups {
             Row(
               children: [
                 BlocProvider(
-                  create: (context) => StudentCubit(
-                      studentRepository: StudentRepository(
-                          studentWebServices: StudentWebServices())),
-                  child: Builder(
-                  builder: (context) {
-                    final studentCubit = context.read<StudentCubit>();
+                    create: (context) => StudentCubit(
+                        studentRepository: StudentRepository(
+                            studentWebServices: StudentWebServices())),
+                    child: Builder(builder: (context) {
+                      final studentCubit = context.read<StudentCubit>();
 
-                    return TextButton(
-                      onPressed: () {
-                         //  parent = Parent(firstName: _parentFirstName, lastName: _parentLastName, emailId: _parentEmailID, nationalId: _parentnationalId, dateOfBirth: dateOfBirth);
-                         // student = Student(firstName: (firstName), lastName: lastName, emailId: emailId, dateOfBirth: dateOfBirth, nationalID: nationalID, department: department, studyYear: studyYear, adminAdminId: adminAdminId, parent:parent );
-                         // studentCubit.postStudentData(student);
-                      },
-                      child: const Text(
-                        'Add Student',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    );
-                  }
-                  )
-                ),
-
+                      return TextButton(
+                        onPressed: () {
+                          final parent = Parent(
+                              firstName: _parentFirstName,
+                              lastName: _parentLastName,
+                              emailId: _parentEmailID,
+                              nationalId: _parentNationalID,
+                              dateOfBirth: _parentDateOfBirth);
+                          final student = Student(
+                              firstName: _studentFirstName,
+                              lastName: _studentLastName,
+                              emailId: _studentEmailID,
+                              dateOfBirth: _studentDateOfBirth,
+                              nationalID: _studentNationalID,
+                              department: _studentDepartment,
+                              parent: parent);
+                          studentCubit.postStudentData(student);
+                        },
+                        child: const Text(
+                          'Add Student',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      );
+                    })),
                 TextButton(
                   onPressed: () {
                     _typeMessage = true;

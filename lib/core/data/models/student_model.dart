@@ -1,27 +1,27 @@
 import 'package:flutter_attendance_system/core/data/models/parent_model.dart';
 
 class Student {
-  String firstName;
-  String lastName;
-  String emailId;
-  DateTime dateOfBirth;
-  String nationalID;
-  String department;
-  int studyYear;
-  int adminAdminId;
-  Parent parent;
+  String? firstName;
+  String? lastName;
+  String? emailId;
+  DateTime? dateOfBirth;
+  String? nationalID;
+  String? department;
+  int? studyYear;
+  int? adminAdminId;
+  Parent? parent;
 
 
   Student({
-    required this.firstName,
-    required this.lastName,
-    required this.emailId,
-    required this.dateOfBirth,
-    required this.nationalID,
-    required this.department,
-    required this.studyYear,
-    required this.adminAdminId,
-    required this.parent,
+    this.firstName,
+    this.lastName,
+    this.emailId,
+    this.dateOfBirth,
+    this.nationalID,
+    this.department,
+    this.studyYear,
+    this.adminAdminId,
+    this.parent,
   });
 
   factory Student.fromJson(Map<String, dynamic> json) {
@@ -44,12 +44,12 @@ class Student {
       'firstName': firstName,
       'lastName': lastName,
       'emailID': emailId,
-      'dateOfBirth': dateOfBirth.toIso8601String(),
+      'dateOfBirth': dateOfBirth!.toIso8601String(),
       'nationality': nationalID,
       'department': department,
       'studyYear': studyYear,
       'ADMIN_AdminID': adminAdminId,
-      'parent': parent.toJson(),
+      'parent': parent!.toJson(),
 
     };
   }
