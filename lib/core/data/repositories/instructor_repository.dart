@@ -22,4 +22,24 @@ class InstructorRepository {
         .toList();
   }
 
+  Future<List<Instructor>> getInstructorDataByDepartment(String department) async {
+
+    final  instructors =
+    await  instructorWebServices.getInstructorDataByDepartment(department);
+
+
+    return  instructors
+        .map((elementInListFromWebService) =>
+        Instructor.fromJson(elementInListFromWebService))
+        .toList();
+  }
+  Future<void> postInstructorData(Instructor instructor) async {
+    try {
+      await instructorWebServices.postInstructorData(instructor.toJson());
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
 }

@@ -93,9 +93,9 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
         backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {
           FacultyAdminPopups facultyAdminPopups =
-              FacultyAdminPopups(context: context, setState: setState);
+              FacultyAdminPopups(mainContext: context, setState: setState);
           _selectedIndex == 0
-              ? facultyAdminPopups.showTimetablesDialog()
+              ? facultyAdminPopups.showAddLectureDialog()
               : facultyAdminPopups.showAddEntitiesDialog();
         },
         child: const Icon(Icons.settings_suggest),

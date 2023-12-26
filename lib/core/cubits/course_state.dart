@@ -8,8 +8,8 @@ class CourseInitial extends CourseState {
 }
 
 class CourseLoaded extends CourseState {
-  final List<Course> course;
+  final List<Course> courses;
 
-  CourseLoaded({required this.course});
+  CourseLoaded({required this.courses});
 
 }

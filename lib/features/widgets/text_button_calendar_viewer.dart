@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class DatePickerButton extends StatefulWidget {
-  final String? selectedDate;
   final Function setChangedDate;
+  final String? initialText;
 
-  const DatePickerButton({Key? key, this.selectedDate, required this.setChangedDate})
+  const DatePickerButton(
+      {Key? key,  required this.setChangedDate, this.initialText})
       : super(key: key);
 
   @override
@@ -12,12 +13,13 @@ class DatePickerButton extends StatefulWidget {
 }
 
 class DatePickerButtonState extends State<DatePickerButton> {
-  String? localSelectedDate;
+  DateTime? selectedDate;
+
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () async {
-        DateTime? selectedDate = await showDatePicker(
+         selectedDate = await showDatePicker(
           context: context,
           initialDate: DateTime.now(),
           firstDate: DateTime(1900),
@@ -26,12 +28,15 @@ class DatePickerButtonState extends State<DatePickerButton> {
 
         if (selectedDate != null) {
           setState(() {
-            localSelectedDate = "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}";
-            widget.setChangedDate(widget.selectedDate);
+            widget.setChangedDate(selectedDate);
           });
         }
       },
-      child: Text(localSelectedDate ?? widget.selectedDate ?? "Select Date"),
+      child: Text(
+        selectedDate == null
+            ? widget.initialText ?? 'Select Date'
+            : selectedDate.toString().substring(0, 10),
+      ),
     );
   }
 }

@@ -11,11 +11,3 @@ class InstructorLoaded extends InstructorState {
   InstructorLoaded({required this.instructors});
 
 }
-class InstructorSuccess extends InstructorState {
-}
-class FacultyAdminError extends InstructorState {
-  final String error;
-
-  FacultyAdminError(this.error);
-
-}

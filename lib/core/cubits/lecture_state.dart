@@ -56,3 +56,17 @@ class LectureLoaded extends LectureState {
   LectureLoaded({required this.lectureList});
 
 }
+
+class LectureSuccessState extends LectureState {
+  final String message;
+
+  LectureSuccessState({required this.message});
+
+}
+
+class LectureErrorState extends LectureState {
+  final String error;
+
+  LectureErrorState({required this.error});
+
+}

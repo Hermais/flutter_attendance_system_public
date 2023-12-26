@@ -26,8 +26,18 @@ class CourseWebServices {
   Future<List<dynamic>> getCourseData() async {
     try {
       /// here we type in the endpoint of the api, without the base url.
-      Response response = await dio.get('/getCourse');
+      Response response = await dio.get('/admin/course/Computer and Systems');
       /// in flutter http response.body, here response.data
+      return response.data;
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
+
+  Future<List<dynamic>> getCourseDataByDepartment(String department) async {
+    try {
+      Response response = await dio.get('/admin/course/$department');
       return response.data;
     } catch (e) {
       print(e);

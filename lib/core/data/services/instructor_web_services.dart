@@ -11,7 +11,7 @@ class InstructorWebServices {
     /// BaseOptions is a class that contains the base url, timeout, etc. This is a
     /// configuration class for Dio.
     BaseOptions options = BaseOptions(
-      baseUrl: 'https://qr-attendance-system.onrender.com',
+      baseUrl: exampleBaseURL,
       connectTimeout: maxDuration,
       receiveTimeout: maxDuration,
       receiveDataWhenStatusError: true,
@@ -32,6 +32,24 @@ class InstructorWebServices {
     } catch (e) {
       print(e);
       return [];
+    }
+  }
+
+  Future<List<dynamic>> getInstructorDataByDepartment(String department) async {
+    try {
+      Response response = await dio.get('/admin/instructorByDepartment/$department');
+      return response.data;
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
+  Future<void> postInstructorData(Map<String, dynamic> postData) async {
+    try {
+      await dio.post('/adminjj', data: postData);
+    } catch (e) {
+      print(e);
+      rethrow;
     }
   }
 }

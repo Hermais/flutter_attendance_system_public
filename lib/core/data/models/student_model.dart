@@ -1,55 +1,54 @@
+import 'package:flutter_attendance_system/core/data/models/parent_model.dart';
+
 class Student {
-  int studentId;
-  String firstName;
-  String lastName;
-  String emailId;
-  DateTime dateOfBirth;
-  String nationality;
-  String department;
-  int studyYear;
-  int parentParentId;
-  int adminAdminId;
+  String? firstName;
+  String? lastName;
+  String? emailId;
+  DateTime? dateOfBirth;
+  String? nationalId;
+  String? department;
+  int? studyYear;
+  int? adminId;
+  Parent? parentDto;
 
   Student({
-    required this.studentId,
-    required this.firstName,
-    required this.lastName,
-    required this.emailId,
-    required this.dateOfBirth,
-    required this.nationality,
-    required this.department,
-    required this.studyYear,
-    required this.parentParentId,
-    required this.adminAdminId,
+    this.firstName,
+    this.lastName,
+    this.emailId,
+    this.dateOfBirth,
+    this.nationalId,
+    this.department,
+    this.studyYear,
+    this.adminId,
+    this.parentDto,
   });
 
   factory Student.fromJson(Map<String, dynamic> json) {
     return Student(
-      studentId: json['StudentID'],
       firstName: json['firstName'],
       lastName: json['lastName'],
-      emailId: json['emailID'],
+      emailId: json['emailId'],
       dateOfBirth: DateTime.parse(json['dateOfBirth']),
-      nationality: json['nationality'],
+      nationalId: json['nationalID'],
       department: json['department'],
       studyYear: json['studyYear'],
-      parentParentId: json['PARENT_ParentID'],
-      adminAdminId: json['ADMIN_AdminID'],
+      adminId: json['adminId'],
+      parentDto: Parent.fromJson(json['parent']),
+
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'StudentID': studentId,
       'firstName': firstName,
       'lastName': lastName,
-      'emailID': emailId,
-      'dateOfBirth': dateOfBirth.toIso8601String(),
-      'nationality': nationality,
+      'dateOfBirth': dateOfBirth!.toIso8601String(),
+      'nationalId': nationalId,
       'department': department,
       'studyYear': studyYear,
-      'PARENT_ParentID': parentParentId,
-      'ADMIN_AdminID': adminAdminId,
+      'adminId': adminId,
+      'parent': parentDto!.toJson(),
+
     };
   }
 }
