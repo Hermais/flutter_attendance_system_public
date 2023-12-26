@@ -1,16 +1,14 @@
 class Course {
-  String courseCode;
-  String courseName;
-  String department;
-  int studyYear;
-  int adminAdminId;
+  String? courseCode;
+  String? courseName;
+  String? department;
+  int? studyYear;
 
   Course({
-    required this.courseCode,
-    required this.courseName,
-    required this.department,
-    required this.studyYear,
-    required this.adminAdminId
+     this.courseCode,
+     this.courseName,
+     this.department,
+     this.studyYear,
   });
 
   factory Course.fromJson(Map<String, dynamic> json) {
@@ -19,7 +17,6 @@ class Course {
       courseName: json['courseName'],
       department: json['department'],
       studyYear: json['studyYear'],
-      adminAdminId: json['ADMIN_AdminID'],
     );
   }
 
@@ -29,7 +26,6 @@ class Course {
       'courseName': courseName,
       'department': department,
       'studyYear': studyYear,
-      'ADMIN_AdminID': adminAdminId,
     };
   }
 }

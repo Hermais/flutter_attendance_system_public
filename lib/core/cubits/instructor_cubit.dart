@@ -18,6 +18,13 @@ class InstructorCubit extends Cubit<InstructorState> {
     });
   }
 
+  void loadInstructorByDepartment(String department) {
+    instructorRepository
+        .getInstructorDataByDepartment(department)
+        .then((instructors) {
+      emit(InstructorLoaded(instructors: instructors));
+    });
+  }
 
   // void postInstructor(Instructor instructor) {
   //   instructorRepository.postInstructorData(instructor).then((_) {

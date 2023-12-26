@@ -34,6 +34,16 @@ class InstructorWebServices {
       return [];
     }
   }
+
+  Future<List<dynamic>> getInstructorDataByDepartment(String department) async {
+    try {
+      Response response = await dio.get('/admin/instructorByDepartment/$department');
+      return response.data;
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
   Future<void> postInstructorData(Map<String, dynamic> postData) async {
     try {
       await dio.post('/adminjj', data: postData);

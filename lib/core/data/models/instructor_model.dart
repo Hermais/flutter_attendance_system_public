@@ -7,6 +7,8 @@ class Instructor {
   DateTime dateOfBirth;
   String department;
   int adminId;
+  List<String>? courseCode;
+
 
   Instructor({
     required this.instructorId,
@@ -16,9 +18,12 @@ class Instructor {
     required this.nationalId,
     required this.dateOfBirth,
     required this.adminId,
-    required this.department
+    required this.department,
+    this.courseCode
   });
 
+
+  // We won't need the courseCode in the get request
   factory Instructor.fromJson(Map<String, dynamic> json) {
     return Instructor(
       instructorId: json['instructorId'],
@@ -40,8 +45,9 @@ class Instructor {
       'emailId': emailId,
       'nationalId': nationalId,
       'dateOfBirth': dateOfBirth.toIso8601String(),
-      'adminId': adminId,
-      'department':department
+      'adminId': 1,
+      'department':department,
+      'courseCode':courseCode ?? []
     };
   }
 }

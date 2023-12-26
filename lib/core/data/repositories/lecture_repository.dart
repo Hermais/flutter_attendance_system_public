@@ -22,5 +22,9 @@ class LectureRepository {
         .toList();
   }
 
+  Future<void> postLecture(Lecture lecture) async {
+    await lectureWebServices.postLectureData(lecture.toJson());
+  }
+
 }
 

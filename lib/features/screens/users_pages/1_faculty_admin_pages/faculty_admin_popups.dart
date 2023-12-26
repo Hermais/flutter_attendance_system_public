@@ -3,21 +3,33 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/core/cubits/course_cubit.dart';
+import 'package:flutter_attendance_system/core/cubits/instructor_cubit.dart';
+import 'package:flutter_attendance_system/core/cubits/lecture_cubit.dart';
 import 'package:flutter_attendance_system/core/cubits/student_cubit.dart';
 import 'package:flutter_attendance_system/core/data/models/parent_model.dart';
 import 'package:flutter_attendance_system/core/data/models/student_model.dart';
+import 'package:flutter_attendance_system/core/data/repositories/instructor_repository.dart';
+import 'package:flutter_attendance_system/core/data/repositories/lecture_repository.dart';
 import 'package:flutter_attendance_system/core/data/repositories/student_repository.dart';
 import 'package:flutter_attendance_system/core/data/services/student_web_services.dart';
 import 'package:flutter_attendance_system/shared/constants_and_statics/shared_vars.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/cubits/halls_cubit.dart';
+import '../../../../core/data/repositories/course_repository.dart';
+import '../../../../core/data/repositories/halls_repository.dart';
+import '../../../../core/data/services/course_web_services.dart';
+import '../../../../core/data/services/halls_web_services.dart';
+import '../../../../core/data/services/instructor_web_services.dart';
+import '../../../../core/data/services/lecture_web_services.dart';
 import '../../../widgets/drop_down_button.dart';
 import '../../../widgets/multi_drop_down_button.dart';
 import '../../../widgets/text_button_calendar_viewer.dart';
 import '../../../widgets/text_button_clock_viewer.dart';
 
 class FacultyAdminPopups {
-  final BuildContext context;
+  final BuildContext mainContext;
   String? _courseCode;
   String? _startTime;
   String? _endTime;
@@ -39,8 +51,9 @@ class FacultyAdminPopups {
   String? _parentLastName;
   String? _parentNationalID;
   DateTime? _parentDateOfBirth;
-  int? _adminID;
+  String? _lectureDepartment;
   DateTime? _instructorDateOfBirth;
+  int? _adminID;
   String? _instructorFirstName;
   String? _instructorLastName;
   String? _instructorEmailID;
@@ -52,106 +65,200 @@ class FacultyAdminPopups {
   DateTime? _lectureStartDate;
   Function setState;
 
-  FacultyAdminPopups({required this.context, required this.setState});
+  FacultyAdminPopups({required this.mainContext, required this.setState});
 
-  Future<void> showTimetablesDialog() async {
+  Future<void> showAddLectureDialog() async {
+    final multiCubitKey = GlobalKey();
+
+    final lectureCubit = LectureCubit(
+        lectureRepository:
+            LectureRepository(lectureWebServices: LectureWebServices()));
+    final instructorCubit = InstructorCubit(
+        instructorRepository: InstructorRepository(
+            instructorWebServices: InstructorWebServices()));
+    final courseCubit = CourseCubit(
+        courseRepository:
+            CourseRepository(courseWebServices: CourseWebServices()));
+    final hallCubit = HallCubit(
+        hallRepository: HallRepository(hallWebServices: HallWebServices()));
+
     return await showDialog(
-      context: context,
+      context: mainContext,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Add Lecture'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text('Specify Main Properties:'),
-                DropdownButtonWidget<String>(
-                  items: const [
-                    'Preparatory',
-                    'First Year',
-                    'Second Year',
-                    'Third Year',
-                    'Fourth Year'
-                  ],
-                  selectionDescription: 'Academic Year',
-                  setValue: (String? value) {
-                    _groupName = value!;
-                  },
-                ),
-                const SizedBox(height: 16),
-                const Divider(
-                  color: Colors.black,
-                  thickness: 1,
-                ),
-                const Text('Select Lecture Details:'),
-                DatePickerButton(
-                  initialText: 'Select Start Date',
-                  setChangedDate: (value) {
-                    _lectureStartDate = value!;
-                  },
-                ),
-                ClockViewerTextButton(
-                  setChangedTime: (String? value) {
-                    _startTime = value!;
-                  },
-                  selectedTime: 'Select Start Time',
-                ),
-                ClockViewerTextButton(
-                  setChangedTime: (String? value) {
-                    _endTime = value!;
-                  },
-                  selectedTime: 'Select End Time',
-                ),
-                DropdownButtonWidget<String>(
-                  items: const [
-                    'Instructor 1',
-                    'Instructor 2',
-                    'Instructor 3',
-                    'Instructor 4'
-                  ],
-                  selectionDescription: 'Select Instructor',
-                  setValue: (String? value) {
-                    _instructorName = value!;
-                  },
-                ),
-                DropdownButtonWidget<String>(
-                  items: const ['Code 1', 'Code 2', 'Code 3', 'Code 4'],
-                  selectionDescription: 'Select Course Code',
-                  setValue: (String? value) {
-                    _courseCode = value!;
-                  },
-                ),
-                DropdownButtonWidget<String>(
-                  items: const [
-                    'Location 1',
-                    'Location 2',
-                    'Location 3',
-                    'Location 4'
-                  ],
-                  selectionDescription: 'Select Hall Location',
-                  setValue: (String? value) {
-                    _hallLocation = value!;
-                  },
-                ),
-                const SizedBox(height: 16),
-              ],
+        return MultiBlocProvider(
+          key: multiCubitKey,
+          providers: [
+            BlocProvider(
+              create: (context) => lectureCubit,
             ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Cancel'),
+            BlocProvider(
+              create: (context) => instructorCubit,
             ),
-            TextButton(
-              onPressed: () {
-                // Do something with the entered data
-                //Navigator.pop(context); // Close the dialog
-              },
-              child: const Text('Add  lecture'),
+            BlocProvider(
+              create: (context) => courseCubit,
+            ),
+            BlocProvider(
+              create: (context) => hallCubit,
             ),
           ],
+          child: AlertDialog(
+            title: const Text('Add Lecture'),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('Specify Main Properties:'),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: DropdownButtonWidget<String>(
+                      items: departments,
+                      selectionDescription: 'Department',
+                      setValue: (String? value) {
+                        instructorCubit.loadInstructorByDepartment(value!);
+                        courseCubit.loadCourseByDepartment(value);
+                        hallCubit.loadHalls();
+
+                        _lectureDepartment = value!;
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const Divider(
+                    color: Colors.black,
+                    thickness: 1,
+                  ),
+                  const Text('Select Lecture Details:'),
+                  DatePickerButton(
+                    initialText: 'Select Start Date',
+                    setChangedDate: (value) {
+                      _lectureStartDate = value!;
+                    },
+                  ),
+                  ClockViewerTextButton(
+                    setChangedTime: (String? value) {
+                      _startTime = value!;
+                    },
+                    selectedTime: 'Select Start Time',
+                  ),
+                  ClockViewerTextButton(
+                    setChangedTime: (String? value) {
+                      _endTime = value!;
+                    },
+                    selectedTime: 'Select End Time',
+                  ),
+                  BlocBuilder<InstructorCubit, InstructorState>(
+                    builder: (context, instructorState) {
+                      if (instructorState is InstructorInitial) {
+                        return DropdownButtonWidget<String>(
+                          items: const [
+                            'Specify Department First',
+                          ],
+                          enabled: false,
+                          selectionDescription: 'Specify Department First',
+                          setValue: (String? value) {
+                            _instructorName = value!;
+                          },
+                        );
+                      } else {
+                        return DropdownButtonWidget<String>(
+                          items: instructorState is InstructorLoaded
+                              ? instructorState.instructors
+                                  .map((e) => '${e.firstName} ${e.lastName}')
+                                  .toList()
+                              : [
+                                  'Specify Department First',
+                                ],
+                          selectionDescription: 'Select Instructor',
+                          setValue: (String? value) {
+                            _instructorName = value!;
+                          },
+                        );
+                      }
+                    },
+                  ),
+                  BlocBuilder<CourseCubit, CourseState>(
+                    builder: (context, courseState) {
+                      if (courseState is CourseInitial) {
+                        return DropdownButtonWidget<String>(
+                          items: const [
+                            'Specify Department First',
+                          ],
+                          enabled: false,
+                          selectionDescription: 'Specify Department First',
+                          setValue: (String? value) {
+                            _courseName = value!;
+                          },
+                        );
+                      } else {
+                        return DropdownButtonWidget<String>(
+                          items: courseState is CourseLoaded
+                              ? courseState.courses
+                                  .map((e) => '${e.courseName}')
+                                  .toList()
+                              : [
+                                  'Specify Department First',
+                                ],
+                          selectionDescription: 'Select Course First',
+                          setValue: (String? value) {
+                            _courseName = value!;
+                            // I want to prin the id corresponding to the attribute courseName
+
+                            print((courseState as CourseLoaded)
+                                .courses
+                                .firstWhere((element) =>
+                                    element.courseName == _courseName)
+                                .courseCode);
+
+                          },
+                        );
+                      }
+                    },
+                  ),
+                  BlocBuilder<HallCubit, HallsState>(
+                    builder: (context, hallsState) {
+                      if (hallsState is HallsInitial) {
+                        return DropdownButtonWidget<String>(
+                          items: const [
+                            'Specify Department First',
+                          ],
+                          enabled: false,
+                          selectionDescription: 'Specify Department First',
+                          setValue: (String? value) {
+                            _hallLocation = value!;
+                          },
+                        );
+                      } else {
+                        return DropdownButtonWidget<String>(
+                          items: hallsState is HallsLoaded
+                              ? hallsState.halls.map((e) => '${e}').toList()
+                              : [
+                                  'Specify Department First',
+                                ],
+                          selectionDescription: 'Select Hall',
+                          setValue: (String? value) {
+                            _hallLocation = value!;
+                          },
+                        );
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: const Text('Add  lecture'),
+              ),
+            ],
+          ),
         );
       },
     );
@@ -159,7 +266,7 @@ class FacultyAdminPopups {
 
   Future<void> showAddEntitiesDialog() async {
     return await showDialog(
-        context: context,
+        context: mainContext,
         builder: (BuildContext context) {
           return AlertDialog(
             content: SingleChildScrollView(
@@ -208,7 +315,7 @@ class FacultyAdminPopups {
 
   Future<void> showAddInstructorDialog() async {
     return await showDialog(
-      context: context,
+      context: mainContext,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text(
@@ -219,25 +326,6 @@ class FacultyAdminPopups {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 25,
-                    ),
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      onFieldSubmitted: (String value) {
-                        _instructorNationalID = value;
-                      },
-                      decoration: const InputDecoration(
-                        labelText: 'Admin ID',
-                        prefixIcon: Icon(
-                          Icons.numbers_sharp,
-                        ),
-                      ),
-                    )),
-                const SizedBox(
-                  height: 10,
-                ),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
@@ -283,7 +371,7 @@ class FacultyAdminPopups {
                     child: TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       onFieldSubmitted: (String value) {
-                        _instructorLastName = value;
+                        _instructorEmailID = value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'Email ID',
@@ -397,7 +485,7 @@ class FacultyAdminPopups {
   Future<void> showAddStudentDialog() async {
     final _firstNameFormKey = GlobalKey<FormState>();
     return await showDialog(
-      context: context,
+      context: mainContext,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text(
@@ -499,12 +587,11 @@ class FacultyAdminPopups {
                 const SizedBox(
                   height: 10,
                 ),
-
                 DropdownButtonWidget<String>(
                   items: academicYears,
                   selectionDescription: 'Select Academic Year',
                   setValue: (String? value) {
-                    _studentAcademicYear =yearMap[value] ;
+                    _studentAcademicYear = yearMap[value];
                   },
                 ),
                 const SizedBox(
@@ -632,7 +719,7 @@ class FacultyAdminPopups {
                               nationalId: _parentNationalID,
                               dateOfBirth: _parentDateOfBirth);
                           final student = Student(
-                              studyYear:_studentAcademicYear ,
+                              studyYear: _studentAcademicYear,
                               adminId: 1,
                               firstName: _studentFirstName,
                               lastName: _studentLastName,
@@ -689,7 +776,7 @@ class FacultyAdminPopups {
         print("Selected file is an Excel file.");
         File selectedFile = File(filePath);
         await sendFile(selectedFile);
-        ScaffoldMessenger.of(context).showSnackBar(
+        ScaffoldMessenger.of(mainContext).showSnackBar(
           SnackBar(
             content: message
                 ? const Text(' successfully loaded add student')
@@ -698,7 +785,7 @@ class FacultyAdminPopups {
           ),
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
+        ScaffoldMessenger.of(mainContext).showSnackBar(
           const SnackBar(
             content: Text("Selected file is not a valid Excel file."),
             duration: Duration(seconds: 3),
@@ -706,7 +793,7 @@ class FacultyAdminPopups {
         );
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
+      ScaffoldMessenger.of(mainContext).showSnackBar(
         const SnackBar(
           content: Text("No file selected."),
           duration: Duration(seconds: 3),

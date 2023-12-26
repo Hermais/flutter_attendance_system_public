@@ -7,9 +7,10 @@ class DropdownButtonWidget<T> extends StatefulWidget {
   final List<T> items;
   final String? selectionDescription;
   final Function setValue;
+  final bool? enabled ;
 
 
-  DropdownButtonWidget({Key? key,  this.value, required this.items, this.selectionDescription, required this.setValue})
+  DropdownButtonWidget({Key? key,  this.value, required this.items, this.selectionDescription, required this.setValue, this.enabled})
       : super(key: key);
 
   @override
@@ -22,13 +23,13 @@ class DropdownButtonWidgetState<T> extends State<DropdownButtonWidget<T>> {
     return DropdownButton<T>(
       icon: const Icon(Icons.arrow_drop_down_outlined),
       value: widget.value,
-      onChanged: (T? value) {
+      onChanged: widget.enabled ?? true ? (T? value) {
         setState(() {
           widget.value =  value;
           widget.setValue(value);
 
         });
-      },
+      } : null,
       items: widget.items
           .map<DropdownMenuItem<T>>(
             (T value) {

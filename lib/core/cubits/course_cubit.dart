@@ -15,8 +15,14 @@ class CourseCubit extends Cubit<CourseState> {
 
 
   void loadCourse() {
-    courseRepository.getCourse().then((course) {
-      emit(CourseLoaded(course: course));
+    courseRepository.getCourse().then((courses) {
+      emit(CourseLoaded(courses: courses));
+    });
+  }
+
+  void loadCourseByDepartment(String department) {
+    courseRepository.getCourseByDepartment(department).then((courses) {
+      emit(CourseLoaded(courses: courses));
     });
   }
 }
