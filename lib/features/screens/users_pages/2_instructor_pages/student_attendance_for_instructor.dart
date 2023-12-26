@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/core/cubits/student_cubit.dart';
+import 'package:flutter_attendance_system/core/data/repositories/student_repository.dart';
+import 'package:flutter_attendance_system/core/data/services/student_web_services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../widgets/card_widget.dart';
 
@@ -18,7 +22,20 @@ class InstructorStudentsAttendanceByWeek extends StatelessWidget {
         ),
         // TODO: Fetch the actual list of students who attend the course for instructor
         //  from the database.
-        body: ListView.builder(
+        body: BlocProvider(
+  create: (context) => StudentCubit(studentRepository:StudentRepository(studentWebServices:StudentWebServices()))..loadStudent(),
+  child: BlocBuilder<StudentCubit, StudentState>(
+  builder: (context, studentState) {
+    if(studentState is StudentInitial){
+
+      return Center(
+        child: CircularProgressIndicator(color: Theme
+            .of(context)
+            .primaryColor,),
+      );
+    }
+    if (studentState is StudentLoaded){
+    return ListView.builder(
             itemCount: 74,
             itemBuilder: (context, index) {
               return InfoCard(
@@ -29,7 +46,12 @@ class InstructorStudentsAttendanceByWeek extends StatelessWidget {
                 cardDescription: "Students of $week will be shown here.",
                 cardTitle: "Student ${index + 1}",
               );
-            }));
+            });}
+    return Placeholder();
+  },
+
+),
+));
   }
 }
 

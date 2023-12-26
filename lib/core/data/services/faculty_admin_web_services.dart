@@ -22,10 +22,14 @@ class FacultyAdminWebServices {
   }
 
   /// list type must be dynamic because it can be a list of strings or a list of maps.
-  Future<List<dynamic>> getFacultyAdminData() async {
+    // static
+     Future<List<dynamic>> getFacultyAdminData(//{
+   //@required String url
+      //@required Map<String,dynamic> Quere }
+   ) async {
     try {
       /// here we type in the endpoint of the api, without the base url.
-      Response response = await dio.get('/getFacultyAdmin');
+      Response response = await dio.get('/getFacultyAdmin'); //get ('method(url)',Quereparameters:Quere)
       /// in flutter http response.body, here response.data
       return response.data;
     } catch (e) {

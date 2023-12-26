@@ -26,20 +26,12 @@ class InstructorWebServices {
   Future<List<dynamic>> getInstructorData() async {
     try {
       /// here we type in the endpoint of the api, without the base url.
-      Response response = await dio.get('/getAllInstructor');
+      Response response = await dio.get('/getAllStudents');
       /// in flutter http response.body, here response.data
       return response.data;
     } catch (e) {
       print(e);
       return [];
-    }
-  }
-  Future<void> postInstructorData(Map<String, dynamic> postData) async {
-    try {
-      await dio.post('/postInstructor', data: postData);
-    } catch (e) {
-      print(e);
-      rethrow;
     }
   }
 }

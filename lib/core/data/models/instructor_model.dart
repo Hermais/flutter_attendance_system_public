@@ -5,9 +5,6 @@ class Instructor {
   String nationalId;
   DateTime dateOfBirth;
   int adminId;
-  String department;
-  List<String> courses;
-
 
   Instructor({
     required this.instructorId,
@@ -16,8 +13,6 @@ class Instructor {
     required this.nationalId,
     required this.dateOfBirth,
     required this.adminId,
-    required this.department,
-    required this.courses,
   });
 
   factory Instructor.fromJson(Map<String, dynamic> json) {
@@ -28,8 +23,6 @@ class Instructor {
       nationalId: json['nationalId'],
       dateOfBirth: DateTime.parse(json['dateOfBirth']),
       adminId: json['adminId'],
-      department: json['department'],
-      courses: json['courses'],
     );
   }
 
@@ -41,8 +34,6 @@ class Instructor {
       'nationalId': nationalId,
       'dateOfBirth': dateOfBirth.toIso8601String(),
       'adminId': adminId,
-      'department':department,
-      'courses':courses,
     };
   }
 }
