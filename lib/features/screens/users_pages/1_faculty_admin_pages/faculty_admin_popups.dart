@@ -3,7 +3,13 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/core/cubits/student_cubit.dart';
+import 'package:flutter_attendance_system/core/data/models/parent_model.dart';
+import 'package:flutter_attendance_system/core/data/models/student_model.dart';
+import 'package:flutter_attendance_system/core/data/repositories/student_repository.dart';
+import 'package:flutter_attendance_system/core/data/services/student_web_services.dart';
 import 'package:flutter_attendance_system/shared/constants_and_statics/shared_vars.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../widgets/drop_down_button.dart';
 import '../../../widgets/multi_drop_down_button.dart';
@@ -24,13 +30,14 @@ class FacultyAdminPopups {
   String? _studentDateOfBirth;
   String? _studentFirstName;
   String? _studentLastName;
-  String? _studentUniversityID;
+  String? _studentEmailID;
   String? _studentNationalID;
   String? _studentAcademicYear;
   String? _studentDepartment;
-  String? _parentID;
+  String? _parentEmailID;
   String? _parentFirstName;
-  String? _parentLAstName;
+  String? _parentLastName;
+  String? _parentNationalID;
   String? _parentDateOfBirth;
   String? _adminID;
   String? _instructorDateOfBirth;
@@ -48,11 +55,9 @@ class FacultyAdminPopups {
   FacultyAdminPopups({required this.context, required this.setState});
 
   Future<void> showTimetablesDialog() async {
-
     return await showDialog(
       context: context,
       builder: (BuildContext context) {
-
         return AlertDialog(
           title: const Text('Add Lecture'),
           content: SingleChildScrollView(
@@ -73,18 +78,18 @@ class FacultyAdminPopups {
                     _groupName = value!;
                   },
                 ),
-
                 const SizedBox(height: 16),
                 const Divider(
                   color: Colors.black,
                   thickness: 1,
                 ),
                 const Text('Select Lecture Details:'),
-                DatePickerButton(selectedDate: "Select Start Date",
-
+                DatePickerButton(
+                  selectedDate: "Select Start Date",
                   setChangedDate: (String? value) {
                     _lectureStartDate = value!;
-                  },),
+                  },
+                ),
                 ClockViewerTextButton(
                   setChangedTime: (String? value) {
                     _startTime = value!;
@@ -128,7 +133,6 @@ class FacultyAdminPopups {
                     _hallLocation = value!;
                   },
                 ),
-
                 const SizedBox(height: 16),
               ],
             ),
@@ -163,57 +167,54 @@ class FacultyAdminPopups {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextButton(
-                    onPressed: (){
+                    onPressed: () {
                       showAddInstructorDialog();
                     },
-                    child:const Text(
+                    child: const Text(
                       'Add Instructor',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   TextButton(
-                    onPressed: (){
+                    onPressed: () {
                       showAddStudentDialog();
                     },
-                    child:const Text(
+                    child: const Text(
                       'Add Student',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   TextButton(
-                    onPressed: (){
+                    onPressed: () {
                       Navigator.pop(context);
                     },
-                    child:const Text(
+                    child: const Text(
                       'Cancel',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                   ),
                 ],
               ),
             ),
           );
-        }
-    );
+        });
   }
+
   Future<void> showAddInstructorDialog() async {
     return await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-
-          title: const Text('Add Instructor',
-            style: TextStyle(
-                fontWeight: FontWeight.w500
-            ),),
+          title: const Text(
+            'Add Instructor',
+            style: TextStyle(fontWeight: FontWeight.w500),
+          ),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -225,7 +226,7 @@ class FacultyAdminPopups {
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (String value) {
-                        _instructorNationalID=value;
+                        _instructorNationalID = value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'Admin ID',
@@ -233,9 +234,10 @@ class FacultyAdminPopups {
                           Icons.numbers_sharp,
                         ),
                       ),
-                    )
+                    )),
+                const SizedBox(
+                  height: 10,
                 ),
-                const SizedBox(height: 10,),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
@@ -243,7 +245,7 @@ class FacultyAdminPopups {
                     child: TextFormField(
                       keyboardType: TextInputType.name,
                       onFieldSubmitted: (String value) {
-                        _instructorFirstName=value;
+                        _instructorFirstName = value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'First Name',
@@ -251,9 +253,10 @@ class FacultyAdminPopups {
                           Icons.text_format,
                         ),
                       ),
-                    )
+                    )),
+                const SizedBox(
+                  height: 10,
                 ),
-                const SizedBox(height: 10,),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
@@ -261,7 +264,7 @@ class FacultyAdminPopups {
                     child: TextFormField(
                       keyboardType: TextInputType.name,
                       onFieldSubmitted: (String value) {
-                        _instructorLastName=value;
+                        _instructorLastName = value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'Last Name',
@@ -269,9 +272,10 @@ class FacultyAdminPopups {
                           Icons.text_format,
                         ),
                       ),
-                    )
+                    )),
+                const SizedBox(
+                  height: 10,
                 ),
-                const SizedBox(height: 10,),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
@@ -279,7 +283,7 @@ class FacultyAdminPopups {
                     child: TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       onFieldSubmitted: (String value) {
-                        _instructorLastName=value;
+                        _instructorLastName = value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'Email ID',
@@ -287,9 +291,10 @@ class FacultyAdminPopups {
                           Icons.text_format,
                         ),
                       ),
-                    )
+                    )),
+                const SizedBox(
+                  height: 10,
                 ),
-                const SizedBox(height: 10,),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
@@ -297,7 +302,7 @@ class FacultyAdminPopups {
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (String value) {
-                        _instructorNationalID=value;
+                        _instructorNationalID = value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'National ID',
@@ -305,9 +310,10 @@ class FacultyAdminPopups {
                           Icons.numbers_sharp,
                         ),
                       ),
-                    )
+                    )),
+                const SizedBox(
+                  height: 10,
                 ),
-                const SizedBox(height: 10,),
                 DatePickerButton(
                   selectedDate: 'Select Date of Birth',
                   setChangedDate: (date) {
@@ -326,7 +332,9 @@ class FacultyAdminPopups {
                     },
                   ),
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 MultiSelectDropdownWidget<String>(
                   items: const [
                     'math_1',
@@ -340,7 +348,7 @@ class FacultyAdminPopups {
                   ],
                   selectionDescription: 'Instructor courses',
                   setValues: (List<String>? values) {
-                    _instructorCourses=values;
+                    _instructorCourses = values;
                     //print('Selected Values: $values');
                   },
                 ),
@@ -350,25 +358,32 @@ class FacultyAdminPopups {
           actions: [
             Row(
               children: [
-
                 TextButton(
-                  onPressed: () {
-                  },
-                  child: const Text('Add Instructor',style: TextStyle(fontSize: 11),),
+                  onPressed: () {},
+                  child: const Text(
+                    'Add Instructor',
+                    style: TextStyle(fontSize: 11),
+                  ),
                 ),
                 TextButton(
                   onPressed: () {
-                    _typeMessage=false;
+                    _typeMessage = false;
                     pickExcelFile(_typeMessage!);
                     Navigator.pop(context);
                   },
-                  child: const Text('Add By Excel',style: TextStyle(fontSize: 11),),
+                  child: const Text(
+                    'Add By Excel',
+                    style: TextStyle(fontSize: 11),
+                  ),
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: const Text('Cancel',style: TextStyle(fontSize: 11),),
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(fontSize: 11),
+                  ),
                 ),
               ],
             ),
@@ -377,19 +392,44 @@ class FacultyAdminPopups {
       },
     );
   }
+
   Future<void> showAddStudentDialog() async {
     return await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Add Student',
-            style: TextStyle(
-                fontWeight: FontWeight.w500
-            ),),
+          title: const Text(
+            'Add Student',
+            style: TextStyle(fontWeight: FontWeight.w500),
+          ),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      onFieldSubmitted: (String value) {
+                        _instructorNationalID = value;
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Admin ID',
+                        prefixIcon: Icon(
+                          Icons.numbers_sharp,
+                        ),
+                      ),
+                    )),
+                const SizedBox(height: 6),
+                const Divider(
+                  color: Colors.black,
+                  thickness: 1,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
                 const Text('Select Student Details:'),
                 Padding(
                     padding: const EdgeInsets.symmetric(
@@ -398,7 +438,7 @@ class FacultyAdminPopups {
                     child: TextFormField(
                       keyboardType: TextInputType.name,
                       onFieldSubmitted: (String value) {
-                        _studentFirstName=value;
+                        _studentFirstName = value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'First Name',
@@ -406,9 +446,10 @@ class FacultyAdminPopups {
                           Icons.text_format,
                         ),
                       ),
-                    )
+                    )),
+                const SizedBox(
+                  height: 10,
                 ),
-                const SizedBox(height: 10,),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
@@ -416,7 +457,7 @@ class FacultyAdminPopups {
                     child: TextFormField(
                       keyboardType: TextInputType.name,
                       onFieldSubmitted: (String value) {
-                        _studentLastName=value;
+                        _studentLastName = value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'Last Name',
@@ -424,27 +465,29 @@ class FacultyAdminPopups {
                           Icons.text_format,
                         ),
                       ),
-                    )
+                    )),
+                const SizedBox(
+                  height: 10,
                 ),
-                const SizedBox(height: 10,),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
                     ),
                     child: TextFormField(
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.emailAddress,
                       onFieldSubmitted: (String value) {
-                        _studentUniversityID=value;
+                        _studentEmailID = value;
                       },
                       decoration: const InputDecoration(
-                        labelText: 'University ID',
+                        labelText: 'Email ID',
                         prefixIcon: Icon(
-                          Icons.numbers_sharp,
+                          Icons.email,
                         ),
                       ),
-                    )
+                    )),
+                const SizedBox(
+                  height: 10,
                 ),
-                const SizedBox(height: 10,),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
@@ -452,7 +495,7 @@ class FacultyAdminPopups {
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (String value) {
-                        _studentNationalID=value;
+                        _studentNationalID = value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'National ID',
@@ -460,9 +503,10 @@ class FacultyAdminPopups {
                           Icons.numbers_sharp,
                         ),
                       ),
-                    )
+                    )),
+                const SizedBox(
+                  height: 10,
                 ),
-                const SizedBox(height: 10,),
                 DatePickerButton(
                   selectedDate: 'Select Date of Birth',
                   setChangedDate: (date) {
@@ -471,7 +515,9 @@ class FacultyAdminPopups {
                     });
                   },
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 DropdownButtonWidget<String>(
                   items: academicYears,
                   selectionDescription: 'Select Academic Year',
@@ -479,7 +525,9 @@ class FacultyAdminPopups {
                     _studentAcademicYear = value!;
                   },
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: DropdownButtonWidget<String>(
@@ -490,7 +538,7 @@ class FacultyAdminPopups {
                     },
                   ),
                 ),
-                const SizedBox(height:6),
+                const SizedBox(height: 6),
                 const Divider(
                   color: Colors.black,
                   thickness: 1,
@@ -503,7 +551,7 @@ class FacultyAdminPopups {
                     child: TextFormField(
                       keyboardType: TextInputType.name,
                       onFieldSubmitted: (String value) {
-                        _studentFirstName=value;
+                        _studentFirstName = value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'First Name',
@@ -511,9 +559,10 @@ class FacultyAdminPopups {
                           Icons.text_format,
                         ),
                       ),
-                    )
+                    )),
+                const SizedBox(
+                  height: 10,
                 ),
-                const SizedBox(height: 10,),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
@@ -521,7 +570,7 @@ class FacultyAdminPopups {
                     child: TextFormField(
                       keyboardType: TextInputType.name,
                       onFieldSubmitted: (String value) {
-                        _studentLastName=value;
+                        _studentLastName = value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'Last Name',
@@ -529,7 +578,28 @@ class FacultyAdminPopups {
                           Icons.text_format,
                         ),
                       ),
-                    )
+                    )),
+                const SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      onFieldSubmitted: (String value) {
+                        _parentEmailID = value;
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Email ID',
+                        prefixIcon: Icon(
+                          Icons.email,
+                        ),
+                      ),
+                    )),
+                const SizedBox(
+                  height: 10,
                 ),
                 Padding(
                     padding: const EdgeInsets.symmetric(
@@ -538,17 +608,15 @@ class FacultyAdminPopups {
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (String value) {
-                        _parentID=value;
+                        _parentNationalID = value;
                       },
                       decoration: const InputDecoration(
-                        labelText: 'Parent ID',
+                        labelText: 'National ID',
                         prefixIcon: Icon(
                           Icons.numbers_sharp,
                         ),
                       ),
-                    )
-                ),
-                const SizedBox(height: 10,),
+                    )),
                 DatePickerButton(
                   selectedDate: 'Select Date of Birth',
                   setChangedDate: (date) {
@@ -557,35 +625,57 @@ class FacultyAdminPopups {
                     });
                   },
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
               ],
             ),
           ),
           actions: [
             Row(
-                children: [
+              children: [
+                BlocProvider(
+                  create: (context) => StudentCubit(
+                      studentRepository: StudentRepository(
+                          studentWebServices: StudentWebServices())),
+                  child: Builder(
+                  builder: (context) {
+                    final studentCubit = context.read<StudentCubit>();
 
-                  TextButton(
-                    onPressed: () {
-                    },
-                    child: const Text('Add Student',style: TextStyle(fontSize: 12),),
+                    return TextButton(
+                      onPressed: () {
+                         //  parent = Parent(firstName: _parentFirstName, lastName: _parentLastName, emailId: _parentEmailID, nationalId: _parentnationalId, dateOfBirth: dateOfBirth);
+                         // student = Student(firstName: (firstName), lastName: lastName, emailId: emailId, dateOfBirth: dateOfBirth, nationalID: nationalID, department: department, studyYear: studyYear, adminAdminId: adminAdminId, parent:parent );
+                         // studentCubit.postStudentData(student);
+                      },
+                      child: const Text(
+                        'Add Student',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    );
+                  }
+                  )
+                ),
+
+                TextButton(
+                  onPressed: () {
+                    _typeMessage = true;
+                    pickExcelFile(_typeMessage!);
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'Add By Excel',
+                    style: TextStyle(fontSize: 12),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      _typeMessage=true;
-                      pickExcelFile(_typeMessage!);
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Add By Excel',style: TextStyle(fontSize: 12),),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Cancel'),
-                  ),
-                ],
-              ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Cancel'),
+                ),
+              ],
+            ),
           ],
         );
       },
@@ -602,20 +692,23 @@ class FacultyAdminPopups {
       String filePath = result.files.single.path!;
       print("Selected file path: $filePath");
       // Check if the selected file has a valid Excel extension
-      if (filePath.toLowerCase().endsWith('.xlsx') || filePath.toLowerCase().endsWith('.xls')) {
+      if (filePath.toLowerCase().endsWith('.xlsx') ||
+          filePath.toLowerCase().endsWith('.xls')) {
         print("Selected file is an Excel file.");
         File selectedFile = File(filePath);
         await sendFile(selectedFile);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: message ? const Text(' successfully loaded add student') :const Text(' successfully loaded add instructor'),
+            content: message
+                ? const Text(' successfully loaded add student')
+                : const Text(' successfully loaded add instructor'),
             duration: const Duration(seconds: 4),
           ),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text(  "Selected file is not a valid Excel file."),
+            content: Text("Selected file is not a valid Excel file."),
             duration: Duration(seconds: 3),
           ),
         );

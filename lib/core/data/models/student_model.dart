@@ -1,55 +1,56 @@
+import 'package:flutter_attendance_system/core/data/models/parent_model.dart';
+
 class Student {
-  int studentId;
   String firstName;
   String lastName;
   String emailId;
   DateTime dateOfBirth;
-  String nationality;
+  String nationalID;
   String department;
   int studyYear;
-  int parentParentId;
   int adminAdminId;
+  Parent parent;
+
 
   Student({
-    required this.studentId,
     required this.firstName,
     required this.lastName,
     required this.emailId,
     required this.dateOfBirth,
-    required this.nationality,
+    required this.nationalID,
     required this.department,
     required this.studyYear,
-    required this.parentParentId,
     required this.adminAdminId,
+    required this.parent,
   });
 
   factory Student.fromJson(Map<String, dynamic> json) {
     return Student(
-      studentId: json['StudentID'],
       firstName: json['firstName'],
       lastName: json['lastName'],
       emailId: json['emailID'],
       dateOfBirth: DateTime.parse(json['dateOfBirth']),
-      nationality: json['nationality'],
+      nationalID: json['nationality'],
       department: json['department'],
       studyYear: json['studyYear'],
-      parentParentId: json['PARENT_ParentID'],
       adminAdminId: json['ADMIN_AdminID'],
+      parent: Parent.fromJson(json['parent']),
+
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'StudentID': studentId,
       'firstName': firstName,
       'lastName': lastName,
       'emailID': emailId,
       'dateOfBirth': dateOfBirth.toIso8601String(),
-      'nationality': nationality,
+      'nationality': nationalID,
       'department': department,
       'studyYear': studyYear,
-      'PARENT_ParentID': parentParentId,
       'ADMIN_AdminID': adminAdminId,
+      'parent': parent.toJson(),
+
     };
   }
 }

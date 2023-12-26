@@ -20,5 +20,13 @@ class StudentRepository {
         Student.fromJson(elementInListFromWebService))
         .toList();
   }
+  Future<void> postStudentData(Student student) async {
+    try {
+      await studentWebServices.postStudentData(student.toJson());
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
 
 }

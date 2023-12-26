@@ -1,5 +1,4 @@
 class Parent {
-  late int parentId;
   late String firstName;
   late String lastName;
   late String emailId;
@@ -7,7 +6,6 @@ class Parent {
   late DateTime dateOfBirth;
 
   Parent({
-    required this.parentId,
     required this.firstName,
     required this.lastName,
     required this.emailId,
@@ -17,7 +15,6 @@ class Parent {
 
   factory Parent.fromJson(Map<String, dynamic> json) {
     return Parent(
-      parentId: json['parentId'],
       firstName: json['firstName'],
       lastName: json['lastName'],
       emailId: json['emailId'],
@@ -28,7 +25,6 @@ class Parent {
 
   Map<String, dynamic> toJson() {
     return {
-      'parentId': parentId,
       'firstName': firstName,
       'lastName': lastName,
       'emailId': emailId,
