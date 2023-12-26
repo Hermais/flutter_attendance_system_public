@@ -5,36 +5,35 @@ class Student {
   String? lastName;
   String? emailId;
   DateTime? dateOfBirth;
-  String? nationalID;
+  String? nationalId;
   String? department;
   int? studyYear;
-  int? adminAdminId;
-  Parent? parent;
-
+  int? adminId;
+  Parent? parentDto;
 
   Student({
     this.firstName,
     this.lastName,
     this.emailId,
     this.dateOfBirth,
-    this.nationalID,
+    this.nationalId,
     this.department,
     this.studyYear,
-    this.adminAdminId,
-    this.parent,
+    this.adminId,
+    this.parentDto,
   });
 
   factory Student.fromJson(Map<String, dynamic> json) {
     return Student(
       firstName: json['firstName'],
       lastName: json['lastName'],
-      emailId: json['emailID'],
+      emailId: json['emailId'],
       dateOfBirth: DateTime.parse(json['dateOfBirth']),
-      nationalID: json['nationality'],
+      nationalId: json['nationalID'],
       department: json['department'],
       studyYear: json['studyYear'],
-      adminAdminId: json['ADMIN_AdminID'],
-      parent: Parent.fromJson(json['parent']),
+      adminId: json['adminId'],
+      parentDto: Parent.fromJson(json['parent']),
 
     );
   }
@@ -43,13 +42,12 @@ class Student {
     return {
       'firstName': firstName,
       'lastName': lastName,
-      'emailID': emailId,
       'dateOfBirth': dateOfBirth!.toIso8601String(),
-      'nationality': nationalID,
+      'nationalId': nationalId,
       'department': department,
       'studyYear': studyYear,
-      'ADMIN_AdminID': adminAdminId,
-      'parent': parent!.toJson(),
+      'adminId': adminId,
+      'parent': parentDto!.toJson(),
 
     };
   }

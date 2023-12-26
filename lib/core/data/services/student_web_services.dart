@@ -36,7 +36,7 @@ class StudentWebServices {
   }
   Future<void> postStudentData(Map<String, dynamic> postData) async {
     try {
-      await dio.post('/admin/student', data: postData);
+      await dio.post('/admin', data: postData);
     } catch (e) {
       print(e);
       rethrow;

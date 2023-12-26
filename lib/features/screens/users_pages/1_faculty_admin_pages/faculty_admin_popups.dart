@@ -32,14 +32,14 @@ class FacultyAdminPopups {
   String? _studentLastName;
   String? _studentEmailID;
   String? _studentNationalID;
-  String? _studentAcademicYear;
+  int? _studentAcademicYear;
   String? _studentDepartment;
   String? _parentEmailID;
   String? _parentFirstName;
   String? _parentLastName;
   String? _parentNationalID;
   DateTime? _parentDateOfBirth;
-  String? _adminID;
+  int? _adminID;
   String? _instructorDateOfBirth;
   String? _instructorFirstName;
   String? _instructorLastName;
@@ -409,23 +409,16 @@ class FacultyAdminPopups {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text('Select Student Details:'),
+                const SizedBox(
+                  height: 10,
+                ),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
                     ),
                     child: TextFormField(
-                      key: _firstNameFormKey,
                       keyboardType: TextInputType.name,
-                      // onFieldSubmitted: (String value) {
-                      //   _studentFirstName = value;
-                      // },
-                      validator: (String? value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
-                      onSaved: (String? value) {
+                      onChanged: (String value) {
                         _studentFirstName = value;
                       },
                       decoration: const InputDecoration(
@@ -444,7 +437,7 @@ class FacultyAdminPopups {
                     ),
                     child: TextFormField(
                       keyboardType: TextInputType.name,
-                      onFieldSubmitted: (String value) {
+                      onChanged: (String value) {
                         _studentLastName = value;
                       },
                       decoration: const InputDecoration(
@@ -463,7 +456,7 @@ class FacultyAdminPopups {
                     ),
                     child: TextFormField(
                       keyboardType: TextInputType.emailAddress,
-                      onFieldSubmitted: (String value) {
+                      onChanged: (String value) {
                         _studentEmailID = value;
                       },
                       decoration: const InputDecoration(
@@ -482,7 +475,7 @@ class FacultyAdminPopups {
                     ),
                     child: TextFormField(
                       keyboardType: TextInputType.number,
-                      onFieldSubmitted: (String value) {
+                      onChanged: (String value) {
                         _studentNationalID = value;
                       },
                       decoration: const InputDecoration(
@@ -506,11 +499,12 @@ class FacultyAdminPopups {
                 const SizedBox(
                   height: 10,
                 ),
+
                 DropdownButtonWidget<String>(
                   items: academicYears,
                   selectionDescription: 'Select Academic Year',
                   setValue: (String? value) {
-                    _studentAcademicYear = value!;
+                    _studentAcademicYear =yearMap[value] ;
                   },
                 ),
                 const SizedBox(
@@ -538,8 +532,8 @@ class FacultyAdminPopups {
                     ),
                     child: TextFormField(
                       keyboardType: TextInputType.name,
-                      onFieldSubmitted: (String value) {
-                        _studentFirstName = value;
+                      onChanged: (String value) {
+                        _parentFirstName = value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'First Name',
@@ -557,8 +551,8 @@ class FacultyAdminPopups {
                     ),
                     child: TextFormField(
                       keyboardType: TextInputType.name,
-                      onFieldSubmitted: (String value) {
-                        _studentLastName = value;
+                      onChanged: (String value) {
+                        _parentLastName = value;
                       },
                       decoration: const InputDecoration(
                         labelText: 'Last Name',
@@ -576,7 +570,7 @@ class FacultyAdminPopups {
                     ),
                     child: TextFormField(
                       keyboardType: TextInputType.emailAddress,
-                      onFieldSubmitted: (String value) {
+                      onChanged: (String value) {
                         _parentEmailID = value;
                       },
                       decoration: const InputDecoration(
@@ -595,7 +589,7 @@ class FacultyAdminPopups {
                     ),
                     child: TextFormField(
                       keyboardType: TextInputType.number,
-                      onFieldSubmitted: (String value) {
+                      onChanged: (String value) {
                         _parentNationalID = value;
                       },
                       decoration: const InputDecoration(
@@ -638,14 +632,16 @@ class FacultyAdminPopups {
                               nationalId: _parentNationalID,
                               dateOfBirth: _parentDateOfBirth);
                           final student = Student(
+                              studyYear:_studentAcademicYear ,
+                              adminId: 1,
                               firstName: _studentFirstName,
                               lastName: _studentLastName,
                               emailId: _studentEmailID,
                               dateOfBirth: _studentDateOfBirth,
-                              nationalID: _studentNationalID,
+                              nationalId: _studentNationalID,
                               department: _studentDepartment,
-                              parent: parent);
-                          studentCubit.postStudentData(student);
+                              parentDto: parent);
+                          studentCubit.printjson(student);
                         },
                         child: const Text(
                           'Add Student',
@@ -751,14 +747,14 @@ class FacultyAdminPopups {
   }
 
   void printVariables() {
-    print('_courseCode: $_courseCode');
-    print('_startTime: $_startTime');
-    print('_endTime: $_endTime');
-    print('_hallLocation: $_hallLocation');
-    print('_courseName: $_courseName');
-    print('_term: $_term');
-    print('_groupName: $_groupName');
-    print('_instructorName: $_instructorName');
-    print('_courseDescription: $_courseDescription');
+    print('_courseCode: $_parentFirstName');
+    print('_startTime: $_parentLastName');
+    print('_endTime: $_studentNationalID');
+    print('_hallLocation: $_studentDepartment');
+    print('_courseName: $_studentDateOfBirth');
+    print('_term: $_studentAcademicYear');
+    print('_groupName: $_studentLastName');
+    print('_instructorName: $_studentEmailID');
+    print('_courseDescription: $_parentEmailID');
   }
 }
