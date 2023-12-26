@@ -40,7 +40,7 @@ class FacultyAdminPopups {
   String? _parentNationalID;
   DateTime? _parentDateOfBirth;
   int? _adminID;
-  String? _instructorDateOfBirth;
+  DateTime? _instructorDateOfBirth;
   String? _instructorFirstName;
   String? _instructorLastName;
   String? _instructorEmailID;
