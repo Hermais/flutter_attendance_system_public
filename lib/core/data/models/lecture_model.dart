@@ -1,24 +1,22 @@
 class Lecture {
-  int lectureID;
-  DateTime startTime;
-  DateTime endTime;
-  DateTime firstDate;
-  int hallLocation;
-  int doctorDoctorId;
-  String courseCourseCode;
-  int adminAdminId;
-  int termTermId;
+  int? lectureID;
+  int? adminId;
+  DateTime? startTime;
+  DateTime? endTime;
+  DateTime? firstDate;
+  int? hallLocation;
+  String? courseCode;
 
   Lecture({
-    required this.lectureID,
-    required this.startTime,
-    required this.endTime,
-    required this.firstDate,
-    required this.hallLocation,
-    required this.doctorDoctorId,
-    required this.courseCourseCode,
-    required this.adminAdminId,
-    required this.termTermId,
+     this.lectureID,
+     this.startTime,
+     this.endTime,
+     this.firstDate,
+     this.hallLocation,
+      this.adminId,
+      this.courseCode,
+
+
   });
 
   factory Lecture.fromJson(Map<String, dynamic> json) {
@@ -28,24 +26,21 @@ class Lecture {
       endTime: DateTime.parse(json['endTime']),
       firstDate: DateTime.parse(json['firstDate']),
       hallLocation: json['hallLocation'],
-      doctorDoctorId: json['DOCTOR_DoctorId'],
-      courseCourseCode: json['COURSE_courseCode'],
-      adminAdminId: json['ADMIN_AdminId'],
-      termTermId: json['TERM_termId'],
+      adminId: json['adminId'],
+      courseCode: json['courseCode'],
+
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'LectureID': lectureID,
-      'startTime': startTime.toIso8601String(),
-      'endTime': endTime.toIso8601String(),
-      'firstDate': firstDate.toIso8601String(),
+      'startTime': startTime!.toString().split(" ")[1].substring(0, 8),
+      'endTime': endTime!.toString().split(" ")[1].substring(0, 8),
+      'firstDate': firstDate!.toString().substring(0, 10),
       'hallLocation': hallLocation,
-      'DOCTOR_DoctorId': doctorDoctorId,
-      'COURSE_courseCode': courseCourseCode,
-      'ADMIN_AdminId': adminAdminId,
-      'TERM_termId': termTermId,
+      'adminId': 1,
+      'courseCode': courseCode,
+
     };
   }
 }

@@ -76,9 +76,9 @@ List<Widget> provideWidgetOptions(BuildContext mainContext) {
                     itemBuilder: (context, index) {
                       return InfoCard(
                         cardThumbnail: const Icon(Icons.book),
-                        cardTitle: state.lectureList[index].courseCourseCode,
-                        lectureStartsAt: DateFormat("hh:mm a").format(state.lectureList[index].startTime),
-                        lectureEndsAt: DateFormat("hh:mm a" ).format(state.lectureList[index].endTime),
+                        cardTitle: state.lectureList[index].courseCode,
+                        lectureStartsAt: DateFormat("hh:mm a").format(state.lectureList[index].startTime!),
+                        lectureEndsAt: DateFormat("hh:mm a" ).format(state.lectureList[index].endTime!),
                         lecturePlace: state.lectureList[index].hallLocation.toString(),
                         buttonText: "Attend",
                         onButtonTap: () {

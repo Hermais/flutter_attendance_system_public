@@ -16,7 +16,7 @@ class LectureManagerCubit extends Cubit<LectureManagerState> {
       loadLecture();
     }
 
-    if(lecture.startTime.isBefore(DateTime.now()) && lecture.endTime.isAfter(DateTime.now())) {
+    if(lecture.startTime!.isBefore(DateTime.now()) && lecture.endTime!.isAfter(DateTime.now())) {
       emit(LectureManagerInSession(lecture: lecture));
     }
     else {
@@ -33,7 +33,7 @@ class LectureManagerCubit extends Cubit<LectureManagerState> {
   }
 
   String getCurrentLectureName() {
-    return lecture.courseCourseCode;
+    return lecture.courseCode!;
   }
 
 

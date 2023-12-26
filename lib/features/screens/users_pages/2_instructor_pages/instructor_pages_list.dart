@@ -79,11 +79,11 @@ List<Widget> provideWidgetOptions(BuildContext context, LectureManagerCubit inst
                       cardThumbnail: const Icon(Icons.book),
 
                       cardTitle: lectureState.lectureList[index]
-                          .courseCourseCode,
+                          .courseCode,
                       lectureStartsAt: DateFormat("hh:mm a").format(
-                          lectureState.lectureList[index].startTime),
+                          lectureState.lectureList[index].startTime!),
                       lectureEndsAt: DateFormat("hh:mm a").format(
-                          lectureState.lectureList[index].endTime),
+                          lectureState.lectureList[index].endTime!),
                       lecturePlace: lectureState.lectureList[index].hallLocation
                           .toString(),
                       buttonText: "Start",

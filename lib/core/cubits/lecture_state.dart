@@ -19,10 +19,8 @@ class LectureDefault extends LectureState {
       endTime: DateTime.now().add(const Duration(minutes: 20)),
       firstDate: DateTime.now(),
       hallLocation: 1,
-      doctorDoctorId: 1,
-      courseCourseCode: 'CSE:234',
-      adminAdminId: 1,
-      termTermId: 1,
+      courseCode: 'CSE:234',
+
     ),
     Lecture(
       lectureID: 2,
@@ -30,10 +28,8 @@ class LectureDefault extends LectureState {
       endTime: DateTime.now().add(const Duration(minutes: 20)),
       firstDate: DateTime.now(),
       hallLocation: 1,
-      doctorDoctorId: 1,
-      courseCourseCode: 'CSE:235',
-      adminAdminId: 1,
-      termTermId: 1,
+      courseCode: 'CSE:235',
+
     ),
     Lecture(
       lectureID: 3,
@@ -41,10 +37,8 @@ class LectureDefault extends LectureState {
       endTime: DateTime.now().add(const Duration(seconds: 40)),
       firstDate: DateTime.now(),
       hallLocation: 1,
-      doctorDoctorId: 1,
-      courseCourseCode: 'CSE:236',
-      adminAdminId: 1,
-      termTermId: 1,
+      courseCode: 'CSE:236',
+
     ),
   ];
 

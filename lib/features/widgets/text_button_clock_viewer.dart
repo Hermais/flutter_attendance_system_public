@@ -3,38 +3,41 @@
 
 import 'package:flutter/material.dart';
 
-class ClockViewerTextButton extends StatefulWidget{
-   String? selectedTime;
+class ClockViewerTextButton extends StatefulWidget {
+  String? initialText;
   final Function setChangedTime;
-  ClockViewerTextButton({super.key, this.selectedTime, required this.setChangedTime});
+
+  ClockViewerTextButton(
+      {super.key, this.initialText, required this.setChangedTime});
 
   @override
   State<StatefulWidget> createState() => ClockViewerTextButtonState();
-
-
-
 }
 
-class ClockViewerTextButtonState extends State<ClockViewerTextButton>{
-
+class ClockViewerTextButtonState extends State<ClockViewerTextButton> {
+  DateTime? selectedTime;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () async {
-        TimeOfDay? selectedTime = await showTimePicker(
+        final timeOfDay = await showTimePicker(
           initialTime: TimeOfDay.now(),
           context: context,
         );
+        selectedTime = DateTime(0,0,0, timeOfDay!.hour, timeOfDay.minute);
+        print(selectedTime);
 
         if (selectedTime != null) {
           setState(() {
-            widget.selectedTime = selectedTime.format(context);
-            widget.setChangedTime(widget.selectedTime);
+            widget.initialText = selectedTime.toString();
+            widget.setChangedTime(selectedTime);
           });
         }
       },
-      child: Text(widget.selectedTime ?? 'Select Time'),
+      child: Text(selectedTime == null
+          ? widget.initialText ?? 'Select Time'
+          : selectedTime!.toString().split(" ")[1].substring(0, 8)),
     );
   }
 }

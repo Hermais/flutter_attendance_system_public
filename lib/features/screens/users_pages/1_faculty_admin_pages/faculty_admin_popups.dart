@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -17,6 +19,7 @@ import 'package:flutter_attendance_system/shared/constants_and_statics/shared_va
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/cubits/halls_cubit.dart';
+import '../../../../core/data/models/lecture_model.dart';
 import '../../../../core/data/repositories/course_repository.dart';
 import '../../../../core/data/repositories/halls_repository.dart';
 import '../../../../core/data/services/course_web_services.dart';
@@ -31,8 +34,8 @@ import '../../../widgets/text_button_clock_viewer.dart';
 class FacultyAdminPopups {
   final BuildContext mainContext;
   String? _courseCode;
-  String? _startTime;
-  String? _endTime;
+  DateTime? _startTime;
+  DateTime? _endTime;
   String? _hallLocation;
   String? _courseName;
   String? _term;
@@ -118,14 +121,14 @@ class FacultyAdminPopups {
                         courseCubit.loadCourseByDepartment(value);
                         hallCubit.loadHalls();
 
-                        _lectureDepartment = value!;
+                        _lectureDepartment = value;
                       },
                     ),
                   ),
                   const SizedBox(height: 16),
                   const Divider(
                     color: Colors.black,
-                    thickness: 1,
+                    thickness: 0.5,
                   ),
                   const Text('Select Lecture Details:'),
                   DatePickerButton(
@@ -135,46 +138,16 @@ class FacultyAdminPopups {
                     },
                   ),
                   ClockViewerTextButton(
-                    setChangedTime: (String? value) {
+                    setChangedTime: (value) {
                       _startTime = value!;
                     },
-                    selectedTime: 'Select Start Time',
+                    initialText: 'Select Start Time',
                   ),
                   ClockViewerTextButton(
-                    setChangedTime: (String? value) {
+                    setChangedTime: (value) {
                       _endTime = value!;
                     },
-                    selectedTime: 'Select End Time',
-                  ),
-                  BlocBuilder<InstructorCubit, InstructorState>(
-                    builder: (context, instructorState) {
-                      if (instructorState is InstructorInitial) {
-                        return DropdownButtonWidget<String>(
-                          items: const [
-                            'Specify Department First',
-                          ],
-                          enabled: false,
-                          selectionDescription: 'Specify Department First',
-                          setValue: (String? value) {
-                            _instructorName = value!;
-                          },
-                        );
-                      } else {
-                        return DropdownButtonWidget<String>(
-                          items: instructorState is InstructorLoaded
-                              ? instructorState.instructors
-                                  .map((e) => '${e.firstName} ${e.lastName}')
-                                  .toList()
-                              : [
-                                  'Specify Department First',
-                                ],
-                          selectionDescription: 'Select Instructor',
-                          setValue: (String? value) {
-                            _instructorName = value!;
-                          },
-                        );
-                      }
-                    },
+                    initialText: 'Select End Time',
                   ),
                   BlocBuilder<CourseCubit, CourseState>(
                     builder: (context, courseState) {
@@ -201,14 +174,13 @@ class FacultyAdminPopups {
                           selectionDescription: 'Select Course First',
                           setValue: (String? value) {
                             _courseName = value!;
-                            // I want to prin the id corresponding to the attribute courseName
-
-                            print((courseState as CourseLoaded)
+                            // I want to print the id corresponding to the attribute courseName
+                            _courseCode = (courseState as CourseLoaded)
                                 .courses
                                 .firstWhere((element) =>
                                     element.courseName == _courseName)
-                                .courseCode);
-
+                                .courseCode;
+                            print(_courseCode);
                           },
                         );
                       }
@@ -254,7 +226,17 @@ class FacultyAdminPopups {
                 child: const Text('Cancel'),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  printVariables();
+                  //lectureCubit.postLecture();
+                  print(Lecture(
+                    firstDate: _lectureStartDate,
+                    startTime: _startTime,
+                    endTime: _endTime,
+                    courseCode: _courseCode,
+                    hallLocation: int.parse(_hallLocation!),
+                  ).toJson());
+                },
                 child: const Text('Add  lecture'),
               ),
             ],
@@ -483,7 +465,6 @@ class FacultyAdminPopups {
 
   /// ##################################################################33
   Future<void> showAddStudentDialog() async {
-    final _firstNameFormKey = GlobalKey<FormState>();
     return await showDialog(
       context: mainContext,
       builder: (BuildContext context) {
