@@ -17,8 +17,10 @@ class InstructorCubit extends Cubit<InstructorState> {
       emit(InstructorLoaded(instructors: instructors));
     });
   }
+
+
   void postInstructor(Instructor instructor) {
-    instructorRepository.postUser(instructor).then((_) {
+    instructorRepository.postInstructorData(instructor).then((_) {
       emit(InstructorSuccessState(message: "Instructor posted successfully"));
     }).catchError((error) {
       emit(InstructorErrorState(error: "Failed to post instructor"));

@@ -21,12 +21,12 @@ class InstructorRepository {
         Instructor.fromJson(elementInListFromWebService))
         .toList();
   }
-  Future<void> postUser(Instructor instructor) async {
+  Future<void> postInstructorData(Instructor instructor) async {
     try {
-      final Map<String, dynamic> instructorData = instructor.toJson();
-      await instructorWebServices.postData(instructorData);
+      await instructorWebServices.postInstructorData(instructor.toJson());
     } catch (e) {
-      throw Exception('Failed to post instructor: $e');
+      print(e);
+      rethrow;
     }
   }
 
