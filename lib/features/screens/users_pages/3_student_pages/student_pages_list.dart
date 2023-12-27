@@ -4,6 +4,7 @@ import 'package:flutter_attendance_system/core/cubits/instructor_cubit.dart';
 import 'package:flutter_attendance_system/core/cubits/lecture_cubit.dart';
 import 'package:flutter_attendance_system/core/cubits/lecture_manager_cubit.dart';
 import 'package:flutter_attendance_system/core/data/repositories/lecture_repository.dart';
+import 'package:flutter_attendance_system/core/data/services/student_web_services.dart';
 import 'package:flutter_attendance_system/features/screens/users_pages/1_faculty_admin_pages/faculty_admin_timetable.dart';
 import 'package:flutter_attendance_system/features/screens/users_pages/3_student_pages/student_timetable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,23 +12,24 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 
 import 'package:intl/intl.dart';
+import '../../../../core/cubits/auth_cubit.dart';
 import '../../../../core/cubits/internet_cubit.dart';
+import '../../../../core/cubits/student_cubit.dart';
 import '../../../../core/cubits/user_cubit.dart';
 import '../../../../core/data/repositories/example_repository.dart';
+import '../../../../core/data/repositories/student_repository.dart';
 import '../../../../core/data/services/example_web_services.dart';
 import '../../../../core/data/services/lecture_web_services.dart';
+import '../../../../main.dart';
 import '../../../../shared/constants_and_statics/shared_vars.dart';
 import '../../../widgets/card_widget.dart';
+
 
 UserCubit myUserCubit =  UserCubit(
     userRepository:
     UserRepository(userWebService: UserWebService()))
   ..loadUsers();
 
-UserCubit myUserCubit2 =  UserCubit(
-    userRepository:
-    UserRepository(userWebService: UserWebService()))
-  ..loadUsers();
 
 List<Widget> provideWidgetOptions(BuildContext mainContext) {
   return <Widget>[
@@ -163,24 +165,24 @@ List<Widget> provideWidgetOptions(BuildContext mainContext) {
       providers: [
         BlocProvider(
           create: (context) =>
-          myUserCubit2,),
+          myUserCubit,),
         BlocProvider(
           create: (context) => InternetCubit(connectivity: Connectivity()),
         ),
       ],
-      child: BlocConsumer<UserCubit, UserState>(
+      child: BlocConsumer<StudentCubit, StudentState>(
         listener: (context, state) {
 
         },
         builder: (context, state) {
-          if (state is UserInitial) {
+          if (state is StudentInitial) {
             return Center(
               child: CircularProgressIndicator(color: Theme
                   .of(context)
                   .primaryColor,),
             );
           }
-          if (state is UserLoaded) {
+          if (state is StudentLoaded) {
             return ListView.builder(
               itemCount:6,
               itemBuilder: (context, index) {
@@ -195,7 +197,7 @@ List<Widget> provideWidgetOptions(BuildContext mainContext) {
                       /// An arbitrary academic year and department is passed to
                       /// the constructor. In actual implementation, the academic year
                       /// and department will be provided.
-                      return StudentTimetable();
+                      return StudentTimetable(day :days[index]);
                     }));
 
                   },
