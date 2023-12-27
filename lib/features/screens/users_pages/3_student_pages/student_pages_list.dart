@@ -14,28 +14,25 @@ import '../../../../core/cubits/auth_cubit.dart';
 import '../../../../core/cubits/internet_cubit.dart';
 import '../../../../core/cubits/student_cubit.dart';
 import '../../../../core/data/repositories/instructor_repository.dart';
-import '../../../../core/data/repositories/student_repository.dart';
 import '../../../../core/data/services/instructor_web_services.dart';
 import '../../../../core/data/services/lecture_web_services.dart';
-import '../../../../core/data/services/student_web_services.dart';
 import '../../../../main.dart';
 import '../../../../shared/constants_and_statics/shared_vars.dart';
 import '../../../widgets/card_widget.dart';
-import '../../login_page/login.dart';
 
 InstructorCubit instructorCubit = InstructorCubit(
     instructorRepository:
         InstructorRepository(instructorWebServices: InstructorWebServices()))
   ..loadInstructorsByStudentId((authCubit.state as AuthSuccess).authGet.id);
 
-List<Widget> provideWidgetOptions(BuildContext mainContext) {
+List<Widget> provideWidgetOptions(BuildContext mainContext,  LectureManagerCubit studentLectureManagerCubit) {
   return <Widget>[
     /// Lectures Tab:
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => studentCubit),
-        BlocProvider.value(
-          value: mainContext.read<LectureManagerCubit>(),
+        BlocProvider(
+          create: (context) => studentLectureManagerCubit,
         ),
         BlocProvider(
             create: (context) => LectureCubit(
@@ -54,7 +51,7 @@ List<Widget> provideWidgetOptions(BuildContext mainContext) {
         listener: (context, lectureManagerState) {
           if (lectureManagerState is LectureManagerInSession) {
             String qrData =
-                '${(BlocProvider.of<LectureManagerCubit>(context).state as LectureManagerInSession).lecture.lectureId}^${(BlocProvider.of<StudentCubit>(context).state as StudentLoaded).students[0].emailId}';
+                '${lectureManagerState.lecture.lectureId}^${(BlocProvider.of<StudentCubit>(context).state as StudentLoaded).students[0].emailId}';
 
             print(qrData);
             showQRCodePopup(context, qrData: qrData);
@@ -93,7 +90,7 @@ List<Widget> provideWidgetOptions(BuildContext mainContext) {
                           .toString(),
                       buttonText: "Attend",
                       onButtonTap: () {
-                        BlocProvider.of<LectureManagerCubit>(mainContext)
+                        BlocProvider.of<LectureManagerCubit>(context)
                             .checkLectureToStart(
                                 lectureState.lectureList[index]);
                       },

@@ -19,8 +19,7 @@ StudentCubit studentCubit = StudentCubit(
     StudentRepository(studentWebServices: StudentWebServices()))
   ..loadStudentById((authCubit.state as AuthSuccess).authGet.id);
 
-LectureManagerCubit lectureManagerCubit = LectureManagerCubit()
-  ..setInitial();
+
 
 class StudentDashboard extends StatefulWidget {
   final String? userName;
@@ -48,9 +47,11 @@ class StudentDashboardState extends State<StudentDashboard> {
 
   @override
   Widget build(BuildContext context) {
+    final LectureManagerCubit studentLectureManagerCubit =
+    LectureManagerCubit();
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => lectureManagerCubit),
+
         BlocProvider(
           create: (context) =>studentCubit,
         ),
@@ -88,7 +89,7 @@ class StudentDashboardState extends State<StudentDashboard> {
             if (studentState is StudentLoaded) {
               return PageView(
                 controller: _pageController,
-                children: provideWidgetOptions(context),
+                children: provideWidgetOptions(context, studentLectureManagerCubit),
                 onPageChanged: (index) {
                   setState(() {
                     _selectedIndex = index;
