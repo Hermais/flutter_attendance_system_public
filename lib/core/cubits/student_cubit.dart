@@ -39,6 +39,13 @@ class StudentCubit extends Cubit<StudentState> {
    });
  }
 
+ void loadStudentInstructorsById(int id) {
+   studentRepository
+       .getStudentInstructorById(id)
+       .then((students) {
+     emit(StudentLoaded(students: students));
+   });
+ }
  }
 
 

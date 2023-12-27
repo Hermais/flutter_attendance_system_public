@@ -4,13 +4,16 @@ class Parent {
    String? emailId;
    String? nationalId;
    DateTime? dateOfBirth;
-
+   String? studentId;
+    int? weekNumber;
   Parent({
      this.firstName,
      this.lastName,
      this.emailId,
      this.nationalId,
      this.dateOfBirth,
+    this.studentId,
+    this.weekNumber,
   });
 
   factory Parent.fromJson(Map<String, dynamic> json) {
