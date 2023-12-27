@@ -32,4 +32,14 @@ class CourseRepository {
         .toList();
   }
 
+  Future<List<Course>> getCourseByInstructorId(int instructorId) async {
+
+    final courses = await courseWebServices.getCourseDataByInstructorId(instructorId);
+
+    return courses
+        .map((elementInListFromWebService) =>
+        Course.fromJson(elementInListFromWebService))
+        .toList();
+  }
+
 }

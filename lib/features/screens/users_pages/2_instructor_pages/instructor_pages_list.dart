@@ -1,29 +1,28 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/core/cubits/course_cubit.dart';
 import 'package:flutter_attendance_system/core/cubits/lecture_cubit.dart';
 import 'package:flutter_attendance_system/core/data/repositories/lecture_repository.dart';
 import 'package:flutter_attendance_system/features/screens/users_pages/2_instructor_pages/student_attendance_for_instructor.dart';
+import 'package:flutter_attendance_system/shared/constants_and_statics/shared_vars.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/cubits/auth_cubit.dart';
 import '../../../../core/cubits/internet_cubit.dart';
 import '../../../../core/cubits/lecture_manager_cubit.dart';
-import '../../../../core/cubits/user_cubit.dart';
-import '../../../../core/data/repositories/example_repository.dart';
-import '../../../../core/data/services/example_web_services.dart';
+import '../../../../core/data/repositories/course_repository.dart';
+import '../../../../core/data/services/course_web_services.dart';
 import '../../../../core/data/services/lecture_web_services.dart';
+import '../../../../main.dart';
 import '../../../widgets/card_widget.dart';
 import 'instructor_students.dart';
 
-UserCubit myUserCubit =  UserCubit(
-    userRepository:
-    UserRepository(userWebService: UserWebService()))
-  ..loadUsers();
+CourseCubit courseCubit = CourseCubit(
+    courseRepository: CourseRepository(courseWebServices: CourseWebServices()))
+  ..loadCourseByInstructorId((authCubit.state as AuthSuccess).authGet.id);
 
-UserCubit myUserCubit2 =  UserCubit(
-    userRepository:
-    UserRepository(userWebService: UserWebService()))
-  ..loadUsers();
+
 
 List<Widget> provideWidgetOptions(BuildContext context, LectureManagerCubit instructorLectureManagerCubit) {
   return <Widget>[
@@ -109,43 +108,44 @@ List<Widget> provideWidgetOptions(BuildContext context, LectureManagerCubit inst
       providers: [
         BlocProvider(
           create: (context) =>
-          myUserCubit,),
+          courseCubit,),
         BlocProvider(
           create: (context) => InternetCubit(connectivity: Connectivity()),
         ),
       ],
-      child: BlocConsumer<UserCubit, UserState>(
-        listener: (context, state) {
+      child: BlocConsumer<CourseCubit,CourseState>(
+        listener: (context, courseState) {
 
         },
-        builder: (context, state) {
-          if (state is UserInitial) {
+        builder: (context, courseState) {
+          if (courseState is CourseInitial) {
             return Center(
               child: CircularProgressIndicator(color: Theme
                   .of(context)
                   .primaryColor,),
             );
           }
-          if (state is UserLoaded) {
+          if (courseState is CourseLoaded ) {
             return ListView.builder(
-              itemCount: state.users.length,
+              itemCount: courseState.courses.length,
               itemBuilder: (context, index) {
                 return InfoCard(
                     isLectureCard: false,
                     isButtonVisible: false,
                     isTopLeftBorderMaxRadius: false,
                     cardThumbnail: const Icon(Icons.person),
+                    descriptionMaxLines: 4,
                     cardDescription:
-                    "This will be the course that the instructor is assigned to. And when"
-                        " it is tapped on it show the page of the students of "
-                        "that students of that course.",
-                    cardTitle: "Instructor's Assigned Course ${index + 1}",
+                    "Course Code: ${courseState.courses[index].courseCode!}\n"
+                        "Department: ${courseState.courses[index].department!}\n"
+                        "Academic Year: ${academicYears[courseState.courses[index].studyYear!]}",
+                    cardTitle: courseState.courses[index].courseName!,
                     onTap: () {
                       Navigator.of(context).push(
                           MaterialPageRoute(builder: (context) {
                             return InstructorStudents(
-                              courseName: "Instructor's Assigned Course ${index +
-                                  1}",);
+                              courseCode: courseState.courses[index].courseCode!,
+                            courseName: courseState.courses[index].courseName!,);
                           }));
                     }
                 );
@@ -160,50 +160,31 @@ List<Widget> provideWidgetOptions(BuildContext context, LectureManagerCubit inst
     ),
 
 
-    // ListView.builder(
-    //   itemCount: 10,
-    //   itemBuilder: (context, index) {
-    //     return InfoCard(
-    //       isLectureCard: false,
-    //       isButtonVisible: false,
-    //       isTopLeftBorderMaxRadius: false,
-    //       cardThumbnail: const Icon(Icons.person),
-    //       cardDescription:
-    //           "This will be the course that the instructor is assigned to. And when"
-    //           " it is tapped on it show the page of the students of "
-    //           "that students of that course.",
-    //       cardTitle: "Instructor's Assigned Course ${index + 1}",
-    //       onTap: () {
-    //         Navigator.of(context).push(MaterialPageRoute(builder: (context){
-    //           return InstructorStudents(courseName: "Instructor's Assigned Course ${index + 1}",);
-    //         }));
-    //       }
-    //     );
 
     MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) =>
-          myUserCubit2,),
+          courseCubit,),
         BlocProvider(
           create: (context) => InternetCubit(connectivity: Connectivity()),
         ),
       ],
-      child: BlocConsumer<UserCubit, UserState>(
+      child: BlocConsumer<CourseCubit, CourseState>(
         listener: (context, state) {
 
         },
-        builder: (context, state) {
-          if (state is UserInitial) {
+        builder: (context, courseState) {
+          if (courseState is CourseInitial) {
             return Center(
               child: CircularProgressIndicator(color: Theme
                   .of(context)
                   .primaryColor,),
             );
           }
-          if (state is UserLoaded) {
+          if (courseState is CourseLoaded) {
             return ListView.builder(
-              itemCount: state.users.length,
+              itemCount: courseState.courses.length,
               itemBuilder: (context, index) {
                 return InfoCard(
                     isLectureCard: false,
@@ -211,13 +192,15 @@ List<Widget> provideWidgetOptions(BuildContext context, LectureManagerCubit inst
                     isTopLeftBorderMaxRadius: false,
                     cardThumbnail: const Icon(Icons.person),
                     cardDescription:
-                    "This will be the course that the instructor is assigned to. And when"
-                        " it is tapped on it show the page of the students of "
-                        "that students of that course.",
-                    cardTitle: "Instructor's Assigned Course ${index + 1}",
+                    "Course Code: ${courseState.courses[index].courseCode!}\n"
+                        "Department: ${courseState.courses[index].department!}\n"
+                        "Academic Year: ${academicYears[courseState.courses[index].studyYear!]}",
+                    cardTitle: courseState.courses[index].courseName!,
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                        return ShowWeeks();
+                        return ShowWeeks(
+                          courseCode: courseState.courses[index].courseCode!,
+                        );
                       }));
                     }
                 );
@@ -230,27 +213,7 @@ List<Widget> provideWidgetOptions(BuildContext context, LectureManagerCubit inst
         },
       ),
     ),
-    // ListView.builder(
-    //   itemCount: 10,
-    //   itemBuilder: (context, index) {
-    //     return InfoCard(
-    //         isLectureCard: false,
-    //         isButtonVisible: false,
-    //         isTopLeftBorderMaxRadius: false,
-    //         cardThumbnail: const Icon(Icons.person),
-    //         cardDescription:
-    //         "This will be the course that the instructor is assigned to. And when"
-    //             " it is tapped on it show the page of the students of "
-    //             "that students of that course.",
-    //         cardTitle: "Instructor's Assigned Course ${index + 1}",
-    //         onTap: () {
-    //           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-    //             return ShowWeeks();
-    //           }));
-    //         }
-    //     );
-    //   },
-  //  )
+
   ];
 }
 

@@ -25,4 +25,10 @@ class CourseCubit extends Cubit<CourseState> {
       emit(CourseLoaded(courses: courses));
     });
   }
+
+  void loadCourseByInstructorId(int instructorId) {
+    courseRepository.getCourseByInstructorId(instructorId).then((courses) {
+      emit(CourseLoaded(courses: courses));
+    });
+  }
 }

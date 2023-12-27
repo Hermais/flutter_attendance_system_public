@@ -41,6 +41,37 @@ class StudentRepository {
     }
   }
 
+  Future<List<Student>> getStudentDataByCourseCode(String courseCode) async {
+    final data = await studentWebServices.getStudentDataByCourseCode(courseCode);
+
+    print(data);
+    // Ensure that data is not null before calling fromJson
+    if (data != null) {
+      return data
+          .map((elementInListFromWebService) =>
+          Student.fromJson(elementInListFromWebService))
+          .toList();
+    } else {
+      // Handle the case where the response data is null
+      throw Exception('Failed to get instructor data by ID');
+    }
+  }
+
+  Future<List<Student>> getStudentAttendanceByCodeWeekInstructorId(String courseCode, String week, int instructorId) async {
+    final data = await studentWebServices.getStudentAttendanceByCodeWeekInstructorId(courseCode, week, instructorId);
+
+    print(data);
+    // Ensure that data is not null before calling fromJson
+    if (data != null) {
+      return data
+          .map((elementInListFromWebService) =>
+          Student.fromJson(elementInListFromWebService))
+          .toList();
+    } else {
+      // Handle the case where the response data is null
+      throw Exception('Failed to get instructor data by ID');
+    }
+  }
 
 }
 //

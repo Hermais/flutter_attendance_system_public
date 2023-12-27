@@ -44,4 +44,15 @@ class CourseWebServices {
       return [];
     }
   }
+
+  Future<List<dynamic>> getCourseDataByInstructorId(int instructorId) async {
+    try {
+      Response response = await dio.get('/instructor/courses/$instructorId');
+
+      return response.data;
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
 }

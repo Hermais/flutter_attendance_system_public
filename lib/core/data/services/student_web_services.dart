@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 
 import '../../../shared/constants_and_statics/shared_vars.dart';
 
-
 class StudentWebServices {
   /// use late keyword to tell dart that we will initialize this variable later.
   late Dio dio;
@@ -19,7 +18,6 @@ class StudentWebServices {
 
     /// When we instantiate Dio, we pass in the options we created above.
     dio = Dio(options);
-
   }
 
   /// list type must be dynamic because it can be a list of strings or a list of maps.
@@ -27,6 +25,7 @@ class StudentWebServices {
     try {
       /// here we type in the endpoint of the api, without the base url.
       Response response = await dio.get('/getAllStudents');
+
       /// in flutter http response.body, here response.data
       return response.data;
     } catch (e) {
@@ -34,6 +33,7 @@ class StudentWebServices {
       return [];
     }
   }
+
   Future<void> postStudentData(Map<String, dynamic> student) async {
     try {
       await dio.post('/admin/student', data: student);
@@ -57,6 +57,26 @@ class StudentWebServices {
     }
   }
 
+  Future<List<dynamic>> getStudentDataByCourseCode(String courseCode) async {
+    try {
+      Response response =
+          await dio.get('/instructor/students/course/$courseCode');
+      return response.data;
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
 
-
+  Future<List<dynamic>> getStudentAttendanceByCodeWeekInstructorId(
+      String courseCode, String week, int instructorId) async {
+    try {
+      Response response = await dio.get(
+          '/instructor/students/attendance/$instructorId/$courseCode/$week');
+      return response.data;
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
 }

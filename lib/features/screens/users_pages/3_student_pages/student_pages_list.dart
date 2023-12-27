@@ -39,7 +39,7 @@ List<Widget> provideWidgetOptions(BuildContext mainContext,  LectureManagerCubit
                 lectureRepository:
                     LectureRepository(lectureWebServices: LectureWebServices()))
               ..getLecturesByDay(
-                  day: 'monday',
+                  day: days[DateTime.now().day],
                   department: (studentCubit.state as StudentLoaded)
                       .students[0]
                       .department!,
