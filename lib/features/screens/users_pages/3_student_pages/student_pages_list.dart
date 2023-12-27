@@ -42,8 +42,8 @@ List<Widget> provideWidgetOptions(BuildContext mainContext) {
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => studentCubit!),
-        BlocProvider(
-          create: (context) => BlocProvider.of<LectureManagerCubit>(mainContext),
+        BlocProvider.value(
+          value: mainContext.read<LectureManagerCubit>(),
         ),
 
         BlocProvider(
