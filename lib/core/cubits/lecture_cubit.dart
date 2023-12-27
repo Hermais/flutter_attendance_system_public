@@ -42,4 +42,12 @@ class LectureCubit extends Cubit<LectureState> {
   void loadDefault() {
     emit(LectureDefault());
   }
+
+  void loadLectureTimeTableByDay(int id,String dayOfWeek) {
+    lectureRepository
+        .getLectureTimeTableByDay(id,dayOfWeek)
+        .then((lectureList) {
+      emit(LectureLoaded(lectureList:lectureList));
+     });
+    }
 }
