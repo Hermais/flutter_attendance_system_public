@@ -20,6 +20,12 @@ class FacultyAdminCubit extends Cubit<FacultyAdminState> {
     });
   }
 
+  void getFacultyAdminById(int id) {
+    facultyAdminRepository.getFacultyAdminById(id).then((facultyAdmin) {
+      emit(FacultyAdminLoaded(facultyAdmin: facultyAdmin));
+    });
+  }
+
   void addLecture() {
 
   }
