@@ -1,24 +1,24 @@
 class Instructor {
-  int instructorId;
-  String firstName;
-  String lastName;
-  String emailId;
-  String nationalId;
-  DateTime dateOfBirth;
-  String department;
-  int adminId;
+  int? instructorId;
+  String? firstName;
+  String? lastName;
+  String? emailId;
+  String? nationalId;
+  DateTime? dateOfBirth;
+  String? department;
+  int? adminId;
   List<String>? courseCode;
 
 
   Instructor({
-    required this.instructorId,
-    required this.firstName,
-    required this.lastName,
-    required this.emailId,
-    required this.nationalId,
-    required this.dateOfBirth,
-    required this.adminId,
-    required this.department,
+    this.instructorId,
+     this.firstName,
+     this.lastName,
+     this.emailId,
+     this.nationalId,
+     this.dateOfBirth,
+     this.adminId,
+     this.department,
     this.courseCode
   });
 
@@ -32,7 +32,6 @@ class Instructor {
       emailId: json['emailId'],
       nationalId: json['nationalId'],
       dateOfBirth: DateTime.parse(json['dateOfBirth']),
-      adminId: json['adminId'],
       department: json['department']
     );
   }
@@ -44,7 +43,7 @@ class Instructor {
       'lastName': lastName,
       'emailId': emailId,
       'nationalId': nationalId,
-      'dateOfBirth': dateOfBirth.toIso8601String(),
+      'dateOfBirth': dateOfBirth!.toIso8601String().substring(0,10),
       'adminId': 1,
       'department':department,
       'courseCode':courseCode ?? []

@@ -34,4 +34,15 @@ class ParentWebServices {
       return [];
     }
   }
+
+  Future<List<dynamic>> getParentDataById(int id) async {
+    try {
+      Response response = await dio.get('/parent/parentInfo/$id');
+      List<dynamic> list = [response.data];
+      return Future.value(list);
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
 }

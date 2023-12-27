@@ -6,8 +6,9 @@ abstract class InstructorState {}
 class InstructorInitial extends InstructorState {}
 
 class InstructorLoaded extends InstructorState {
-  final List<Instructor> instructors;
+  final List<Instructor>? instructors;
+  final Instructor? instructor;
 
-  InstructorLoaded({required this.instructors});
+  InstructorLoaded({this.instructor,  this.instructors});
 
 }

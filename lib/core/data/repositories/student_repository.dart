@@ -28,5 +28,20 @@ class StudentRepository {
       rethrow;
     }
   }
+  Future<List<Student>> getInstructorDataById(int id) async {
+    final data = await studentWebServices.getStudentDataById(id);
+
+    print(data);
+    // Ensure that data is not null before calling fromJson
+    if (data != null) {
+      return data
+          .map((elementInListFromWebService) =>
+          Student.fromJson(elementInListFromWebService))
+          .toList();
+    } else {
+      // Handle the case where the response data is null
+      throw Exception('Failed to get instructor data by ID');
+    }
+  }
 
 }

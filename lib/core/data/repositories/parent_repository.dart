@@ -22,4 +22,14 @@ class ParentRepository {
         .toList();
   }
 
+  Future<List<Parent>> getParentDataById(int id) async {
+
+    final  parent =
+    await  parentWebServices.getParentDataById(id);
+    return  parent
+        .map((elementInListFromWebService) =>
+        Parent.fromJson(elementInListFromWebService))
+        .toList();
+  }
+
 }

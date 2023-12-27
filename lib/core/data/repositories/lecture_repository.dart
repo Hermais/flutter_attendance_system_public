@@ -26,5 +26,14 @@ class LectureRepository {
     await lectureWebServices.postLectureData(lecture.toJson());
   }
 
+  Future<List<Lecture>> getLecturesByDay({required String day, required String department, required int academicYear}) async {
+    final lectures = await lectureWebServices.getLectureDataByDay(day: day, department: department, academicYear: academicYear);
+
+    return lectures
+        .map((elementInListFromWebService) =>
+        Lecture.fromJson(elementInListFromWebService))
+        .toList();
+  }
+
 }
 

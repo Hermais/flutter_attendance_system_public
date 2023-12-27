@@ -37,14 +37,6 @@ class NoLoginNavigation extends StatelessWidget {
               },
             ),
             InfoCard(
-              cardThumbnail: const Icon(Icons.person),
-              cardTitle: "Instructor",
-              isLectureCard: false,
-              onTap: () {
-                Navigator.of(context).pushNamed(instructor);
-              },
-            ),
-            InfoCard(
               cardThumbnail: const Icon(Icons.supervised_user_circle),
               cardTitle: "Student",
               isLectureCard: false,
@@ -60,6 +52,14 @@ class NoLoginNavigation extends StatelessWidget {
 
               onTap: () {
                 Navigator.of(context).pushNamed(parent);
+              },
+            ),
+            InfoCard(
+              cardThumbnail: const Icon(Icons.person),
+              cardTitle: "Instructor",
+              isLectureCard: false,
+              onTap: () {
+                Navigator.of(context).pushNamed(instructor);
               },
             ),
           ],

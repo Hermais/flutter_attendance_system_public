@@ -6,11 +6,11 @@ class Parent {
    DateTime? dateOfBirth;
 
   Parent({
-    required this.firstName,
-    required this.lastName,
-    required this.emailId,
-    required this.nationalId,
-    required this.dateOfBirth,
+     this.firstName,
+     this.lastName,
+     this.emailId,
+     this.nationalId,
+     this.dateOfBirth,
   });
 
   factory Parent.fromJson(Map<String, dynamic> json) {

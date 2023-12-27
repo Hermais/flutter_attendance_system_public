@@ -33,7 +33,7 @@ class Student {
       department: json['department'],
       studyYear: json['studyYear'],
       adminId: json['adminId'],
-      parentDto: Parent.fromJson(json['parent']),
+      parentDto: json['parentDto'] == null ? null:Parent.fromJson(json['parentDto']),
 
     );
   }
@@ -47,7 +47,7 @@ class Student {
       'department': department,
       'studyYear': studyYear,
       'adminId': adminId,
-      'parent': parentDto!.toJson(),
+      'parentDto': parentDto!.toJson(),
 
     };
   }

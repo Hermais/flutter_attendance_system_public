@@ -28,5 +28,17 @@ class StudentCubit extends Cubit<StudentState> {
    void printjson(Student student){
      print('Student: ${student.toJson()}');
    }
+
+
+ void loadStudentById(int id) {
+   studentRepository
+       .getInstructorDataById(id)
+       .then((student) {
+     emit(StudentLoaded(students: student));
+   });
  }
+
+ }
+
+
 

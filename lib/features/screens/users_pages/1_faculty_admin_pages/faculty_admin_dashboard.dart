@@ -64,24 +64,7 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
   @override
   Widget build(BuildContext context) {
     return //BlocConsumer<FacultyAdminCubit,FacultyAdminState>(
-    //     listener: (context,State){},
-    //     builder:(context,State){
-    //   return if (state is! FacultyAdminLoaded){
-      //
-      //  Column(children: [
-      //     for (var facultyAdmin in state.facultyAdmin)
-      //                       InfoCard.blank(
-      //                         cardTitle: "${day.name}",
-      //                       ),
-      //                   ]);
-      //
-      //
-      //
-      //
-      //
-      //   }
-    //
-    // })
+
 
       Scaffold(
       appBar: AppBar(

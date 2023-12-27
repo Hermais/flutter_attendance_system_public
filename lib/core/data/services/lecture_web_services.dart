@@ -35,6 +35,15 @@ class LectureWebServices {
     }
   }
 
+  Future<List<dynamic>> getLectureDataByDay({required String day, required String department, required int academicYear}) async {
+    try {
+      Response response = await dio.get('/admin/$day/$department/$academicYear');
+      return response.data;
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
   Future<void> postLectureData(Map<String, dynamic> lecture) async {
     try {
       await dio.post('/admin/lecture', data: lecture);
@@ -42,4 +51,6 @@ class LectureWebServices {
       print(e);
     }
   }
+
+
 }

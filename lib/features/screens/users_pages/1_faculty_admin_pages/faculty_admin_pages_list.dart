@@ -54,15 +54,15 @@ List<Widget> provideWidgetOptions(BuildContext context) {
           }
           if (instructorState is InstructorLoaded) {
             return ListView.builder(
-              itemCount: instructorState.instructors.length,
+              itemCount: instructorState.instructors!.length,
               itemBuilder: (context, index) {
                 return InfoCard.blank(
-                  cardTitle: 'Dr. ${instructorState.instructors[index].firstName}'
-                      ' ${instructorState.instructors[index].lastName}',
+                  cardTitle: 'Dr. ${instructorState.instructors![index].firstName}'
+                      ' ${instructorState.instructors![index].lastName}',
                   cardThumbnail: const CustomIcon(icon: Icons.account_box),
                   margin: margin,
-                  cardDescription: 'Email: ${instructorState.instructors[index].emailId}\n'
-                  'Department: ${instructorState.instructors[index].department}\n',
+                  cardDescription: 'Email: ${instructorState.instructors![index].emailId}\n'
+                  'Department: ${instructorState.instructors![index].department}\n',
                   descriptionMaxLines: 2,
                 );
               },

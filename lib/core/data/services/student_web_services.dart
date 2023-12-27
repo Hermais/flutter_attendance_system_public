@@ -43,4 +43,18 @@ class StudentWebServices {
     }
   }
 
+  Future<List<dynamic>> getStudentDataById(int id) async {
+    try {
+      Response response = await dio.get('/student/info/$id');
+      print(response.data);
+      // convert a map to a list of map
+      List<dynamic> list = [response.data];
+      print(list);
+      return Future.value(list);
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
+
 }

@@ -77,7 +77,7 @@ class FacultyAdminTimetables extends StatelessWidget {
                 'Tap here to go to select lectures for ${days[index]}',
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => getLecturesByDay(days[index])));
+                  builder: (context) => getLecturesByDay(days[index], department: globalDepartment)));
             },
           );
         },
@@ -97,14 +97,17 @@ class FacultyAdminTimetables extends StatelessWidget {
     // department will be sent as a string as is.
     globalDepartment ?? 'Preparatory';
     department ?? globalDepartment;
-
+  LectureCubit lectureCubit = LectureCubit(lectureRepository: lectureRepository);
     /// if department is null, show for preparatory.
     return Scaffold(
       appBar: AppBar(
         title: Text(day),
       ),
       body: BlocProvider(
-        create: (context) => LectureCubit(lectureRepository: lectureRepository)..loadLecture(),
+        create: (context) => lectureCubit..getLecturesByDay(
+            day: day,
+            department: 'Preparatory',
+            academicYear: yearMap[academicYear ?? this.academicYear]!),
         child: BlocBuilder<LectureCubit, LectureState>(
           builder: (context, Lecturestate) {
             if (Lecturestate is LectureInitial) {

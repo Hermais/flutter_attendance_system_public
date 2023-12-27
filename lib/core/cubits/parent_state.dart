@@ -8,8 +8,8 @@ class ParentInitial extends ParentState {
 }
 
 class ParentLoaded extends ParentState {
-  final List<Parent> parent;
+  final List<Parent> parents;
 
-  ParentLoaded({required this.parent});
+  ParentLoaded({required this.parents});
 
 }

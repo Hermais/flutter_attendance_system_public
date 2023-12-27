@@ -5,6 +5,7 @@ import 'package:flutter_attendance_system/core/cubits/lecture_cubit.dart';
 import 'package:flutter_attendance_system/core/cubits/lecture_manager_cubit.dart';
 import 'package:flutter_attendance_system/core/data/repositories/lecture_repository.dart';
 import 'package:flutter_attendance_system/features/screens/users_pages/1_faculty_admin_pages/faculty_admin_timetable.dart';
+import 'package:flutter_attendance_system/features/screens/users_pages/3_student_pages/student_timetable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -194,10 +195,9 @@ List<Widget> provideWidgetOptions(BuildContext mainContext) {
                       /// An arbitrary academic year and department is passed to
                       /// the constructor. In actual implementation, the academic year
                       /// and department will be provided.
-                      return FacultyAdminTimetables(
-                        academicYear: academicYears[0],
-                      ).getLecturesByDay(days[index], department: departments[0]);
+                      return StudentTimetable();
                     }));
+
                   },
                 );
               },

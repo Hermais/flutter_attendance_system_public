@@ -7,16 +7,25 @@ import '../data/repositories/lecture_repository.dart';
 part 'lecture_state.dart';
 
 class LectureCubit extends Cubit<LectureState> {
-
   LectureRepository lectureRepository;
 
   LectureCubit({required this.lectureRepository}) : super(LectureInitial());
 
-
-
   void loadLecture() {
     lectureRepository.getLecture().then((lecture) {
       emit(LectureLoaded(lectureList: lecture));
+    });
+  }
+
+  void getLecturesByDay(
+      {required String day,
+      required String department,
+      required int academicYear}) {
+    lectureRepository.getLecturesByDay(
+        day: day, department: department, academicYear: academicYear).then((lecture) {
+      emit(LectureLoaded(lectureList: lecture));
+
+
     });
   }
 

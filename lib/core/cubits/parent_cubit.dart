@@ -16,7 +16,13 @@ class ParentCubit extends Cubit<ParentState> {
 
   void loadParent() {
     parentRepository.getParentData().then((parent) {
-      emit(ParentLoaded(parent: parent));
+      emit(ParentLoaded(parents: parent));
+    });
+  }
+
+  void loadParentById(int id) {
+    parentRepository.getParentDataById(id).then((parent) {
+      emit(ParentLoaded(parents: parent));
     });
   }
 }

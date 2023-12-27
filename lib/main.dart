@@ -10,7 +10,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motion/motion.dart';
 
 import 'app_router.dart';
+import 'core/cubits/auth_cubit.dart';
+import 'core/data/repositories/auth_repository.dart';
+import 'core/data/services/auth_web_services.dart';
 import 'features/widgets/app_bar_flexible_space.dart';
+
+
+AuthCubit authCubit = AuthCubit(
+    authRepository: AuthRepository(authWebServices: AuthWebServices()));
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +42,7 @@ class MainApp extends StatefulWidget {
 }
 
 class MainAppState extends State<MainApp> {
+
   @override
   Widget build(BuildContext context) {
     /// Provides the app with the theme change manager cubit, but only up to LoginPage().
@@ -55,6 +63,9 @@ class MainAppState extends State<MainApp> {
         ),
         BlocProvider(
           create: (context) => InternetCubit(connectivity: Connectivity()),
+        ),
+        BlocProvider(
+          create: (context) => authCubit,
         ),
       ],
       child: BlocBuilder<ThemeChangeManagerCubit, ThemeChangeManagerState>(
