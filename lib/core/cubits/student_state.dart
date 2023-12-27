@@ -20,11 +20,11 @@ class addStudenloaded extends StudentState {}
 class StudentAdded extends StudentState {
   final String message;
 
-  StudentAdded(this.message);
+  StudentAdded({required this.message});
 }
 
 class StudentError extends StudentState {
   final String error;
 
-  StudentError(this.error);
+  StudentError({required this.error});
 }

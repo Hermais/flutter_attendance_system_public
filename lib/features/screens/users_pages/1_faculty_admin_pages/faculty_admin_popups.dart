@@ -9,6 +9,7 @@ import 'package:flutter_attendance_system/core/cubits/course_cubit.dart';
 import 'package:flutter_attendance_system/core/cubits/instructor_cubit.dart';
 import 'package:flutter_attendance_system/core/cubits/lecture_cubit.dart';
 import 'package:flutter_attendance_system/core/cubits/student_cubit.dart';
+import 'package:flutter_attendance_system/core/data/models/instructor_model.dart';
 import 'package:flutter_attendance_system/core/data/models/parent_model.dart';
 import 'package:flutter_attendance_system/core/data/models/student_model.dart';
 import 'package:flutter_attendance_system/core/data/repositories/instructor_repository.dart';
@@ -230,15 +231,13 @@ class FacultyAdminPopups {
                   printVariables();
                   //lectureCubit.postLecture();
                   Lecture lecture = Lecture(
-                    firstDate: _lectureStartDate,
-                    startTime: _startTime,
-                    endTime: _endTime,
-                    courseCode: _courseCode,
-                    hallLocation: int.parse(_hallLocation!));
+                      firstDate: _lectureStartDate,
+                      startTime: _startTime,
+                      endTime: _endTime,
+                      courseCode: _courseCode,
+                      hallLocation: int.parse(_hallLocation!));
                   print(lecture.toJson());
                   lectureCubit.postLecture(lecture);
-
-
                 },
                 child: const Text('Add  lecture'),
               ),
@@ -432,7 +431,20 @@ class FacultyAdminPopups {
             Row(
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // instructor = Instructor(
+                    //   department: _instructorDepartment,
+                    //   adminId:1 ,
+                    //   courseCode:_instructorCourses ,
+                    //   dateOfBirth: _instructorDateOfBirth,
+                    //   emailId: _instructorEmailID,
+                    //   firstName: _instructorFirstName,
+                    //   instructorId:,
+                    //   lastName:_instructorLastName ,
+                    //   nationalId: _instructorNationalID,
+                    //
+                    // );
+                  },
                   child: const Text(
                     'Add Instructor',
                     style: TextStyle(fontSize: 11),
