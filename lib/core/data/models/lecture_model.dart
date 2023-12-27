@@ -1,5 +1,7 @@
+import 'package:intl/intl.dart';
+
 class Lecture {
-  int? lectureID;
+  int? lectureId;
   int? adminId;
   DateTime? startTime;
   DateTime? endTime;
@@ -8,7 +10,7 @@ class Lecture {
   String? courseCode;
 
   Lecture({
-     this.lectureID,
+     this.lectureId,
      this.startTime,
      this.endTime,
      this.firstDate,
@@ -20,11 +22,30 @@ class Lecture {
   });
 
   factory Lecture.fromJson(Map<String, dynamic> json) {
+    String? startTimeString = json['startTime'];
+    String? endTimeString = json['endTime'];
+    String? firstDateString = json['firstDate'];
+
+    DateTime? startTime;
+    DateTime? endTime;
+    DateTime? firstDate;
+
+    if (startTimeString != null) {
+      startTime = DateFormat('HH:mm:ss').parse(startTimeString);
+    }
+
+    if (endTimeString != null) {
+      endTime = DateFormat('HH:mm:ss').parse(endTimeString);
+    }
+
+    if (firstDateString != null) {
+      firstDate = DateFormat('yyyy-MM-dd').parse(firstDateString);
+    }
     return Lecture(
-      lectureID: json['LectureID'],
-      startTime: DateTime.parse(json['startTime']),
-      endTime: DateTime.parse(json['endTime']),
-      firstDate: DateTime.parse(json['firstDate']),
+      lectureId: json['lectureId'],
+      startTime: startTime,
+      endTime: endTime,
+      firstDate: firstDate,
       hallLocation: json['hallLocation'],
       adminId: json['adminId'],
       courseCode: json['courseCode'],

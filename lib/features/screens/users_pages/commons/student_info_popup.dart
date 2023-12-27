@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_attendance_system/shared/constants_and_statics/shared_vars.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/cubits/student_cubit.dart';
+import '../../../../core/data/models/student_model.dart';
 import '../../../widgets/card_widget.dart';
+import '../../login_page/login.dart';
+import '../3_student_pages/student_dashboard.dart';
+
+
+
+Student student = (studentCubit!.state as StudentLoaded).students[0];
 
 class StudentAndParentInfo extends StatelessWidget{
   final bool? isForStudent;
@@ -9,6 +19,10 @@ class StudentAndParentInfo extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+  create: (context) => studentCubit!,
+  child: BlocBuilder<StudentCubit, StudentState >(
+  builder: (context, state) {
     return Column(
       children: [
         // Create a card with title "Student Info".
@@ -20,29 +34,30 @@ class StudentAndParentInfo extends StatelessWidget{
         InfoCard.bland(
           cardThumbnail: const Icon(Icons.drive_file_rename_outline),
           cardTitle: "Name",
-          cardDescription: "Sheldon Lee Cooper",
+          cardDescription: "${student.firstName} ${student.lastName}",
         ),
         InfoCard.bland(
           cardThumbnail: const Icon(Icons.person),
-          cardTitle: "ID",
-          cardDescription: "123456789",
+          cardTitle: "National ID",
+          cardDescription: student.nationalId,
         ),
+        InfoCard.bland(
+          cardThumbnail: const Icon(Icons.date_range),
+          cardTitle: "Date of Birth",
+          cardDescription: student.dateOfBirth.toString().substring(0,10),
+        ),
+
         InfoCard.bland(
           cardThumbnail: const Icon(Icons.email),
           cardTitle: "Email",
-          cardDescription: "example@domain.com",
-        ),
-        InfoCard.bland(
-          cardThumbnail: const Icon(Icons.phone),
-          cardTitle: "Phone Number",
-          cardDescription: "0591234567",
+          cardDescription: student.emailId,
         ),
         Visibility(
           visible: isForStudent ?? false,
           child: InfoCard.bland(
             cardThumbnail: const Icon(Icons.person),
             cardTitle: "User Name",
-            cardDescription: "StudentUserName",
+            cardDescription: student.emailId,
           ),
         ),
         Visibility(
@@ -50,14 +65,14 @@ class StudentAndParentInfo extends StatelessWidget{
           child: InfoCard.bland(
             cardThumbnail: const Icon(Icons.lock),
             cardTitle: "Password",
-            cardDescription: "StudentPassword",
+            cardDescription: student.nationalId,
           ),
         ),
 
         InfoCard.bland(
-          cardThumbnail: const Icon(Icons.calendar_today),
+          cardThumbnail: const Icon(Icons.book),
           cardTitle: "Academic Year",
-          cardDescription: "2021-2022 CSE 2",
+          cardDescription: '${student.department}, ${academicYears[student.studyYear!]}',
           buttonText: "Close",
           isButtonVisible: true,
           onButtonTap: () {
@@ -66,6 +81,9 @@ class StudentAndParentInfo extends StatelessWidget{
         ),
       ],
     );
+  },
+),
+);
   }
 
 

@@ -29,7 +29,7 @@ class Student {
       lastName: json['lastName'],
       emailId: json['emailId'],
       dateOfBirth: DateTime.parse(json['dateOfBirth']),
-      nationalId: json['nationalID'],
+      nationalId: json['nationalId'],
       department: json['department'],
       studyYear: json['studyYear'],
       adminId: json['adminId'],

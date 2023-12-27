@@ -1,5 +1,6 @@
 
 import '../models/instructor_model.dart';
+import '../models/student_model.dart';
 import '../services/instructor_web_services.dart';
 
 class InstructorRepository {
@@ -54,6 +55,21 @@ class InstructorRepository {
     }
   }
 
+  Future<List<Instructor>> getInstructorByStudentId(int id) async {
+    final data = await instructorWebServices.getInstructorByStudentId(id);
+
+    print(data);
+    // Ensure that data is not null before calling fromJson
+    if (data != null) {
+      return data
+          .map((elementInListFromWebService) =>
+          Instructor.fromJson(elementInListFromWebService))
+          .toList();
+    } else {
+      // Handle the case where the response data is null
+      throw Exception('Failed to get instructor data by ID');
+    }
+  }
 
 
 }

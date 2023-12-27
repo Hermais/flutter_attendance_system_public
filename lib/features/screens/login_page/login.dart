@@ -3,11 +3,16 @@ import 'package:flutter_attendance_system/core/cubits/auth_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motion/motion.dart';
 
+import '../../../core/cubits/student_cubit.dart';
 import '../../../core/cubits/theme_change_manager_cubit.dart';
 import '../../../core/data/models/auth_post_model.dart';
+import '../../../core/data/repositories/student_repository.dart';
+import '../../../core/data/services/student_web_services.dart';
 import '../../../main.dart';
 import '../../../shared/constants_and_statics/shared_vars.dart';
 import '../../../shared/shared_pref/shared_theme_colors.dart';
+
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -30,12 +35,12 @@ class _LoginPageState extends State<LoginPage> {
     /// BlocBuilder receives emits from the cubit and rebuilds the widget tree.
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, authState) {
-        if(authState is AuthLoading){
+        if (authState is AuthLoading) {
           ScaffoldMessenger.of(context).showSnackBar(
-             SnackBar(
+            SnackBar(
               content: const Text('Authorizing, Please wait...'),
-               backgroundColor: Theme.of(context).primaryColor,
-               duration: const Duration(seconds: 2),
+              backgroundColor: Theme.of(context).primaryColor,
+              duration: const Duration(seconds: 2),
             ),
           );
         }
@@ -43,19 +48,14 @@ class _LoginPageState extends State<LoginPage> {
         } else if (authState is AuthSuccess) {
           if (authState.authGet.userType == 1) {
             Navigator.of(context).pushNamed(facultyAdmin);
-          }else if (authState.authGet.userType == 2){
+          } else if (authState.authGet.userType == 2) {
+
+
             Navigator.of(context).pushNamed(student);
-
-
-          }else if (authState.authGet.userType == 3){
+          } else if (authState.authGet.userType == 3) {
             Navigator.of(context).pushNamed(parent);
-
-
-          }
-          else if (authState.authGet.userType == 4){
+          } else if (authState.authGet.userType == 4) {
             Navigator.of(context).pushNamed(instructor);
-
-
           }
         } else if (authState is AuthFailed) {
           ScaffoldMessenger.of(context).showSnackBar(

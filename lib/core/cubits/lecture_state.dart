@@ -14,7 +14,7 @@ class LectureInitial extends LectureState {
 class LectureDefault extends LectureState {
   final List<Lecture> lectureList = [
     Lecture(
-      lectureID: 1,
+      lectureId: 1,
       startTime: DateTime.now().add(const Duration(minutes: 10)),
       endTime: DateTime.now().add(const Duration(minutes: 20)),
       firstDate: DateTime.now(),
@@ -23,7 +23,7 @@ class LectureDefault extends LectureState {
 
     ),
     Lecture(
-      lectureID: 2,
+      lectureId: 2,
       startTime: DateTime.now().subtract(const Duration(minutes: 10)),
       endTime: DateTime.now().add(const Duration(minutes: 20)),
       firstDate: DateTime.now(),
@@ -32,7 +32,7 @@ class LectureDefault extends LectureState {
 
     ),
     Lecture(
-      lectureID: 3,
+      lectureId: 3,
       startTime: DateTime.now().subtract(const Duration(seconds: 40)),
       endTime: DateTime.now().add(const Duration(seconds: 40)),
       firstDate: DateTime.now(),

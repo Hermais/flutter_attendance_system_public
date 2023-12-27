@@ -43,5 +43,13 @@ class InstructorCubit extends Cubit<InstructorState> {
     });
   }
 
+  void loadInstructorsByStudentId(int id) {
+    instructorRepository
+        .getInstructorByStudentId(id)
+        .then((instructors) {
+      emit(InstructorLoaded(instructors: instructors));
+    });
+  }
+
 
 }

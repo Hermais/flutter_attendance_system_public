@@ -4,98 +4,109 @@ import 'package:flutter_attendance_system/core/cubits/instructor_cubit.dart';
 import 'package:flutter_attendance_system/core/cubits/lecture_cubit.dart';
 import 'package:flutter_attendance_system/core/cubits/lecture_manager_cubit.dart';
 import 'package:flutter_attendance_system/core/data/repositories/lecture_repository.dart';
-import 'package:flutter_attendance_system/core/data/services/student_web_services.dart';
-import 'package:flutter_attendance_system/features/screens/users_pages/1_faculty_admin_pages/faculty_admin_timetable.dart';
+import 'package:flutter_attendance_system/features/screens/users_pages/3_student_pages/student_dashboard.dart';
 import 'package:flutter_attendance_system/features/screens/users_pages/3_student_pages/student_timetable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-
-import 'package:intl/intl.dart';
 import '../../../../core/cubits/auth_cubit.dart';
 import '../../../../core/cubits/internet_cubit.dart';
 import '../../../../core/cubits/student_cubit.dart';
-import '../../../../core/cubits/user_cubit.dart';
-import '../../../../core/data/models/auth_get_model.dart';
-import '../../../../core/data/repositories/example_repository.dart';
+import '../../../../core/data/repositories/instructor_repository.dart';
 import '../../../../core/data/repositories/student_repository.dart';
-import '../../../../core/data/services/example_web_services.dart';
+import '../../../../core/data/services/instructor_web_services.dart';
 import '../../../../core/data/services/lecture_web_services.dart';
+import '../../../../core/data/services/student_web_services.dart';
 import '../../../../main.dart';
 import '../../../../shared/constants_and_statics/shared_vars.dart';
 import '../../../widgets/card_widget.dart';
-import '../2_instructor_pages/instructor_pages_list.dart';
+import '../../login_page/login.dart';
+
+InstructorCubit instructorCubit = InstructorCubit(
+    instructorRepository:
+        InstructorRepository(instructorWebServices: InstructorWebServices()))
+  ..loadInstructorsByStudentId((authCubit.state as AuthSuccess).authGet.id);
 
 
-StudentCubit myStudentCubit = StudentCubit(studentRepository: (StudentRepository(studentWebServices:StudentWebServices())))..loadStudentInstructorsById((authCubit.state as AuthSuccess).authGet.id);
 
-UserCubit myUserCubit2 =  UserCubit(
-    userRepository:
-    UserRepository(userWebService: UserWebService()))
-  ..loadUsers();
+
+
+
+
 
 List<Widget> provideWidgetOptions(BuildContext mainContext) {
+
   return <Widget>[
     /// Lectures Tab:
     MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => studentCubit!),
+        BlocProvider(
+          create: (context) => BlocProvider.of<LectureManagerCubit>(mainContext),
+        ),
+
         BlocProvider(
           create: (context) => LectureCubit(
               lectureRepository:
-                  LectureRepository(lectureWebServices: LectureWebServices()))..loadDefault(),
+              LectureRepository(lectureWebServices: LectureWebServices()))..getLecturesByDay(
+              day: 'monday',
+              department:
+              (studentCubit!.state as StudentLoaded).students[0].department!,
+              academicYear: (studentCubit!.state as StudentLoaded)
+                  .students[0]
+                  .studyYear!)
+
         ),
-        BlocProvider(
-          create: (context) => LectureManagerCubit(),
-        ),
+
       ],
       child: BlocListener<LectureManagerCubit, LectureManagerState>(
-        listener: (context, state) {
-          if (state is LectureManagerInSession) {
+
+        listener: (context, lectureManagerState) {
+          if (lectureManagerState is LectureManagerInSession) {
             showQRCodePopup(context);
-          } else if (state is LectureManagerFailed){
+          } else if (lectureManagerState is LectureManagerFailed) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text("This lecture is not in session."),
                 duration: Duration(seconds: 1),
-
                 backgroundColor: Colors.red,
               ),
             );
           }
+
         },
         child: BlocBuilder<LectureCubit, LectureState>(
-          builder: (context, state) {
-            if (state is LectureInitial) {
+          builder: (context, lectureState) {
+            if (lectureState is LectureInitial) {
 
               return const Center(
                 child: CircularProgressIndicator(),
               );
+
             }
-            if (state is LectureLoaded || state is LectureDefault)
-              {
-                print(DateTime.now().timeZoneName);
-                return ListView.builder(
-                    itemCount:
-                    state
-                        .lectureList
-                        .length,
-                    itemBuilder: (context, index) {
-                      return InfoCard(
-                        cardThumbnail: const Icon(Icons.book),
-                        cardTitle: state.lectureList[index].courseCode,
-                        lectureStartsAt: DateFormat("hh:mm a").format(state.lectureList[index].startTime!),
-                        lectureEndsAt: DateFormat("hh:mm a" ).format(state.lectureList[index].endTime!),
-                        lecturePlace: state.lectureList[index].hallLocation.toString(),
-                        buttonText: "Attend",
-                        onButtonTap: () {
-                          BlocProvider.of<LectureManagerCubit>(context)
-                              .checkLectureToStart(
-                              state
-                                  .lectureList[index]);
-                        },
-                      );
-                    });
-              }
+            if (lectureState is LectureLoaded || lectureState is LectureDefault) {
+              print(DateTime.now().timeZoneName);
+              return ListView.builder(
+                  itemCount: lectureState.lectureList.length,
+                  itemBuilder: (context, index) {
+                    return InfoCard(
+                      cardThumbnail: const Icon(Icons.book),
+                      cardTitle: lectureState.lectureList[index].courseCode,
+                      lectureStartsAt: DateFormat("hh:mm a")
+                          .format(lectureState.lectureList[index].startTime!),
+                      lectureEndsAt: DateFormat("hh:mm a")
+                          .format(lectureState.lectureList[index].endTime!),
+                      lecturePlace:
+                          lectureState.lectureList[index].hallLocation.toString(),
+                      buttonText: "Attend",
+                      onButtonTap: () {
+                        BlocProvider.of<LectureManagerCubit>(mainContext)
+                            .checkLectureToStart(lectureState.lectureList[index]);
+                      },
+                    );
+                  });
+            }
             return const Center(
               child: Text("Error"),
             );
@@ -104,139 +115,71 @@ List<Widget> provideWidgetOptions(BuildContext mainContext) {
       ),
     ),
 
-    /// Instructors Tab:
+    /// Timetable Tab:
+    ListView.builder(
+      itemCount: 6,
+      itemBuilder: (context, index) {
+        return InfoCard(
+          isButtonVisible: false,
+          isLectureCard: false,
+          cardTitle: days[index],
+          cardDescription: "Tap here to show the lectures of today.",
+          cardThumbnail: const Icon(Icons.table_chart),
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+              return StudentTimetable(day: days[index]);
+            }));
+          },
+        );
+      },
+    ),
 
+    /// Instructors Tab:
     MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-          myStudentCubit,),
+          create: (context) => instructorCubit,
+        ),
         BlocProvider(
           create: (context) => InternetCubit(connectivity: Connectivity()),
         ),
       ],
-      child: BlocConsumer<StudentCubit, StudentState>(
-        listener: (context, state) {
-
-        },
+      child: BlocConsumer<InstructorCubit, InstructorState>(
+        listener: (context, state) {},
         builder: (context, studentInstructorState) {
-          if (studentInstructorState is StudentInitial) {
+          if (studentInstructorState is InstructorInitial) {
             return Center(
-              child: CircularProgressIndicator(color: Theme
-                  .of(context)
-                  .primaryColor,),
+              child: CircularProgressIndicator(
+                color: Theme.of(context).primaryColor,
+              ),
             );
           }
-          if (studentInstructorState is StudentLoaded) {
+          if (studentInstructorState is InstructorLoaded &&
+              (studentInstructorState.instructors!.isNotEmpty)) {
             return ListView.builder(
-              itemCount: studentInstructorState.students.length,
+              itemCount: studentInstructorState.instructors!.length,
               itemBuilder: (context, index) {
                 return InfoCard(
                   isLectureCard: false,
                   isButtonVisible: false,
                   isTopLeftBorderMaxRadius: false,
                   cardThumbnail: const Icon(Icons.person),
-                  cardDescription: "The whereabouts of the instructor will be here.",
-                  cardTitle: "DR.${studentInstructorState.students[index].firstName}",
+                  cardDescription:
+                  'Email: ${studentInstructorState.instructors![index].emailId}\n'
+                      'Department: ${studentInstructorState.instructors![index].department}\n',
+                  cardTitle:
+                      "DR. ${studentInstructorState.instructors![index].firstName} "
+                          "${studentInstructorState.instructors![index].firstName}",
                 );
               },
             );
           }
           return const Center(
-            child: Text('Something went wrong!'),
+            child: Text('No instructors are assigned yet.'),
           );
         },
       ),
     ),
-
-    // ListView.builder(
-    //   itemCount: 10,
-    //   itemBuilder: (context, index) {
-    //     return InfoCard(
-    //       isLectureCard: false,
-    //       isButtonVisible: false,
-    //       isTopLeftBorderMaxRadius: false,
-    //       cardThumbnail: const Icon(Icons.person),
-    //       cardDescription: "The whereabouts of the instructor will be here.",
-    //       cardTitle: "Instructor ${index + 1}",
-    //     );
-    //   },
-    // ),
-
-    /// Timetable Tab:
-    MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) =>
-          myUserCubit,),
-        BlocProvider(
-          create: (context) => InternetCubit(connectivity: Connectivity()),
-        ),
-      ],
-      child: BlocConsumer<UserCubit, UserState>(
-        listener: (context, state) {
-
-        },
-        builder: (context, state) {
-          if (state is UserInitial) {
-            return Center(
-              child: CircularProgressIndicator(color: Theme
-                  .of(context)
-                  .primaryColor,),
-            );
-          }
-          if (state is UserLoaded) {
-            return ListView.builder(
-              itemCount:6,
-              itemBuilder: (context, index) {
-                return InfoCard(
-                  isButtonVisible: false,
-                  isLectureCard: false,
-                  cardTitle: days[index],
-                  cardDescription: "No lectures today.",
-                  cardThumbnail: const Icon(Icons.table_chart),
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                      /// An arbitrary academic year and department is passed to
-                      /// the constructor. In actual implementation, the academic year
-                      /// and department will be provided.
-                      return StudentTimetable(day:days[index]);
-                    }));
-
-                  },
-                );
-              },
-            );
-          }
-          return const Center(
-            child: Text('Something went wrong!'),
-          );
-        },
-      ),
-    ),
-
-    // ListView.builder(
-    //   itemCount: 6,
-    //   itemBuilder: (context, index) {
-    //     return InfoCard(
-    //       isButtonVisible: false,
-    //       isLectureCard: false,
-    //       cardTitle: days[index],
-    //       cardDescription: "No lectures today.",
-    //       cardThumbnail: const Icon(Icons.table_chart),
-    //       onTap: () {
-    //         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-    //           /// An arbitrary academic year and department is passed to
-    //           /// the constructor. In actual implementation, the academic year
-    //           /// and department will be provided.
-    //           return FacultyAdminTimetables(
-    //             academicYear: academicYears[0],
-    //           ).getLecturesByDay(days[index], department: departments[0]);
-    //         }));
-    //       },
-    //     );
-    //   },
-    // ),
   ];
 }
 

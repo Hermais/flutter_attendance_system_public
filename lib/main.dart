@@ -22,7 +22,6 @@ AuthCubit authCubit = AuthCubit(
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Motion.instance.initialize();
-
   MaterialColor primarySwatchColor =
   (await ManageLastThemeColor().loadLastThemeColor());
   runApp(

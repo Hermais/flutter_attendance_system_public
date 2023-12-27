@@ -1,17 +1,26 @@
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/features/screens/users_pages/3_student_pages/student_pages_list.dart';
-import 'package:flutter_attendance_system/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/cubits/auth_cubit.dart';
+import '../../../../core/cubits/lecture_manager_cubit.dart';
 import '../../../../core/cubits/student_cubit.dart';
 import '../../../../core/data/repositories/student_repository.dart';
 import '../../../../core/data/services/student_web_services.dart';
+import '../../../../main.dart';
 import '../../../widgets/bottom_navigation_bar.dart';
 import '../commons/student_info_popup.dart';
 
 void temp() {}
+
+StudentCubit studentCubit = StudentCubit(
+    studentRepository:
+    StudentRepository(studentWebServices: StudentWebServices()))
+  ..loadStudentById((authCubit.state as AuthSuccess).authGet.id);
+
+LectureManagerCubit lectureManagerCubit = LectureManagerCubit()
+  ..setInitial();
 
 class StudentDashboard extends StatefulWidget {
   final String? userName;
@@ -26,10 +35,7 @@ class StudentDashboard extends StatefulWidget {
 class StudentDashboardState extends State<StudentDashboard> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController(initialPage: 0);
-  final StudentCubit studentCubit = StudentCubit(
-      studentRepository:
-      StudentRepository(studentWebServices: StudentWebServices()))
-    ..loadStudentById((authCubit.state as AuthSuccess).authGet.id);
+
 
   void _onItemTapped(int index) {
     setState(() {
@@ -42,17 +48,23 @@ class StudentDashboardState extends State<StudentDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => studentCubit,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => lectureManagerCubit),
+        BlocProvider(
+          create: (context) =>studentCubit,
+        ),
+      ],
       child: Scaffold(
         appBar: AppBar(
 
 
-          title: BlocBuilder<StudentCubit,StudentState>(
+          title: BlocBuilder<StudentCubit, StudentState>(
             builder: (context, studentState) {
               if (studentState is StudentLoaded) {
                 return Text(
-                  'Welcome, ${studentState.students[0].firstName ?? "Student!"}',
+                  'Welcome, ${studentState.students[0].firstName ??
+                      "Student!"}',
                 );
               } else {
                 return const Text('Welcome, Student!');
@@ -71,13 +83,23 @@ class StudentDashboardState extends State<StudentDashboard> {
           },
           child: const Icon(Icons.question_mark),
         ),
-        body: PageView(
-          controller: _pageController,
-          children: provideWidgetOptions(context),
-          onPageChanged: (index) {
-            setState(() {
-              _selectedIndex = index;
-            });
+        body: BlocBuilder<StudentCubit, StudentState>(
+          builder: (context, studentState) {
+            if (studentState is StudentLoaded) {
+              return PageView(
+                controller: _pageController,
+                children: provideWidgetOptions(context),
+                onPageChanged: (index) {
+                  setState(() {
+                    _selectedIndex = index;
+                  });
+                },
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
           },
         ),
 
@@ -88,12 +110,12 @@ class StudentDashboardState extends State<StudentDashboard> {
               title: const Text('Lectures'),
             ),
             FlashyTabBarItem(
-              icon: const Icon(Icons.supervisor_account),
-              title: const Text('Instructors'),
-            ),
-            FlashyTabBarItem(
               icon: const Icon(Icons.calendar_month_rounded),
               title: const Text('My Timetable'),
+            ),
+            FlashyTabBarItem(
+              icon: const Icon(Icons.supervisor_account),
+              title: const Text('Instructors'),
             ),
           ],
           selectedIndex: _selectedIndex,

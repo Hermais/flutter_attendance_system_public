@@ -24,6 +24,10 @@ class LectureManagerCubit extends Cubit<LectureManagerState> {
     }
   }
 
+  void setInitial() {
+    emit(LectureManagerInitial());
+  }
+
   loadLecture() {
     emit(LectureManagerLoaded(lecture: lecture));
   }

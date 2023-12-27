@@ -37,7 +37,7 @@ class LectureWebServices {
 
   Future<List<dynamic>> getLectureDataByDay({required String day, required String department, required int academicYear}) async {
     try {
-      Response response = await dio.get('/admin/$day/$department/$academicYear');
+      Response response = await dio.get('/admin/$academicYear/$department/$day');
       return response.data;
     } catch (e) {
       print(e);
