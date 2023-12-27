@@ -1,18 +1,18 @@
 class FacultyAdmin {
-  late int adminID;
-  late String firstName;
-  late String lastName;
-  late String emailID;
-  late int nationalID;
-  late DateTime dateOfBirth;
+  int? adminID;
+   String? firstName;
+   String? lastName;
+   String? emailID;
+   int? nationalID;
+   String? dateOfBirth;
 
   FacultyAdmin({
-    required this.adminID,
-    required this.firstName,
-    required this.lastName,
-    required this.emailID,
-    required this.nationalID,
-    required this.dateOfBirth
+    this.adminID,
+     this.firstName,
+     this.lastName,
+     this.emailID,
+     this.nationalID,
+     this.dateOfBirth
   });
 
   factory FacultyAdmin.fromJson(Map<String, dynamic> json) {

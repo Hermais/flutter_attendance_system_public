@@ -16,15 +16,16 @@ class StudentCubit extends Cubit<StudentState> {
    });
  }
 
- Future<void> postStudentData(Student student) async {
-   emit(addStudenloaded());
-   try{
-     await studentRepository.postStudentData(student);
-       emit(StudentAdded('successfully added'));
-     } catch(e){
-       emit(StudentError('Failed to add: $e'));
-     }
+  void postStudentData(Student student){
+       studentRepository.postStudentData(student).then((_){
+         emit(StudentAdded(message: "Student posted successfully"));
+         print("Student posted successfully");
+       }).catchError((error){
+         emit(StudentError(error: "Failed to post student"));
+         print("Failed to post student");
+       });
    }
+
    void printjson(Student student){
      print('Student: ${student.toJson()}');
    }

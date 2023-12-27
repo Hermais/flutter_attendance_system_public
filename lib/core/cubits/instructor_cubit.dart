@@ -33,11 +33,15 @@ class InstructorCubit extends Cubit<InstructorState> {
     });
   }
 
-  // void postInstructor(Instructor instructor) {
-  //   instructorRepository.postInstructorData(instructor).then((_) {
-  //     emit(InstructorSuccessState(message: "Instructor posted successfully"));
-  //   }).catchError((error) {
-  //     emit(InstructorErrorState(error: "Failed to post instructor"));
-  //   });
-  // }
+  void postInstructorData(Instructor instructor){
+    instructorRepository.postInstructorData(instructor).then((_){
+      emit(InstructorAdded(message: "Instructor posted successfully"));
+      print("Instructor posted successfully");
+    }).catchError((error){
+      emit(InstructorError(error: "Failed to post instructor"));
+      print("Failed to post instructordent");
+    });
+  }
+
+
 }

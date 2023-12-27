@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/core/cubits/auth_cubit.dart';
-import 'package:flutter_attendance_system/core/data/repositories/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motion/motion.dart';
 
 import '../../../core/cubits/theme_change_manager_cubit.dart';
 import '../../../core/data/models/auth_post_model.dart';
-import '../../../core/data/services/auth_web_services.dart';
 import '../../../main.dart';
 import '../../../shared/constants_and_statics/shared_vars.dart';
 import '../../../shared/shared_pref/shared_theme_colors.dart';
-import '../temp_users_nav/temp_users_navigator.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -23,8 +20,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var emailController = TextEditingController(text: 'keales8@issuu.com');
-  var passwordController = TextEditingController(text: '20021204-8706-8438');
+  var emailController = TextEditingController(text: 'admin_1@gmail.com');
+  var passwordController = TextEditingController(text: '30301011366639');
 
   @override
   Widget build(BuildContext context) {

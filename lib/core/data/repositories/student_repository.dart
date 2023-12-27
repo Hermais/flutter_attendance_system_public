@@ -21,12 +21,9 @@ class StudentRepository {
         .toList();
   }
   Future<void> postStudentData(Student student) async {
-    try {
+
       await studentWebServices.postStudentData(student.toJson());
-    } catch (e) {
-      print(e);
-      rethrow;
-    }
+
   }
   Future<List<Student>> getInstructorDataById(int id) async {
     final data = await studentWebServices.getStudentDataById(id);

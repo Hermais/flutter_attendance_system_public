@@ -57,9 +57,9 @@ class InstructorWebServices {
       return [];
     }
   }
-  Future<void> postInstructorData(Map<String, dynamic> postData) async {
+  Future<void> postInstructorData(Map<String, dynamic> instructor) async {
     try {
-      await dio.post('/adminjj', data: postData);
+      await dio.post('/admin/instructor', data: instructor);
     } catch (e) {
       print(e);
       rethrow;

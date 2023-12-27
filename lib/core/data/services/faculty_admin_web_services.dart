@@ -37,4 +37,16 @@ class FacultyAdminWebServices {
       return [];
     }
   }
+
+  Future<List<dynamic>> getFacultyAdminById(int id) async {
+    try {
+      Response response = await dio.get('/admin/adminInfo/$id');
+      List<dynamic> list = [response.data];
+      print(list);
+      return Future.value(list);
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
 }
