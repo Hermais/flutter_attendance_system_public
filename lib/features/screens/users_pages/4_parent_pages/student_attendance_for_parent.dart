@@ -36,7 +36,7 @@ class ParentStudentAttendanceByWeekAndDay extends StatelessWidget {
               }
               if(parentState is ParentLoaded){
               return ListView.builder(
-                  itemCount: 5,
+                  itemCount:5,
                   itemBuilder: (context, index) {
                     return InfoCard(
                       isLectureCard: true,

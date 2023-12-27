@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../../../shared/constants_and_statics/shared_vars.dart';
+import '../models/parent_model.dart';
 
 
 class ParentWebServices {
