@@ -5,6 +5,8 @@ import 'package:flutter_attendance_system/core/data/services/student_web_service
 import 'package:flutter_attendance_system/features/widgets/card_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../shared/constants_and_statics/shared_vars.dart';
+
 class InstructorStudents extends StatelessWidget {
   final String courseCode;
   final String? courseName;
@@ -43,7 +45,8 @@ class InstructorStudents extends StatelessWidget {
                         isTopLeftBorderMaxRadius: false,
                         cardThumbnail: const Icon(Icons.person),
                         cardDescription:
-                            "Students of $courseName will be shown here.",
+                            "Academic Year: ${academicYears[studentState.students[index].studyYear!]}"
+                            "\nDepartment: ${studentState.students[index].department!}",
                         cardTitle: "${studentState.students[index].firstName} "
                             "${studentState.students[index].lastName}",
                       );

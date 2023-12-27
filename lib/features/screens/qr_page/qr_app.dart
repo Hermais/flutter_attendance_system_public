@@ -3,12 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-void main() {
-  void store() {}
-  runApp(MaterialApp(
-    home: QRScanner(storeScanResult: store, qrAppTitle: "Attendance Scanner"),
-  ));
-}
+
 class QRScannerWithScaffold extends StatelessWidget
 {
   final Function storeScanResult;
@@ -189,10 +184,10 @@ class _QRScannerState extends State<QRScanner> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
-        controller.pauseCamera();
+        //controller.pauseCamera();
+        print(result!.code);
         widget.storeScanResult(result!.code ?? "NULL Error!");
-        Navigator.of(context).pop();
-        Navigator.of(context).pop();
+
       });
     });
   }

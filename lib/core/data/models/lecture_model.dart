@@ -8,6 +8,7 @@ class Lecture {
   DateTime? firstDate;
   int? hallLocation;
   String? courseCode;
+  String? courseName;
 
   Lecture({
      this.lectureId,
@@ -17,6 +18,7 @@ class Lecture {
      this.hallLocation,
       this.adminId,
       this.courseCode,
+      this.courseName,
 
 
   });
@@ -49,6 +51,7 @@ class Lecture {
       hallLocation: json['hallLocation'],
       adminId: json['adminId'],
       courseCode: json['courseCode'],
+      courseName: json['courseName'],
 
     );
   }
@@ -61,6 +64,7 @@ class Lecture {
       'hallLocation': hallLocation,
       'adminId': 1,
       'courseCode': courseCode,
+
 
     };
   }

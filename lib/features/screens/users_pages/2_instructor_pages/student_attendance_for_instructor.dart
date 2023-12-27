@@ -21,10 +21,9 @@ class InstructorStudentsAttendanceByWeek extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Students of $week'),
+          title: Text('Students of Week $week'),
         ),
-        // TODO: Fetch the actual list of students who attend the course for instructor
-        //  from the database.
+
         body: BlocProvider(
           create: (context) => StudentCubit(
               studentRepository:
@@ -39,7 +38,8 @@ class InstructorStudentsAttendanceByWeek extends StatelessWidget {
                   ),
                 );
               }
-              if (studentState is StudentLoaded) {
+              if (studentState is StudentLoaded &&
+                  (studentState.students.isNotEmpty)) {
                 return ListView.builder(
                     itemCount: studentState.students.length,
                     itemBuilder: (context, index) {
@@ -49,13 +49,15 @@ class InstructorStudentsAttendanceByWeek extends StatelessWidget {
                         isTopLeftBorderMaxRadius: false,
                         cardThumbnail: const Icon(Icons.person),
                         cardDescription:
-                            "Students of $week will be shown here.",
+                            "This student attended $courseCode lecture.",
                         cardTitle: "${studentState.students[index].firstName} "
                             "${studentState.students[index].lastName}",
                       );
                     });
               }
-              return Placeholder();
+              return const Center(
+                child: Text('No students attended this week.'),
+              );
             },
           ),
         ));

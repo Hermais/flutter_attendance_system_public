@@ -66,5 +66,17 @@ class LectureWebServices {
     }
     }
 
+    Future<List<dynamic>> getLectureOfInstructorById(int id) async {
+    try {
+      Response response = await dio.get('/instructor/lectures/$id');
+      print(response.data);
 
+      return response.data;
+    } catch (e) {
+      print(e);
+      return[];
+    }
+
+
+}
 }

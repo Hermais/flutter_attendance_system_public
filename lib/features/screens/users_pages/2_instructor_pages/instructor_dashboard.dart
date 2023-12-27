@@ -2,6 +2,7 @@ import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/core/cubits/auth_cubit.dart';
 import 'package:flutter_attendance_system/core/cubits/instructor_cubit.dart';
+import 'package:flutter_attendance_system/core/cubits/qr_scanner_cubit.dart';
 import 'package:flutter_attendance_system/features/widgets/bottom_navigation_bar.dart';
 import 'package:flutter_attendance_system/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +13,9 @@ import '../../../../core/data/services/instructor_web_services.dart';
 import '../../qr_page/qr_app.dart';
 import 'instructor_pages_list.dart';
 
-void temp() {}
+void temp(String result) {
+  print(result);
+}
 
 class InstructorDashboard extends StatefulWidget {
   final String? userName;
@@ -30,8 +33,9 @@ class InstructorDashboardState extends State<InstructorDashboard> {
   final PageController _pageController = PageController(initialPage: 0);
   final InstructorCubit instructorCubit = InstructorCubit(
       instructorRepository:
-          InstructorRepository(instructorWebServices: InstructorWebServices()))
+      InstructorRepository(instructorWebServices: InstructorWebServices()))
     ..loadInstructorById((authCubit.state as AuthSuccess).authGet.id);
+  final QrScannerCubit qrScannerCubit = QrScannerCubit();
 
   void _onItemTapped(int index) {
     setState(() {
@@ -44,76 +48,102 @@ class InstructorDashboardState extends State<InstructorDashboard> {
   @override
   Widget build(BuildContext context) {
     final LectureManagerCubit instructorLectureManagerCubit =
-        LectureManagerCubit();
-    return BlocProvider(
-      create: (context) => instructorCubit,
-      child: Scaffold(
-          appBar: AppBar(
-            actions: [
-              IconButton(
-                onPressed: () {
-                  if (instructorLectureManagerCubit.state
+    LectureManagerCubit();
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => instructorCubit,
+        ),
+        BlocProvider(
+          create: (context) => qrScannerCubit,
+        ),
+      ],
+      child: BlocListener<QrScannerCubit, QrScannerState>(
+        listener: (context, qrScannerState) {
+          print(qrScannerState);
+          if (qrScannerState is QrScannerIdle || qrScannerState is QrScannerScanned) {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) {
+                return BlocProvider.value(
+                  value: qrScannerCubit,
+                  child: QRScannerWithScaffold(
+                    storeScanResult: temp,
+                    qrAppTitle: "Scan QR code to track attendance:",
+                  ),
+                );
+              }),
+            );
+          }
+        },
+        child: Scaffold(
+            appBar: AppBar(
+              actions: [
+                BlocProvider(
+                  create: (context) => BlocProvider.of<QrScannerCubit>(context),
+                  child: IconButton(
+                    onPressed: () {
+                      if (instructorLectureManagerCubit.state
                       is LectureManagerInSession) {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) {
-                        return const QRScannerWithScaffold(
-                          storeScanResult: temp,
+                        qrScannerCubit
+                            .openQrScanner();
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("No lecture is selected."),
+                            duration: Duration(seconds: 1),
+                            backgroundColor: Colors.red,
+                          ),
                         );
-                      }),
+                      }
+                    },
+                    icon: const Icon(Icons.qr_code_scanner),
+                  ),
+                ),
+              ],
+              title: BlocBuilder<InstructorCubit, InstructorState>(
+                builder: (context, instructorState) {
+                  if (instructorState is InstructorLoaded) {
+                    return Text(
+                      'Welcome, Dr. ${instructorState.instructors![0]
+                          .firstName ??
+                          "Instructor!"}',
                     );
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("No lecture is selected."),
-                        duration: Duration(seconds: 1),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
+                    return const Text('Welcome, Instructor!');
                   }
                 },
-                icon: const Icon(Icons.qr_code_scanner),
               ),
-            ],
-            title: BlocBuilder<InstructorCubit, InstructorState>(
-              builder: (context, instructorState) {
-                if (instructorState is InstructorLoaded) {
-                  return Text(
-                    'Welcome, Dr. ${instructorState.instructors![0].firstName ?? "Instructor!"}',
-                  );
-                } else {
-                  return const Text('Welcome, Instructor!');
-                }
+            ),
+            body: PageView(
+              controller: _pageController,
+              children:
+              provideWidgetOptions(context, instructorLectureManagerCubit),
+              onPageChanged: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
               },
             ),
-          ),
-          body: PageView(
-            controller: _pageController,
-            children:
-                provideWidgetOptions(context, instructorLectureManagerCubit),
-            onPageChanged: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-          ),
-          bottomNavigationBar: CustomBottomNavigationBar(
-            items: <FlashyTabBarItem>[
-              FlashyTabBarItem(
-                icon: const Icon(Icons.dashboard_rounded),
-                title: const Text('Lectures'),
-              ),
-              FlashyTabBarItem(
-                icon: const Icon(Icons.people),
-                title: const Text('Students'),
-              ),
-              FlashyTabBarItem(
-                icon: const Icon(Icons.checklist),
-                title: const Text('Attendance'),
-              ),
-            ],
-            selectedIndex: _selectedIndex,
-            onItemTapped: _onItemTapped,
-          )),
+            bottomNavigationBar: CustomBottomNavigationBar(
+              items: <FlashyTabBarItem>[
+                FlashyTabBarItem(
+                  icon: const Icon(Icons.dashboard_rounded),
+                  title: const Text('Lectures'),
+                ),
+                FlashyTabBarItem(
+                  icon: const Icon(Icons.people),
+                  title: const Text('Students'),
+                ),
+                FlashyTabBarItem(
+                  icon: const Icon(Icons.checklist),
+                  title: const Text('Attendance'),
+                ),
+              ],
+              selectedIndex: _selectedIndex,
+              onItemTapped: _onItemTapped,
+            )),
+      ),
     );
   }
 

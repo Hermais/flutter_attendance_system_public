@@ -50,4 +50,14 @@ class LectureCubit extends Cubit<LectureState> {
       emit(LectureLoaded(lectureList:lectureList));
      });
     }
+
+    void loadLectureOfInstructorById(int id) {
+    lectureRepository
+        .getLectureOfInstructorById(id)
+        .then((lectureList) {
+      emit(LectureLoaded(lectureList:lectureList));
+     });
+    }
+
+
 }

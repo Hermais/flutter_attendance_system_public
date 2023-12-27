@@ -35,7 +35,7 @@ List<Widget> provideWidgetOptions(BuildContext context, LectureManagerCubit inst
           LectureCubit(
               lectureRepository:
               LectureRepository(lectureWebServices: LectureWebServices()))
-            ..loadDefault(),
+            ..loadLectureOfInstructorById((authCubit.state as AuthSuccess).authGet.id),
         ),
         BlocProvider(
           create: (context) => instructorLectureManagerCubit,
@@ -78,7 +78,8 @@ List<Widget> provideWidgetOptions(BuildContext context, LectureManagerCubit inst
                       cardThumbnail: const Icon(Icons.book),
 
                       cardTitle: lectureState.lectureList[index]
-                          .courseCode,
+                          .courseName,
+                      descriptionMaxLines: 4,
                       lectureStartsAt: DateFormat("hh:mm a").format(
                           lectureState.lectureList[index].startTime!),
                       lectureEndsAt: DateFormat("hh:mm a").format(
@@ -86,6 +87,7 @@ List<Widget> provideWidgetOptions(BuildContext context, LectureManagerCubit inst
                       lecturePlace: lectureState.lectureList[index].hallLocation
                           .toString(),
                       buttonText: "Start",
+                      cardDescription: "Course Code: ${lectureState.lectureList[index].courseCode!}\n",
                       onButtonTap: () {
                         BlocProvider.of<LectureManagerCubit>(context)
                             .checkLectureToStart(

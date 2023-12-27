@@ -47,9 +47,24 @@ class LectureRepository {
           .toList();
     } else {
       // Handle the case where the response data is null
-      throw Exception('Failed to get instructor data by ID');
+      throw Exception('Failed to get instructor data by ID');
  }
     }
 
-}
+    Future<List<Lecture>> getLectureOfInstructorById(int id) async {
+    final data = await lectureWebServices.getLectureOfInstructorById(id);
+
+    print(data);
+    // Ensure that data is not null before calling fromJson
+    if (data != null) {
+      return data
+          .map((elementInListFromWebService) =>
+          Lecture.fromJson(elementInListFromWebService))
+          .toList();
+    } else {
+      // Handle the case where the response data is null
+      throw Exception('Failed to get instructor data by ID');
+    }
+
+}}
 
