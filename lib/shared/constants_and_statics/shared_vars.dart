@@ -10,6 +10,7 @@ const year1 = 'Year 1';
 const year2 = 'Year 2';
 const year3 = 'Year 3';
 const year4 = 'Year 4';
+const qrCodeDellimeter = '^';
 
 const yearMap = {
   prepYear: 0,

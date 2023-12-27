@@ -28,44 +28,38 @@ InstructorCubit instructorCubit = InstructorCubit(
         InstructorRepository(instructorWebServices: InstructorWebServices()))
   ..loadInstructorsByStudentId((authCubit.state as AuthSuccess).authGet.id);
 
-
-
-
-
-
-
-
 List<Widget> provideWidgetOptions(BuildContext mainContext) {
-
   return <Widget>[
     /// Lectures Tab:
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => studentCubit!),
+        BlocProvider(create: (context) => studentCubit),
         BlocProvider.value(
           value: mainContext.read<LectureManagerCubit>(),
         ),
-
         BlocProvider(
-          create: (context) => LectureCubit(
-              lectureRepository:
-              LectureRepository(lectureWebServices: LectureWebServices()))..getLecturesByDay(
-              day: 'monday',
-              department:
-              (studentCubit!.state as StudentLoaded).students[0].department!,
-              academicYear: (studentCubit!.state as StudentLoaded)
-                  .students[0]
-                  .studyYear!)
-
-        ),
-
+            create: (context) => LectureCubit(
+                lectureRepository:
+                    LectureRepository(lectureWebServices: LectureWebServices()))
+              ..getLecturesByDay(
+                  day: 'monday',
+                  department: (studentCubit.state as StudentLoaded)
+                      .students[0]
+                      .department!,
+                  academicYear: (studentCubit.state as StudentLoaded)
+                      .students[0]
+                      .studyYear!)),
       ],
       child: BlocListener<LectureManagerCubit, LectureManagerState>(
-
         listener: (context, lectureManagerState) {
           if (lectureManagerState is LectureManagerInSession) {
-            showQRCodePopup(context);
+            String qrData =
+                '${(BlocProvider.of<LectureManagerCubit>(context).state as LectureManagerInSession).lecture.lectureId}^${(BlocProvider.of<StudentCubit>(context).state as StudentLoaded).students[0].emailId}';
+
+            print(qrData);
+            showQRCodePopup(context, qrData: qrData);
           } else if (lectureManagerState is LectureManagerFailed) {
+
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text("This lecture is not in session."),
@@ -74,18 +68,16 @@ List<Widget> provideWidgetOptions(BuildContext mainContext) {
               ),
             );
           }
-
         },
         child: BlocBuilder<LectureCubit, LectureState>(
           builder: (context, lectureState) {
             if (lectureState is LectureInitial) {
-
               return const Center(
                 child: CircularProgressIndicator(),
               );
-
             }
-            if (lectureState is LectureLoaded || lectureState is LectureDefault) {
+            if (lectureState is LectureLoaded ||
+                lectureState is LectureDefault) {
               print(DateTime.now().timeZoneName);
               return ListView.builder(
                   itemCount: lectureState.lectureList.length,
@@ -97,12 +89,13 @@ List<Widget> provideWidgetOptions(BuildContext mainContext) {
                           .format(lectureState.lectureList[index].startTime!),
                       lectureEndsAt: DateFormat("hh:mm a")
                           .format(lectureState.lectureList[index].endTime!),
-                      lecturePlace:
-                          lectureState.lectureList[index].hallLocation.toString(),
+                      lecturePlace: lectureState.lectureList[index].hallLocation
+                          .toString(),
                       buttonText: "Attend",
                       onButtonTap: () {
                         BlocProvider.of<LectureManagerCubit>(mainContext)
-                            .checkLectureToStart(lectureState.lectureList[index]);
+                            .checkLectureToStart(
+                                lectureState.lectureList[index]);
                       },
                     );
                   });
@@ -165,11 +158,11 @@ List<Widget> provideWidgetOptions(BuildContext mainContext) {
                   isTopLeftBorderMaxRadius: false,
                   cardThumbnail: const Icon(Icons.person),
                   cardDescription:
-                  'Email: ${studentInstructorState.instructors![index].emailId}\n'
+                      'Email: ${studentInstructorState.instructors![index].emailId}\n'
                       'Department: ${studentInstructorState.instructors![index].department}\n',
                   cardTitle:
                       "DR. ${studentInstructorState.instructors![index].firstName} "
-                          "${studentInstructorState.instructors![index].firstName}",
+                      "${studentInstructorState.instructors![index].firstName}",
                 );
               },
             );

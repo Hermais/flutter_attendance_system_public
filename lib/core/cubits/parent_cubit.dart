@@ -25,4 +25,5 @@ class ParentCubit extends Cubit<ParentState> {
       emit(ParentLoaded(parents: parent));
     });
   }
+
 }
