@@ -36,7 +36,8 @@ class InstructorDashboardState extends State<InstructorDashboard> {
       InstructorRepository(instructorWebServices: InstructorWebServices()))
     ..loadInstructorById((authCubit.state as AuthSuccess).authGet.id);
   final QrScannerCubit qrScannerCubit = QrScannerCubit(instructorWebServices: InstructorWebServices());
-
+  final LectureManagerCubit instructorLectureManagerCubit =
+  LectureManagerCubit();
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -47,8 +48,7 @@ class InstructorDashboardState extends State<InstructorDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    final LectureManagerCubit instructorLectureManagerCubit =
-    LectureManagerCubit();
+
 
     return MultiBlocProvider(
       providers: [
@@ -73,7 +73,7 @@ class InstructorDashboardState extends State<InstructorDashboard> {
                           return BlocProvider.value(
                             value: qrScannerCubit,
                             child: QRScannerWithScaffold(
-                              storeScanResult: qrScannerCubit.catchQrCode,
+                              storeScanResult: verifyAttendance,
                               qrAppTitle: "Scan QR code to track attendance:",
                             ),
                           );
@@ -139,4 +139,8 @@ class InstructorDashboardState extends State<InstructorDashboard> {
   }
 
 // Create a confirmation popup for the instructor again.
+
+  verifyAttendance(String qrScanResult){
+    qrScannerCubit.catchQrCode(qrScanResult, instructorLectureManagerCubit );
+  }
 }

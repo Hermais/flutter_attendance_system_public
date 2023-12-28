@@ -76,6 +76,11 @@ class _QRScannerState extends State<QRScanner> {
                 controller!.resumeCamera();
             }
           }
+          if(state is QrPostFailure){
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Attendance could not be marked.')),
+            );
+          }
         },
         child: Scaffold(
             body: Stack(alignment: Alignment.bottomCenter, children: [

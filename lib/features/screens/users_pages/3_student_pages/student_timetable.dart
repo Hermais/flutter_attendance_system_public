@@ -67,7 +67,7 @@ class StudentTimetable extends StatelessWidget {
                         cardDescription:
                         "Lecture of ${day} will be shown here.",
                         cardTitle: "${lectureState.lectureList[0]
-                            .courseCode}",
+                            .courseName}",
                         lectureStartsAt: lectureState.lectureList[0]
                             .startTime.toString().substring(10, 16),
                         lectureEndsAt: lectureState.lectureList[0]

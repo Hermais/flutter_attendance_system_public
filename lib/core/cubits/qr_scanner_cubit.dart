@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_attendance_system/core/cubits/lecture_manager_cubit.dart';
 import 'package:flutter_attendance_system/core/data/models/attendance_post_model.dart';
 import 'package:flutter_attendance_system/main.dart';
 import 'package:meta/meta.dart';
@@ -15,10 +16,15 @@ class QrScannerCubit extends Cubit<QrScannerState> {
   void openQrScanner() {
     emit(QrScannerIdle());
   }
-  void catchQrCode(String qrCode) {
+  void catchQrCode(String qrCode, LectureManagerCubit lectureManagerCubit) {
     customPrint(qrCode);
+    int lectureId = int.parse(qrCode.split(qrCodeDellimeter)[0]);
+    if(lectureId != (lectureManagerCubit.state as LectureManagerInSession).lecture.lectureId){
+      emit(QrPostFailure());
+      return;
+    }
     Attendance attendance = Attendance(
-        lectureId: int.parse(qrCode.split(qrCodeDellimeter)[0]),
+        lectureId: lectureId,
         studentEmail: qrCode.split(qrCodeDellimeter)[1]);
     customPrint(attendance.toJson().toString());
     emit(QrScannerScanned(qrCode: qrCode));

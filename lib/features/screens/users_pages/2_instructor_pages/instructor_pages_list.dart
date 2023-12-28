@@ -63,8 +63,8 @@ List<Widget> provideWidgetOptions(BuildContext context, LectureManagerCubit inst
                 child: CircularProgressIndicator(),
               );
             }
-            if (lectureState is LectureLoaded ||
-                lectureState is LectureDefault) {
+            if ((lectureState is LectureLoaded ||
+                lectureState is LectureDefault )&&(lectureState.lectureList.isNotEmpty)) {
               print(DateTime
                   .now()
                   .timeZoneName);
@@ -98,7 +98,7 @@ List<Widget> provideWidgetOptions(BuildContext context, LectureManagerCubit inst
                   });
             }
             return const Center(
-              child: Text("Error"),
+              child: Text("No lectures today."),
             );
           },
         ),
@@ -232,7 +232,7 @@ List<Widget> provideWidgetOptions(BuildContext context, LectureManagerCubit inst
             child: ListBody(
               children: <Widget>[
                 Text("Are you sure you want to start this lecture? "
-                    "The lecture can be terminated at least after 30 minutes."),
+                    ),
               ],
             ),
           ),

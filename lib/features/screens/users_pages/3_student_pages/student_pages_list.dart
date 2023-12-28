@@ -26,6 +26,7 @@ InstructorCubit instructorCubit = InstructorCubit(
   ..loadInstructorsByStudentId((authCubit.state as AuthSuccess).authGet.id);
 
 List<Widget> provideWidgetOptions(BuildContext mainContext,  LectureManagerCubit studentLectureManagerCubit) {
+
   return <Widget>[
     /// Lectures Tab:
     MultiBlocProvider(
@@ -39,7 +40,7 @@ List<Widget> provideWidgetOptions(BuildContext mainContext,  LectureManagerCubit
                 lectureRepository:
                     LectureRepository(lectureWebServices: LectureWebServices()))
               ..getLecturesByDay(
-                  day: days[DateTime.now().weekday-2].toLowerCase(),
+                  day: days[DateTime.now().weekday].toLowerCase(),
                   department: (studentCubit.state as StudentLoaded)
                       .students[0]
                       .department!,
@@ -81,7 +82,7 @@ List<Widget> provideWidgetOptions(BuildContext mainContext,  LectureManagerCubit
                   itemBuilder: (context, index) {
                     return InfoCard(
                       cardThumbnail: const Icon(Icons.book),
-                      cardTitle: lectureState.lectureList[index].courseCode,
+                      cardTitle: lectureState.lectureList[index].courseName,
                       lectureStartsAt: DateFormat("hh:mm a")
                           .format(lectureState.lectureList[index].startTime!),
                       lectureEndsAt: DateFormat("hh:mm a")
@@ -89,6 +90,7 @@ List<Widget> provideWidgetOptions(BuildContext mainContext,  LectureManagerCubit
                       lecturePlace: lectureState.lectureList[index].hallLocation
                           .toString(),
                       buttonText: "Attend",
+                      cardDescription: "Course Code: ${lectureState.lectureList[index].courseCode!}\n",
                       onButtonTap: () {
                         BlocProvider.of<LectureManagerCubit>(context)
                             .checkLectureToStart(
