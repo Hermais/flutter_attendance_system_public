@@ -722,7 +722,7 @@ class FacultyAdminPopups {
                               nationalId: _studentNationalID,
                               department: _studentDepartment,
                               parentDto: parent);
-                          studentCubit.printjson(student);
+                          studentCubit.postStudentData(student);
                         },
                         child: const Text(
                           'Add Student',

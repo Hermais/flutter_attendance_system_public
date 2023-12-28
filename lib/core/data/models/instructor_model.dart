@@ -38,7 +38,6 @@ class Instructor {
 
   Map<String, dynamic> toJson() {
     return {
-      'instructorId': instructorId,
       'firstName':firstName,
       'lastName': lastName,
       'emailId': emailId,
