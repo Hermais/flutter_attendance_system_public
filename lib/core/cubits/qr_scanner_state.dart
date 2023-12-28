@@ -12,3 +12,4 @@ class QrScannerPosting extends QrScannerState {}
 class QrScannerIdle extends QrScannerState {}
 class QrPostSuccess extends QrScannerState {}
 class QrPostFailure extends QrScannerState {}
+class QrIdMismatch extends QrScannerState {}

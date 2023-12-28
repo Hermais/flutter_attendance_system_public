@@ -72,13 +72,13 @@ class _QRScannerState extends State<QRScanner> {
             if(state is QrScannerScanned){
               controller!.pauseCamera();
             }
-            else if(state is QrScannerIdle){
+            else if(state is QrIdMismatch){
                 controller!.resumeCamera();
             }
           }
-          if(state is QrPostFailure){
+          if(state is QrIdMismatch){
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Attendance could not be marked.')),
+              const SnackBar(content: Text('Lecture ID Mismatch. Attendance could not be marked.')),
             );
           }
         },

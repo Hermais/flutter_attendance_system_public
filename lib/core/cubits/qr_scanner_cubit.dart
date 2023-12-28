@@ -20,7 +20,7 @@ class QrScannerCubit extends Cubit<QrScannerState> {
     customPrint(qrCode);
     int lectureId = int.parse(qrCode.split(qrCodeDellimeter)[0]);
     if(lectureId != (lectureManagerCubit.state as LectureManagerInSession).lecture.lectureId){
-      emit(QrPostFailure());
+      emit(QrIdMismatch());
       return;
     }
     Attendance attendance = Attendance(
