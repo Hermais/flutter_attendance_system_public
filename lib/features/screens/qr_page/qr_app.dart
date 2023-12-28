@@ -69,6 +69,12 @@ class _QRScannerState extends State<QRScanner> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Attendance marked successfully.')),
             );
+            if(state is QrScannerScanned){
+              controller!.pauseCamera();
+            }
+            else if(state is QrScannerIdle){
+                controller!.resumeCamera();
+            }
           }
         },
         child: Scaffold(
@@ -210,7 +216,7 @@ class _QRScannerState extends State<QRScanner> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
-        controller.pauseCamera();
+
 
         print("\n\n\n\n\n\nSCAN RESULT ${result!.code}\n\n\n\n\n\n\n");
         widget.storeScanResult(result!.code ?? "NULL Error!");

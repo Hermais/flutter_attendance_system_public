@@ -3,6 +3,7 @@ import 'package:flutter_attendance_system/core/data/models/attendance_post_model
 import 'package:flutter_attendance_system/main.dart';
 import 'package:meta/meta.dart';
 
+import '../../shared/constants_and_statics/shared_vars.dart';
 import '../data/services/instructor_web_services.dart';
 
 part 'qr_scanner_state.dart';
@@ -17,8 +18,8 @@ class QrScannerCubit extends Cubit<QrScannerState> {
   void catchQrCode(String qrCode) {
     customPrint(qrCode);
     Attendance attendance = Attendance(
-        lectureId: int.parse(qrCode.split('^')[0]),
-        studentEmail: qrCode.split('^')[1]);
+        lectureId: int.parse(qrCode.split(qrCodeDellimeter)[0]),
+        studentEmail: qrCode.split(qrCodeDellimeter)[1]);
     customPrint(attendance.toJson().toString());
     emit(QrScannerScanned(qrCode: qrCode));
     postAttendance(attendance);
@@ -29,6 +30,7 @@ class QrScannerCubit extends Cubit<QrScannerState> {
     instructorWebServices.postAttendance(attendance).then((value) {
       if(value == 'Attendance marked successfully.'){
         emit(QrPostSuccess());
+        emit(QrScannerIdle());
       }else{
         emit(QrPostFailure());
       }

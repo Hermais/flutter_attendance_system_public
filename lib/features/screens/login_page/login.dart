@@ -193,14 +193,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         onPressed: () {
-                          // Navigator.of(context).push(
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const NoLoginNavigation(
-                          //         //appBarFlexibleSpace: state.appBarFlexibleSpace,
-                          //         ),
-                          //   ),
-                          // );
-
                           authCubit.postAuth(
                             AuthPost(
                               emailId: emailController.text,
@@ -231,63 +223,40 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(
                       height: 7,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 45),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: buttonsColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        onPressed: () {},
-                        child: const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Icon(
-                                Icons.qr_code_scanner,
-                                color: buttonTextIconsColor,
-                                size: 30,
-                              ),
-                            ),
-                            Text(
-                              'Scan to Login',
-                              style: TextStyle(
-                                  color: buttonTextIconsColor, fontSize: 25),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 7,
-                    ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     const Text(
-                    //       'Don\'t have an account?',
-                    //       style: TextStyle(
-                    //         fontSize: 16,
-                    //         color: Colors.black,
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 45),
+                    //   child: ElevatedButton(
+                    //     style: ElevatedButton.styleFrom(
+                    //       backgroundColor: buttonsColor,
+                    //       shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.circular(10),
                     //       ),
                     //     ),
-                    //     MaterialButton(
-                    //       child:  Text(
-                    //         'Create',
-                    //         style: TextStyle(
-                    //           fontSize: 20,
-                    //           color: Theme.of(context).primaryColor,
-                    //
+                    //     onPressed: () {},
+                    //     child: const Row(
+                    //       mainAxisSize: MainAxisSize.min,
+                    //       children: [
+                    //         Padding(
+                    //           padding: EdgeInsets.all(8.0),
+                    //           child: Icon(
+                    //             Icons.qr_code_scanner,
+                    //             color: buttonTextIconsColor,
+                    //             size: 30,
+                    //           ),
                     //         ),
-                    //       ),
-                    //       onPressed: () {
-                    //       },
-                    //     )
-                    //   ],
-                    // )
+                    //         Text(
+                    //           'Scan to Login',
+                    //           style: TextStyle(
+                    //               color: buttonTextIconsColor, fontSize: 25),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 7,
+                    // ),
+
                   ],
                 ),
               ),
