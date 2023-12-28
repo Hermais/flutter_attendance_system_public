@@ -37,6 +37,7 @@ class _MultiSelectDropdownWidgetState<T>
           widget.setValues(_selectedValues);
         });
       },
+
       chipDisplay: MultiSelectChipDisplay<T>(
         onTap: (item) {
           setState(() {

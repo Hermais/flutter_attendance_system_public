@@ -19,6 +19,7 @@ import 'package:flutter_attendance_system/shared/constants_and_statics/shared_va
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/cubits/halls_cubit.dart';
+import '../../../../core/data/models/instructor_model.dart';
 import '../../../../core/data/models/lecture_model.dart';
 import '../../../../core/data/repositories/course_repository.dart';
 import '../../../../core/data/repositories/halls_repository.dart';
@@ -70,20 +71,20 @@ class FacultyAdminPopups {
 
   FacultyAdminPopups({required this.mainContext, required this.setState});
 
+  final lectureCubit = LectureCubit(
+      lectureRepository:
+      LectureRepository(lectureWebServices: LectureWebServices()));
+  final instructorCubit = InstructorCubit(
+      instructorRepository:
+      InstructorRepository(instructorWebServices: InstructorWebServices()));
+  final courseCubit = CourseCubit(
+      courseRepository:
+      CourseRepository(courseWebServices: CourseWebServices()));
+  final hallCubit = HallCubit(
+      hallRepository: HallRepository(hallWebServices: HallWebServices()));
+
   Future<void> showAddLectureDialog() async {
     final multiCubitKey = GlobalKey();
-
-    final lectureCubit = LectureCubit(
-        lectureRepository:
-            LectureRepository(lectureWebServices: LectureWebServices()));
-    final instructorCubit = InstructorCubit(
-        instructorRepository: InstructorRepository(
-            instructorWebServices: InstructorWebServices()));
-    final courseCubit = CourseCubit(
-        courseRepository:
-            CourseRepository(courseWebServices: CourseWebServices()));
-    final hallCubit = HallCubit(
-        hallRepository: HallRepository(hallWebServices: HallWebServices()));
 
     return await showDialog(
       context: mainContext,
@@ -118,7 +119,8 @@ class FacultyAdminPopups {
                       selectionDescription: 'Department',
                       setValue: (String? value) {
                         instructorCubit.loadInstructorByDepartment(value!);
-                        courseCubit.loadCourseByDepartment(value);
+                        courseCubit
+                            .loadCourseByDepartmentForLecturePosting(value);
                         hallCubit.loadHalls();
 
                         _lectureDepartment = value;
@@ -166,11 +168,11 @@ class FacultyAdminPopups {
                         return DropdownButtonWidget<String>(
                           items: courseState is CourseLoaded
                               ? courseState.courses
-                                  .map((e) => '${e.courseName}')
-                                  .toList()
+                              .map((e) => '${e.courseName}')
+                              .toList()
                               : [
-                                  'Specify Department First',
-                                ],
+                            'Specify Department First',
+                          ],
                           selectionDescription: 'Select Course First',
                           setValue: (String? value) {
                             _courseName = value!;
@@ -178,7 +180,7 @@ class FacultyAdminPopups {
                             _courseCode = (courseState as CourseLoaded)
                                 .courses
                                 .firstWhere((element) =>
-                                    element.courseName == _courseName)
+                            element.courseName == _courseName)
                                 .courseCode;
                             print(_courseCode);
                           },
@@ -204,8 +206,8 @@ class FacultyAdminPopups {
                           items: hallsState is HallsLoaded
                               ? hallsState.halls.map((e) => '${e}').toList()
                               : [
-                                  'Specify Department First',
-                                ],
+                            'Specify Department First',
+                          ],
                           selectionDescription: 'Select Hall',
                           setValue: (String? value) {
                             _hallLocation = value!;
@@ -396,31 +398,38 @@ class FacultyAdminPopups {
                   scrollDirection: Axis.horizontal,
                   child: DropdownButtonWidget<String>(
                     items: departments,
-                    selectionDescription: 'Select Department',
+                    selectionDescription: 'Department',
                     setValue: (String? value) {
-                      _instructorDepartment = value!;
+                      courseCubit
+                          .loadCourseByDepartmentForInstructorPosting(value!);
+
+                      _lectureDepartment = value;
                     },
                   ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                MultiSelectDropdownWidget<String>(
-                  items: const [
-                    'math_1',
-                    'math_2',
-                    'math_3',
-                    'math_4',
-                    'math_5',
-                    'math_6',
-                    'math_7',
-                    'math_8',
-                  ],
-                  selectionDescription: 'Instructor courses',
-                  setValues: (List<String>? values) {
-                    _instructorCourses = values;
-                    //print('Selected Values: $values');
-                  },
+                BlocProvider(
+                  create: (context) => courseCubit,
+                  child: BlocBuilder<CourseCubit,CourseState>(
+                    builder: (context, state) {
+                      return MultiSelectDropdownWidget<String>(
+                        items: state is CourseLoaded
+                            ? state.courses
+                            .map((e) => '${e.courseCode}')
+                            .toList()
+                            : [
+                          'Specify Department First',
+                        ],
+                        selectionDescription: 'Instructor courses',
+                        setValues: (List<String>? values) {
+                          _instructorCourses = values;
+                          print('Selected Values: $values');
+                        },
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
@@ -430,18 +439,17 @@ class FacultyAdminPopups {
               children: [
                 TextButton(
                   onPressed: () {
-                    // instructor = Instructor(
-                    //   department: _instructorDepartment,
-                    //   adminId:1 ,
-                    //   courseCode:_instructorCourses ,
-                    //   dateOfBirth: _instructorDateOfBirth,
-                    //   emailId: _instructorEmailID,
-                    //   firstName: _instructorFirstName,
-                    //   instructorId:,
-                    //   lastName:_instructorLastName ,
-                    //   nationalId: _instructorNationalID,
-                    //
-                    // );
+                    final instructor = Instructor(
+                        adminId: 1,
+                        firstName: _instructorFirstName,
+                        lastName: _instructorLastName,
+                        emailId: _instructorEmailID,
+                        dateOfBirth: _instructorDateOfBirth,
+                        nationalId: _instructorNationalID,
+                        department: _lectureDepartment,
+                        courseCode: _instructorCourses);
+                    instructorCubit.postInstructorData(instructor);
+                    Navigator.pop(context);
                   },
                   child: const Text(
                     'Add Instructor',
@@ -698,9 +706,10 @@ class FacultyAdminPopups {
             Row(
               children: [
                 BlocProvider(
-                    create: (context) => StudentCubit(
-                        studentRepository: StudentRepository(
-                            studentWebServices: StudentWebServices())),
+                    create: (context) =>
+                        StudentCubit(
+                            studentRepository: StudentRepository(
+                                studentWebServices: StudentWebServices())),
                     child: Builder(builder: (context) {
                       final studentCubit = context.read<StudentCubit>();
 
@@ -722,6 +731,7 @@ class FacultyAdminPopups {
                               nationalId: _studentNationalID,
                               department: _studentDepartment,
                               parentDto: parent);
+                          studentCubit.printjson(student);
                           studentCubit.postStudentData(student);
                         },
                         child: const Text(
@@ -769,7 +779,7 @@ class FacultyAdminPopups {
           filePath.toLowerCase().endsWith('.xls')) {
         print("Selected file is an Excel file.");
         File selectedFile = File(filePath);
-        await sendFile(selectedFile);
+        await sendFile(selectedFile, message);
         ScaffoldMessenger.of(mainContext).showSnackBar(
           SnackBar(
             content: message
@@ -796,8 +806,10 @@ class FacultyAdminPopups {
     }
   }
 
-  Future<void> sendFile(File file) async {
-    var url = 'https://example.com/upload';
+  Future<void> sendFile(File file, bool message) async {
+    var url = message
+        ? 'https://qr-attendance-system.onrender.com/admin/insert-all-students'
+        : 'https://qr-attendance-system.onrender.com/admin/insert-all-instructors';
 
     try {
       Dio dio = Dio();
@@ -806,7 +818,9 @@ class FacultyAdminPopups {
       FormData formData = FormData.fromMap({
         'file': await MultipartFile.fromFile(
           file.path,
-          filename: file.path.split('/').last,
+          filename: file.path
+              .split('/')
+              .last,
         ),
       });
 
@@ -826,6 +840,4 @@ class FacultyAdminPopups {
       print('Error uploading file: $error');
     }
   }
-
-
 }

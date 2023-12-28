@@ -2,12 +2,9 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/core/cubits/instructor_cubit.dart';
 import 'package:flutter_attendance_system/core/cubits/internet_cubit.dart';
-import 'package:flutter_attendance_system/core/data/repositories/example_repository.dart';
-import 'package:flutter_attendance_system/core/data/services/example_web_services.dart';
 import 'package:flutter_attendance_system/features/widgets/loading_progress_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/cubits/user_cubit.dart';
 import '../../../../core/data/repositories/instructor_repository.dart';
 import '../../../../core/data/services/instructor_web_services.dart';
 import '../../../../shared/constants_and_statics/shared_vars.dart';
@@ -52,7 +49,8 @@ List<Widget> provideWidgetOptions(BuildContext context) {
 
             return const Center(child: LoadingIndicator());
           }
-          if (instructorState is InstructorLoaded) {
+          if (instructorState is InstructorLoaded &&
+              instructorState.instructors!.isNotEmpty) {
             return ListView.builder(
               itemCount: instructorState.instructors!.length,
               itemBuilder: (context, index) {
@@ -69,7 +67,7 @@ List<Widget> provideWidgetOptions(BuildContext context) {
             );
           }
           return const Center(
-            child: Text('Something went wrong!'),
+            child: Text('No instructors were assigned.'),
           );
         },
       ),

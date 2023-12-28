@@ -20,11 +20,17 @@ class CourseCubit extends Cubit<CourseState> {
     });
   }
 
-  void loadCourseByDepartment(String department) {
+  void loadCourseByDepartmentForLecturePosting(String department) {
     courseRepository.getCourseByDepartment(department).then((courses) {
       emit(CourseLoaded(courses: courses));
     });
   }
+  void loadCourseByDepartmentForInstructorPosting(String department) {
+    courseRepository.getCourseByDepartmentForInstructorPosting(department).then((courses) {
+      emit(CourseLoaded(courses: courses));
+    });
+  }
+
 
   void loadCourseByInstructorId(int instructorId) {
     courseRepository.getCourseByInstructorId(instructorId).then((courses) {

@@ -38,14 +38,14 @@ class Instructor {
 
   Map<String, dynamic> toJson() {
     return {
+      'adminId': 1,
+      'department':department,
       'firstName':firstName,
       'lastName': lastName,
       'emailId': emailId,
       'nationalId': nationalId,
       'dateOfBirth': dateOfBirth!.toIso8601String().substring(0,10),
-      'adminId': 1,
-      'department':department,
-      'courseCode':courseCode ?? []
+      'courseCode': courseCode ?? []
     };
   }
 }

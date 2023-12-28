@@ -42,4 +42,13 @@ class CourseRepository {
         .toList();
   }
 
+  Future<List<Course>> getCourseByDepartmentForInstructorPosting(String department) async {
+
+    final courses = await courseWebServices.getCourseDataByDepartmentForInstructorPosting(department);
+
+    return courses
+        .map((elementInListFromWebService) =>
+        Course.fromJson(elementInListFromWebService))
+        .toList();
+  }
 }

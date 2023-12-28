@@ -47,6 +47,7 @@ class Student {
       'department': department,
       'studyYear': studyYear,
       'adminId': adminId,
+      'emailId': emailId,
       'parentDto': parentDto!.toJson(),
 
     };
