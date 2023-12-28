@@ -35,7 +35,7 @@ class InstructorDashboardState extends State<InstructorDashboard> {
       instructorRepository:
       InstructorRepository(instructorWebServices: InstructorWebServices()))
     ..loadInstructorById((authCubit.state as AuthSuccess).authGet.id);
-  final QrScannerCubit qrScannerCubit = QrScannerCubit();
+  final QrScannerCubit qrScannerCubit = QrScannerCubit(instructorWebServices: InstructorWebServices());
 
   void _onItemTapped(int index) {
     setState(() {
@@ -68,7 +68,7 @@ class InstructorDashboardState extends State<InstructorDashboard> {
                 return BlocProvider.value(
                   value: qrScannerCubit,
                   child: QRScannerWithScaffold(
-                    storeScanResult: temp,
+                    storeScanResult: qrScannerCubit.catchQrCode,
                     qrAppTitle: "Scan QR code to track attendance:",
                   ),
                 );

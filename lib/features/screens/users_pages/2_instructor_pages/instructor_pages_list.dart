@@ -35,7 +35,7 @@ List<Widget> provideWidgetOptions(BuildContext context, LectureManagerCubit inst
           LectureCubit(
               lectureRepository:
               LectureRepository(lectureWebServices: LectureWebServices()))
-            ..loadLectureOfInstructorById((authCubit.state as AuthSuccess).authGet.id),
+            ..loadDefault(),
         ),
         BlocProvider(
           create: (context) => instructorLectureManagerCubit,

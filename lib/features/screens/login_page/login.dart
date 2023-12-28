@@ -3,11 +3,8 @@ import 'package:flutter_attendance_system/core/cubits/auth_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motion/motion.dart';
 
-import '../../../core/cubits/student_cubit.dart';
 import '../../../core/cubits/theme_change_manager_cubit.dart';
 import '../../../core/data/models/auth_post_model.dart';
-import '../../../core/data/repositories/student_repository.dart';
-import '../../../core/data/services/student_web_services.dart';
 import '../../../main.dart';
 import '../../../shared/constants_and_statics/shared_vars.dart';
 import '../../../shared/shared_pref/shared_theme_colors.dart';

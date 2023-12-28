@@ -39,7 +39,7 @@ List<Widget> provideWidgetOptions(BuildContext mainContext,  LectureManagerCubit
                 lectureRepository:
                     LectureRepository(lectureWebServices: LectureWebServices()))
               ..getLecturesByDay(
-                  day: days[DateTime.now().day],
+                  day: days[DateTime.now().weekday-2].toLowerCase(),
                   department: (studentCubit.state as StudentLoaded)
                       .students[0]
                       .department!,
@@ -73,8 +73,8 @@ List<Widget> provideWidgetOptions(BuildContext mainContext,  LectureManagerCubit
                 child: CircularProgressIndicator(),
               );
             }
-            if (lectureState is LectureLoaded ||
-                lectureState is LectureDefault) {
+            if ((lectureState is LectureLoaded ||
+                lectureState is LectureDefault) && lectureState.lectureList.isNotEmpty) {
               print(DateTime.now().timeZoneName);
               return ListView.builder(
                   itemCount: lectureState.lectureList.length,
@@ -98,7 +98,7 @@ List<Widget> provideWidgetOptions(BuildContext mainContext,  LectureManagerCubit
                   });
             }
             return const Center(
-              child: Text("Error"),
+              child: Text('No lectures today.'),
             );
           },
         ),

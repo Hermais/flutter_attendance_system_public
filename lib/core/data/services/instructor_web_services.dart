@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_attendance_system/core/data/models/attendance_post_model.dart';
+import 'package:flutter_attendance_system/main.dart';
 
 import '../../../shared/constants_and_statics/shared_vars.dart';
 
@@ -65,6 +67,25 @@ class InstructorWebServices {
       rethrow;
     }
   }
+  Future<String?> postAttendance(Attendance attendance) async {
+    try {
+      // Use queryParameters to include query parameters
+      Response<String> response = await dio.post(
+        '/student/mark-attendance',
+        queryParameters: {
+          'lectureId': attendance.lectureId,
+          'studentEmail': attendance.studentEmail,
+        },
+      );
+
+      customPrint(response.data!);
+      return response.data!;
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
 
   Future<List<dynamic>> getInstructorByStudentId(int id) async {
     try {
@@ -79,4 +100,6 @@ class InstructorWebServices {
       return [];
     }
   }
+
+
 }

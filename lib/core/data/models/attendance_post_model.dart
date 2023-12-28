@@ -1,8 +1,8 @@
-class AuthPost{
+class Attendance{
   int? lectureId;
   String? studentEmail;
 
-  AuthPost({this.lectureId, this.studentEmail});
+  Attendance({this.lectureId, this.studentEmail});
 
 
   Map<String, dynamic> toJson(){

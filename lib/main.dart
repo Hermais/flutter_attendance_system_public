@@ -31,6 +31,11 @@ void main() async {
   );
 }
 
+void customPrint(String message)
+{
+  print('\n\n\n\n\n\n\n\n\n***************************************************************'
+      '\n$message\n\n\n\n\n\n\n\n\n***************************************************************\n\n\n\n\n\n\n\n\n');
+}
 class MainApp extends StatefulWidget {
   MaterialColor primarySwatchAppColor;
 

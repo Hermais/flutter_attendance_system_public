@@ -2,28 +2,32 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-class QRScannerWithScaffold extends StatelessWidget
-{
+import '../../../core/cubits/qr_scanner_cubit.dart';
+
+class QRScannerWithScaffold extends StatelessWidget {
   final Function storeScanResult;
   final String? qrAppTitle;
   final Widget? appBarFlexibleSpace;
 
-
-  const QRScannerWithScaffold({super.key, required this.storeScanResult, this.qrAppTitle, this.appBarFlexibleSpace});
+  const QRScannerWithScaffold(
+      {super.key,
+      required this.storeScanResult,
+      this.qrAppTitle,
+      this.appBarFlexibleSpace});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         flexibleSpace: appBarFlexibleSpace,
-
-
-
       ),
-      body: QRScanner(storeScanResult: storeScanResult,qrAppTitle: qrAppTitle,),
+      body: QRScanner(
+        storeScanResult: storeScanResult,
+        qrAppTitle: qrAppTitle,
+      ),
     );
   }
 }
@@ -57,103 +61,125 @@ class _QRScannerState extends State<QRScanner> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Stack(alignment: Alignment.bottomCenter, children: [
-      Column(
-        children: <Widget>[
-          Expanded(
-              child: _buildQrView(context)),
-        ],
+    return BlocProvider.value(
+      value: BlocProvider.of<QrScannerCubit>(context),
+      child: BlocListener<QrScannerCubit, QrScannerState>(
+        listener: (context, state) {
+          if(state is QrScannerIdle || state is QrScannerScanned) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Attendance marked successfully.')),
+            );
+          }
+        },
+        child: Scaffold(
+            body: Stack(alignment: Alignment.bottomCenter, children: [
+          Column(
+            children: <Widget>[
+              Expanded(child: _buildQrView(context)),
+            ],
+          ),
+          Container(
+            height: 180,
+            alignment: Alignment.bottomCenter,
+            transformAlignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(widget.margins),
+                    topRight: Radius.circular(widget.margins))),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    alignment: Alignment.center,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(widget.margins),
+                          bottomRight: Radius.circular(widget.margins)),
+                      color: const Color.fromRGBO(245, 240, 235, 1),
+                    ),
+                    child: Text(
+                      widget.qrAppTitle ?? "Scan a code",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  Column(
+                    children: [
+                      Text(
+                        'Scan result: ${result != null ? result!.code : ' '}',
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            margin: const EdgeInsets.all(8),
+                            child: FilledButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Theme.of(context).primaryColor),
+                              ),
+                              onPressed: () async {
+                                await controller?.toggleFlash();
+                                setState(() {});
+                              },
+                              child: FutureBuilder(
+                                future: controller?.getFlashStatus(),
+                                builder: (context, snapshot) {
+                                  //return Text('Flash: ${snapshot.data}');
+                                  return Icon((snapshot.data ?? false)
+                                      ? Icons.flash_on
+                                      : Icons.flash_off);
+                                },
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.all(8),
+                            child: FilledButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Theme.of(context).primaryColor),
+                              ),
+                              onPressed: () async {
+                                await controller?.flipCamera();
+                                setState(() {});
+                              },
+                              child: FutureBuilder(
+                                future: controller?.getCameraInfo(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.data != null) {
+                                    //return Text('Camera\'s facing ${describeEnum(snapshot.data!)}');
+                                    return Icon((snapshot.data!.name == 'front'
+                                        ? Icons.camera_rear
+                                        : Icons.camera_front));
+                                  } else {
+                                    return const Text('loading');
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          )
+        ])),
       ),
-      Container(
-        height: 180,
-        alignment: Alignment.bottomCenter,
-        transformAlignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: Colors.white,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(widget.margins),
-                topRight:Radius.circular(widget.margins) )),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              alignment: Alignment.center,
-              height:50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(widget.margins),
-                    bottomRight:Radius.circular(widget.margins) ),
-
-                color: const Color.fromRGBO(245, 240, 235, 1),
-
-              ),
-              child: Text(
-                widget.qrAppTitle ?? "Scan a code",
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.all(8),
-                  child: FilledButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Theme.of(context).primaryColor),
-                    ),
-                    onPressed: () async {
-                      await controller?.toggleFlash();
-                      setState(() {});
-                    },
-                    child: FutureBuilder(
-                      future: controller?.getFlashStatus(),
-                      builder: (context, snapshot) {
-                        //return Text('Flash: ${snapshot.data}');
-                        return Icon((snapshot.data ?? false)
-                            ? Icons.flash_on
-                            : Icons.flash_off);
-                      },
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.all(8),
-                  child: FilledButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Theme.of(context).primaryColor),
-                    ),
-                    onPressed: () async {
-                      await controller?.flipCamera();
-                      setState(() {});
-                    },
-                    child: FutureBuilder(
-                      future: controller?.getCameraInfo(),
-                      builder: (context, snapshot) {
-                        if (snapshot.data != null) {
-                          //return Text('Camera\'s facing ${describeEnum(snapshot.data!)}');
-                          return Icon((snapshot.data!.name == 'front'
-                              ? Icons.camera_rear
-                              : Icons.camera_front));
-                        } else {
-                          return const Text('loading');
-                        }
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      )
-    ]));
+    );
   }
 
   Widget _buildQrView(BuildContext context) {
@@ -184,10 +210,10 @@ class _QRScannerState extends State<QRScanner> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
-        //controller.pauseCamera();
-        print(result!.code);
-        widget.storeScanResult(result!.code ?? "NULL Error!");
+        controller.pauseCamera();
 
+        print("\n\n\n\n\n\nSCAN RESULT ${result!.code}\n\n\n\n\n\n\n");
+        widget.storeScanResult(result!.code ?? "NULL Error!");
       });
     });
   }
