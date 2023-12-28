@@ -9,7 +9,6 @@ import 'package:flutter_attendance_system/core/cubits/course_cubit.dart';
 import 'package:flutter_attendance_system/core/cubits/instructor_cubit.dart';
 import 'package:flutter_attendance_system/core/cubits/lecture_cubit.dart';
 import 'package:flutter_attendance_system/core/cubits/student_cubit.dart';
-import 'package:flutter_attendance_system/core/data/models/instructor_model.dart';
 import 'package:flutter_attendance_system/core/data/models/parent_model.dart';
 import 'package:flutter_attendance_system/core/data/models/student_model.dart';
 import 'package:flutter_attendance_system/core/data/repositories/instructor_repository.dart';
@@ -228,7 +227,6 @@ class FacultyAdminPopups {
               ),
               TextButton(
                 onPressed: () {
-                  printVariables();
                   //lectureCubit.postLecture();
                   Lecture lecture = Lecture(
                       firstDate: _lectureStartDate,
@@ -829,15 +827,5 @@ class FacultyAdminPopups {
     }
   }
 
-  void printVariables() {
-    print('_courseCode: $_parentFirstName');
-    print('_startTime: $_parentLastName');
-    print('_endTime: $_studentNationalID');
-    print('_hallLocation: $_studentDepartment');
-    print('_courseName: $_studentDateOfBirth');
-    print('_term: $_studentAcademicYear');
-    print('_groupName: $_studentLastName');
-    print('_instructorName: $_studentEmailID');
-    print('_courseDescription: $_parentEmailID');
-  }
+
 }
