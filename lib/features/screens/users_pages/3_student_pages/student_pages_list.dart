@@ -40,7 +40,7 @@ List<Widget> provideWidgetOptions(BuildContext mainContext,  LectureManagerCubit
                 lectureRepository:
                     LectureRepository(lectureWebServices: LectureWebServices()))
               ..getLecturesByDay(
-                  day: days[DateTime.now().weekday].toLowerCase(),
+                  day: days[DateTime.now().weekday-1].toLowerCase(),
                   department: (studentCubit.state as StudentLoaded)
                       .students[0]
                       .department!,
@@ -109,7 +109,7 @@ List<Widget> provideWidgetOptions(BuildContext mainContext,  LectureManagerCubit
 
     /// Timetable Tab:
     ListView.builder(
-      itemCount: 6,
+      itemCount: days.length,
       itemBuilder: (context, index) {
         return InfoCard(
           isButtonVisible: false,

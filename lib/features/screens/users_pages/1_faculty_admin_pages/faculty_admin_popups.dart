@@ -1,5 +1,3 @@
-// ignore_for_file: unused_field
-
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -39,10 +37,6 @@ class FacultyAdminPopups {
   DateTime? _endTime;
   String? _hallLocation;
   String? _courseName;
-  String? _term;
-  String? _groupName;
-  String? _instructorName;
-  String? _courseDescription;
   DateTime? _studentDateOfBirth;
   String? _studentFirstName;
   String? _studentLastName;
@@ -57,14 +51,11 @@ class FacultyAdminPopups {
   DateTime? _parentDateOfBirth;
   String? _lectureDepartment;
   DateTime? _instructorDateOfBirth;
-  int? _adminID;
   String? _instructorFirstName;
   String? _instructorLastName;
   String? _instructorEmailID;
   String? _instructorNationalID;
-  String? _instructorDepartment;
   List<String>? _instructorCourses;
-  bool? _isFloatingActionButtonVisible;
   bool? _typeMessage;
   DateTime? _lectureStartDate;
   Function setState;
@@ -229,7 +220,6 @@ class FacultyAdminPopups {
               ),
               TextButton(
                 onPressed: () {
-                  //lectureCubit.postLecture();
                   Lecture lecture = Lecture(
                       firstDate: _lectureStartDate,
                       startTime: _startTime,
@@ -484,7 +474,6 @@ class FacultyAdminPopups {
     );
   }
 
-  /// ##################################################################33
   Future<void> showAddStudentDialog() async {
     return await showDialog(
       context: mainContext,

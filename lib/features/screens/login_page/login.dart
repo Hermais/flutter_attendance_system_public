@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_attendance_system/core/cubits/auth_cubit.dart';
+import 'package:flutter_attendance_system/features/widgets/drop_down_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motion/motion.dart';
 
@@ -8,8 +9,6 @@ import '../../../core/data/models/auth_post_model.dart';
 import '../../../main.dart';
 import '../../../shared/constants_and_statics/shared_vars.dart';
 import '../../../shared/shared_pref/shared_theme_colors.dart';
-
-
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -22,6 +21,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  var devMode = true;
   var emailController = TextEditingController(text: 'hithamab@yahoo.com');
   var passwordController = TextEditingController(text: '19660603-9671-5368');
 
@@ -46,8 +46,6 @@ class _LoginPageState extends State<LoginPage> {
           if (authState.authGet.userType == 1) {
             Navigator.of(context).pushNamed(facultyAdmin);
           } else if (authState.authGet.userType == 2) {
-
-
             Navigator.of(context).pushNamed(student);
           } else if (authState.authGet.userType == 3) {
             Navigator.of(context).pushNamed(parent);
@@ -56,8 +54,8 @@ class _LoginPageState extends State<LoginPage> {
           }
         } else if (authState is AuthFailed) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Login Failed'),
+            SnackBar(
+              content: Text('Login Failed, try again!: ${authState.message}'),
             ),
           );
         }
@@ -132,131 +130,131 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(
                       height: 40,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 25,
-                      ),
-                      child: TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        controller: emailController,
-                        onFieldSubmitted: (String value) {
-                          print(value);
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'User Name',
-                          prefixIcon: Icon(
-                            Icons.key,
-                            color: Theme.of(context).primaryColor,
+                    Visibility(
+                      visible: !devMode,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 25,
+                            ),
+                            child: TextFormField(
+                              keyboardType: TextInputType.emailAddress,
+                              controller: emailController,
+                              onFieldSubmitted: (String value) {
+                                print(value);
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'User Name',
+                                prefixIcon: Icon(
+                                  Icons.key,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                border: const OutlineInputBorder(),
+                              ),
+                            ),
                           ),
-                          border: const OutlineInputBorder(),
-                        ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 25,
+                            ),
+                            child: TextFormField(
+                              keyboardType: TextInputType.visiblePassword,
+                              controller: passwordController,
+                              obscureText: true,
+                              onFieldSubmitted: (String value) {
+                                print(value);
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'Password',
+                                prefixIcon: Icon(
+                                  Icons.lock,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                suffixIcon: Icon(
+                                  Icons.remove_red_eye,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                border: const OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 25,
-                      ),
-                      child: TextFormField(
-                        keyboardType: TextInputType.visiblePassword,
-                        controller: passwordController,
-                        obscureText: true,
-                        onFieldSubmitted: (String value) {
-                          print(value);
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          prefixIcon: Icon(
-                            Icons.lock,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          suffixIcon: Icon(
-                            Icons.remove_red_eye,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          border: const OutlineInputBorder(),
-                        ),
-                      ),
-                    ),
+                    Visibility(
+                        visible: devMode,
+                        child: DropdownButtonWidget<String>(
+                          items: const [
+                            "admin_1@gmail.com 30301011366639",
+                            "wferriby1@wikipedia.org 19860808-0785-8800",
+                            "keales8@issuu.com 20021204-8706-8438",
+                            "scockaymee@arizona.edu 19871129-0601-1282",
+                            "hithamab@yahoo.com 19660603-9671-5368"
+                          ],
+                          selectionDescription: 'Select a user to login',
+                          setValue: (String value) {
+                            final email = value.split(" ")[0];
+                            final password = value.split(" ")[1];
+                            print(email);
+                            print(password);
+                            authCubit.postAuth(
+                              AuthPost(
+                                emailId: email,
+                                nationalId: password,
+                              ),
+                            );
+                          },
+                        )),
                     const SizedBox(
                       height: 25,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 79),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: buttonsColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                    Visibility(
+                      visible: !devMode,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 79),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: buttonsColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          authCubit.postAuth(
-                            AuthPost(
-                              emailId: emailController.text,
-                              nationalId: passwordController.text,
-                            ),
-                          );
-                        },
-                        child: const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Icon(
-                                Icons.login,
-                                color: buttonTextIconsColor,
-                                size: 30,
+                          onPressed: () {
+                            authCubit.postAuth(
+                              AuthPost(
+                                emailId: emailController.text,
+                                nationalId: passwordController.text,
                               ),
-                            ),
-                            Text(
-                              'Login',
-                              style: TextStyle(
-                                  color: buttonTextIconsColor, fontSize: 25),
-                            ),
-                          ],
+                            );
+                          },
+                          child: const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.login,
+                                  color: buttonTextIconsColor,
+                                  size: 30,
+                                ),
+                              ),
+                              Text(
+                                'Login',
+                                style: TextStyle(
+                                    color: buttonTextIconsColor, fontSize: 25),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(
                       height: 7,
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 45),
-                    //   child: ElevatedButton(
-                    //     style: ElevatedButton.styleFrom(
-                    //       backgroundColor: buttonsColor,
-                    //       shape: RoundedRectangleBorder(
-                    //         borderRadius: BorderRadius.circular(10),
-                    //       ),
-                    //     ),
-                    //     onPressed: () {},
-                    //     child: const Row(
-                    //       mainAxisSize: MainAxisSize.min,
-                    //       children: [
-                    //         Padding(
-                    //           padding: EdgeInsets.all(8.0),
-                    //           child: Icon(
-                    //             Icons.qr_code_scanner,
-                    //             color: buttonTextIconsColor,
-                    //             size: 30,
-                    //           ),
-                    //         ),
-                    //         Text(
-                    //           'Scan to Login',
-                    //           style: TextStyle(
-                    //               color: buttonTextIconsColor, fontSize: 25),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 7,
-                    // ),
-
                   ],
                 ),
               ),

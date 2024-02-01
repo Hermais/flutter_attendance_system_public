@@ -1,7 +1,7 @@
 import 'package:google_fonts/google_fonts.dart';
 
 /// Web service constants
-const maxDuration = Duration(seconds: 60);
+const maxDuration = Duration(seconds: 20);
 const exampleBaseURL = 'https://qr-attendance-system.onrender.com';
 
 
@@ -22,13 +22,13 @@ const yearMap = {
 
 
 const days = [
+  'Friday',
+  'Saturday',
   'Sunday',
   'Monday',
   'Tuesday',
   'Wednesday',
   'Thursday',
-  'Saturday',
-  'Friday'
 ];
 
 const academicYears = [prepYear, year1, year2, year3, year4];

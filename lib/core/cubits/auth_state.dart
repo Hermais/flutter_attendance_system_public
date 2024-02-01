@@ -9,6 +9,11 @@ class AuthSuccess extends AuthState {
   AuthSuccess({required this.authGet});
 
 }
-class AuthFailed extends AuthState {}
+class AuthFailed extends AuthState {
+  final String message;
+
+  AuthFailed({required this.message});
+
+}
 class AuthLoading extends AuthState {}
 

@@ -12,9 +12,7 @@ class AuthRepository{
     final authResponse =
     authWebServices.postAuthData(authPost.toJson());
 
-    /// map is a special method inside the List class that allows us to transform
-    /// each element in the list. By transforming we mean that we can change the
-    /// type of each element in the list by the lambada function.
+
     return authResponse;
   }
 

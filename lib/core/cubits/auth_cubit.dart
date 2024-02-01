@@ -12,11 +12,16 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit({required this.authRepository}) : super(AuthInitial());
 
 
-  void postAuth(AuthPost auth) {
+  void postAuth(AuthPost auth) async {
     emit(AuthLoading());
-    authRepository.postAuth(auth).then((response) {
-      emit(AuthSuccess(authGet: AuthGet.fromJson(response)));
 
-    });
+    try {
+      final response = await authRepository.postAuth(auth);
+      emit(AuthSuccess(authGet: AuthGet.fromJson(response)));
+    } catch (e) {
+      print(e);
+      emit(AuthFailed(message: e.toString().split("Exception: ")[1]));
+    }
   }
+
 }

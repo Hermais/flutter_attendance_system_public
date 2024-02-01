@@ -45,11 +45,9 @@ class LectureWebServices {
     }
   }
   Future<void> postLectureData(Map<String, dynamic> lecture) async {
-    try {
+
       await dio.post('/admin/lecture', data: lecture);
-    } catch (e) {
-      print(e);
-    }
+
   }
 
   Future<List<dynamic>> getLectureTimeTableByDay(int id,String dayOfWeek) async {

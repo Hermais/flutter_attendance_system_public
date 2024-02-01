@@ -67,68 +67,61 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return //BlocConsumer<FacultyAdminCubit,FacultyAdminState>(
-
-
-      BlocProvider(
-        create: (context) =>
-        FacultyAdminCubit(facultyAdminRepository: FacultyAdminRepository(
-            facultyAdminWebServices: FacultyAdminWebServices()))
-          ..getFacultyAdminById(
-              (authCubit.state as AuthSuccess).authGet.id),
-        child: Scaffold(
-          appBar: AppBar(
-            title: BlocBuilder<FacultyAdminCubit, FacultyAdminState >(
-              builder: (context, facultyAdminState) {
-                if (facultyAdminState is FacultyAdminLoaded) {
-                  return Text(
-                    'Welcome, ${facultyAdminState.facultyAdmin[0].firstName ?? "Faculty Admin!" }',
-                  );
-                } else {
-                  return const Text('Welcome, Faculty Admin!');
-                }
-              },
-            ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: Theme
-                .of(context)
-                .primaryColor,
-            onPressed: () {
-              FacultyAdminPopups facultyAdminPopups =
-              FacultyAdminPopups(mainContext: context, setState: setState);
-              _selectedIndex == 0
-                  ? facultyAdminPopups.showAddLectureDialog()
-                  : facultyAdminPopups.showAddEntitiesDialog();
+    return BlocProvider(
+      create: (context) => FacultyAdminCubit(
+          facultyAdminRepository: FacultyAdminRepository(
+              facultyAdminWebServices: FacultyAdminWebServices()))
+        ..getFacultyAdminById((authCubit.state as AuthSuccess).authGet.id),
+      child: Scaffold(
+        appBar: AppBar(
+          title: BlocBuilder<FacultyAdminCubit, FacultyAdminState>(
+            builder: (context, facultyAdminState) {
+              if (facultyAdminState is FacultyAdminLoaded) {
+                return Text(
+                  'Welcome, ${facultyAdminState.facultyAdmin[0].firstName ?? "Faculty Admin!"}',
+                );
+              } else {
+                return const Text('Welcome, Faculty Admin!');
+              }
             },
-            child: const Icon(Icons.settings_suggest),
-          ),
-          body: PageView(
-            controller: _pageController,
-            children: provideWidgetOptions(context),
-            onPageChanged: (index) {
-              setState(() {
-                _selectedIndex = index;
-                // _isFloatingActionButtonVisible = _selectedIndex==0;
-              });
-            },
-          ),
-          bottomNavigationBar: CustomBottomNavigationBar(
-            onItemTapped: _onItemTapped,
-            selectedIndex: _selectedIndex,
-            items: <FlashyTabBarItem>[
-              FlashyTabBarItem(
-                icon: const Icon(Icons.calendar_month_rounded),
-                title: const Text('Timetables'),
-              ),
-              FlashyTabBarItem(
-                icon: const Icon(Icons.supervisor_account),
-                title: const Text('Instructors'),
-              ),
-            ],
-
           ),
         ),
-      );
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).primaryColor,
+          onPressed: () {
+            FacultyAdminPopups facultyAdminPopups =
+                FacultyAdminPopups(mainContext: context, setState: setState);
+            _selectedIndex == 0
+                ? facultyAdminPopups.showAddLectureDialog()
+                : facultyAdminPopups.showAddEntitiesDialog();
+          },
+          child: const Icon(Icons.settings_suggest),
+        ),
+        body: PageView(
+          controller: _pageController,
+          children: provideWidgetOptions(context),
+          onPageChanged: (index) {
+            setState(() {
+              _selectedIndex = index;
+              // _isFloatingActionButtonVisible = _selectedIndex==0;
+            });
+          },
+        ),
+        bottomNavigationBar: CustomBottomNavigationBar(
+          onItemTapped: _onItemTapped,
+          selectedIndex: _selectedIndex,
+          items: <FlashyTabBarItem>[
+            FlashyTabBarItem(
+              icon: const Icon(Icons.calendar_month_rounded),
+              title: const Text('Timetables'),
+            ),
+            FlashyTabBarItem(
+              icon: const Icon(Icons.supervisor_account),
+              title: const Text('Instructors'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

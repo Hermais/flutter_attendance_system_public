@@ -21,43 +21,38 @@ class LectureCubit extends Cubit<LectureState> {
       {required String day,
       required String department,
       required int academicYear}) {
-    lectureRepository.getLecturesByDay(
-        day: day, department: department, academicYear: academicYear).then((lecture) {
+    lectureRepository
+        .getLecturesByDay(
+            day: day, department: department, academicYear: academicYear)
+        .then((lecture) {
       emit(LectureLoaded(lectureList: lecture));
-
-
     });
   }
 
-  void postLecture(Lecture lecture) {
-    lectureRepository.postLecture(lecture).then((_) {
-      emit(LectureSuccessState(message: "Lecture posted successfully"));
-      print("Lecture posted successfully");
-    }).catchError((error) {
-      emit(LectureErrorState(error: "Failed to post lecture"));
-      print("Failed to post lecture");
-    });
+  void postLecture(Lecture lecture) async {
+    try {
+      await lectureRepository.postLecture(lecture);
+      emit(LecturePostSuccess(message: 'Lecture Added Successfully'));
+    } catch (e) {
+      emit(LecturePostError(error: e.toString()));
+    }
   }
 
   void loadDefault() {
     emit(LectureDefault());
   }
 
-  void loadLectureTimeTableByDay(int id,String dayOfWeek) {
+  void loadLectureTimeTableByDay(int id, String dayOfWeek) {
     lectureRepository
-        .getLectureTimeTableByDay(id,dayOfWeek)
+        .getLectureTimeTableByDay(id, dayOfWeek)
         .then((lectureList) {
-      emit(LectureLoaded(lectureList:lectureList));
-     });
-    }
+      emit(LectureLoaded(lectureList: lectureList));
+    });
+  }
 
-    void loadLectureOfInstructorById(int id) {
-    lectureRepository
-        .getLectureOfInstructorById(id)
-        .then((lectureList) {
-      emit(LectureLoaded(lectureList:lectureList));
-     });
-    }
-
-
+  void loadLectureOfInstructorById(int id) {
+    lectureRepository.getLectureOfInstructorById(id).then((lectureList) {
+      emit(LectureLoaded(lectureList: lectureList));
+    });
+  }
 }
