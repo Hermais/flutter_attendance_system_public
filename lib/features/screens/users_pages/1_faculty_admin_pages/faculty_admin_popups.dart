@@ -78,6 +78,7 @@ class FacultyAdminPopups {
     final multiCubitKey = GlobalKey();
 
     return await showDialog(
+      barrierDismissible: false,
       context: mainContext,
       builder: (BuildContext context) {
         return MultiBlocProvider(
@@ -98,117 +99,159 @@ class FacultyAdminPopups {
           ],
           child: AlertDialog(
             title: const Text('Add Lecture'),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('Specify Main Properties:'),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DropdownButtonWidget<String>(
-                      items: departments,
-                      selectionDescription: 'Department',
-                      setValue: (String? value) {
-                        instructorCubit.loadInstructorByDepartment(value!);
-                        courseCubit
-                            .loadCourseByDepartmentForLecturePosting(value);
-                        hallCubit.loadHalls();
+            content: Form(
+              child: BlocConsumer<LectureCubit , LectureState>(
+                listener: (context, state) {
+                  if(state is LecturePostSuccess){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.message),
+                        duration: const Duration(seconds: 3),
+                      ),
+                    );
+                  }else if (state is LecturePostError){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.error),
+                        duration: const Duration(seconds: 20),
+                      ),
+                    );
+                  }else if (state is LecturePosting){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: const Text('Posting Lecture...'),
+                        duration: const Duration(seconds: 3),
+                        backgroundColor: Theme.of(context).primaryColor,
+                      ),
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text('Pick a department: '),
+                      DropdownButtonWidget<String>(
+                        items: departments,
+                        selectionDescription: 'Select Department',
+                        setValue: (String? value) {
+                          instructorCubit.loadInstructorByDepartment(value!);
+                          courseCubit
+                              .loadCourseByDepartmentForLecturePosting(value);
+                          hallCubit.loadHalls();
 
-                        _lectureDepartment = value;
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  const Divider(
-                    color: Colors.black,
-                    thickness: 0.5,
-                  ),
-                  const Text('Select Lecture Details:'),
-                  DatePickerButton(
-                    initialText: 'Select Start Date',
-                    setChangedDate: (value) {
-                      _lectureStartDate = value!;
-                    },
-                  ),
-                  ClockViewerTextButton(
-                    setChangedTime: (value) {
-                      _startTime = value!;
-                    },
-                    initialText: 'Select Start Time',
-                  ),
-                  ClockViewerTextButton(
-                    setChangedTime: (value) {
-                      _endTime = value!;
-                    },
-                    initialText: 'Select End Time',
-                  ),
-                  BlocBuilder<CourseCubit, CourseState>(
-                    builder: (context, courseState) {
-                      if (courseState is CourseInitial) {
-                        return DropdownButtonWidget<String>(
-                          items: const [
-                            'Specify Department First',
-                          ],
-                          enabled: false,
-                          selectionDescription: 'Specify Department First',
-                          setValue: (String? value) {
-                            _courseName = value!;
-                          },
-                        );
-                      } else {
-                        return DropdownButtonWidget<String>(
-                          items: courseState is CourseLoaded
-                              ? courseState.courses
-                              .map((e) => '${e.courseName}')
-                              .toList()
-                              : [
-                            'Specify Department First',
-                          ],
-                          selectionDescription: 'Select Course First',
-                          setValue: (String? value) {
-                            _courseName = value!;
-                            // I want to print the id corresponding to the attribute courseName
-                            _courseCode = (courseState as CourseLoaded)
-                                .courses
-                                .firstWhere((element) =>
-                            element.courseName == _courseName)
-                                .courseCode;
-                            print(_courseCode);
-                          },
-                        );
-                      }
-                    },
-                  ),
-                  BlocBuilder<HallCubit, HallsState>(
-                    builder: (context, hallsState) {
-                      if (hallsState is HallsInitial) {
-                        return DropdownButtonWidget<String>(
-                          items: const [
-                            'Specify Department First',
-                          ],
-                          enabled: false,
-                          selectionDescription: 'Specify Department First',
-                          setValue: (String? value) {
-                            _hallLocation = value!;
-                          },
-                        );
-                      } else {
-                        return DropdownButtonWidget<String>(
-                          items: hallsState is HallsLoaded
-                              ? hallsState.halls.map((e) => '${e}').toList()
-                              : [
-                            'Specify Department First',
-                          ],
-                          selectionDescription: 'Select Hall',
-                          setValue: (String? value) {
-                            _hallLocation = value!;
-                          },
-                        );
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                ],
+                          _lectureDepartment = value;
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      const Divider(
+                        color: Colors.black,
+                        thickness: 0.5,
+                      ),
+                      const Text('Specify lecture details: '),
+                      DatePickerButton(
+                        initialText: 'Select Start Date',
+                        setChangedDate: (value) {
+                          _lectureStartDate = value!;
+                        },
+                      ),
+                      ClockViewerTextButton(
+                        setChangedTime: (value) {
+                          _startTime = value!;
+                        },
+                        initialText: 'Select Start Time',
+                      ),
+                      ClockViewerTextButton(
+                        setChangedTime: (value) {
+                          _endTime = value!;
+                        },
+                        initialText: 'Select End Time',
+                      ),
+                      BlocBuilder<CourseCubit, CourseState>(
+                        builder: (context, courseState) {
+                          if (courseState is CourseInitial) {
+                            return DropdownButtonWidget<String>(
+                              items: const [
+                                'Specify Department First',
+                              ],
+                              enabled: false,
+                              selectionDescription: 'Specify Department First',
+                              setValue: (String? value) {
+                                _courseName = value!;
+                              },
+                            );
+                          } else if (courseState is CourseLoaded) {
+                            return DropdownButtonWidget<String>(
+                              items:courseState.courses
+                                  .map((e) => '${e.courseName}')
+                                  .toList()
+                                  ,
+                              selectionDescription: 'Select Course First',
+                              setValue: (String? value) {
+                                _courseName = value!;
+                                // I want to print the id corresponding to the attribute courseName
+                                _courseCode = (courseState)
+                                    .courses
+                                    .firstWhere((element) =>
+                                element.courseName == _courseName)
+                                    .courseCode;
+                                print(_courseCode);
+                              },
+                            );
+                          } else {
+                            return DropdownButtonWidget<String>(
+                              items: const [
+                                'Loading, please, wait...',
+                              ],
+                              enabled: false,
+                              selectionDescription: 'Loading, please, wait...',
+                              setValue: (String? value) {
+                                _courseName = value!;
+                              },
+                            );
+                          }
+                        },
+                      ),
+                      BlocBuilder<HallCubit, HallsState>(
+                        builder: (context, hallsState) {
+                          if (hallsState is HallsInitial) {
+                            return DropdownButtonWidget<String>(
+                              items: const [
+                                'Specify Department First',
+                              ],
+                              enabled: false,
+                              selectionDescription: 'Specify Department First',
+                              setValue: (String? value) {
+                                _hallLocation = value!;
+                              },
+                            );
+                          } else if (hallsState is HallsLoaded) {
+                            return DropdownButtonWidget<String>(
+                              items:  hallsState.halls.map((e) => e).toList()
+                                  ,
+                              selectionDescription: 'Select Hall',
+                              setValue: (String? value) {
+                                _hallLocation = value!;
+                              },
+                            );
+                          } else {
+                            return DropdownButtonWidget<String>(
+                              items: const [
+                                'Loading, please, wait...',
+                              ],
+                              enabled: false,
+                              selectionDescription: 'Loading, please, wait...',
+                              setValue: (String? value) {
+                                _hallLocation = value!;
+                              },
+                            );
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  );
+                },
               ),
             ),
             actions: [
@@ -220,6 +263,17 @@ class FacultyAdminPopups {
               ),
               TextButton(
                 onPressed: () {
+                  if (_lectureStartDate == null || _startTime == null ||
+                      _endTime == null || _courseCode == null ||
+                      _hallLocation == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Please, fill all the fields."),
+                        duration: Duration(seconds: 3),
+                      ),
+                    );
+                    return;
+                  }
                   Lecture lecture = Lecture(
                       firstDate: _lectureStartDate,
                       startTime: _startTime,
@@ -268,18 +322,18 @@ class FacultyAdminPopups {
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                  ),
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
+                  // TextButton(
+                  //   onPressed: () {
+                  //     Navigator.pop(context);
+                  //   },
+                  //   child: const Text(
+                  //     'Cancel',
+                  //     style: TextStyle(fontWeight: FontWeight.w600),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -289,6 +343,7 @@ class FacultyAdminPopups {
 
   Future<void> showAddInstructorDialog() async {
     return await showDialog(
+      barrierDismissible: false,
       context: mainContext,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -402,7 +457,7 @@ class FacultyAdminPopups {
                 ),
                 BlocProvider(
                   create: (context) => courseCubit,
-                  child: BlocBuilder<CourseCubit,CourseState>(
+                  child: BlocBuilder<CourseCubit, CourseState>(
                     builder: (context, state) {
                       return MultiSelectDropdownWidget<String>(
                         items: state is CourseLoaded
@@ -410,8 +465,9 @@ class FacultyAdminPopups {
                             .map((e) => '${e.courseCode}')
                             .toList()
                             : [
-                          'Specify Department First',
+
                         ],
+
                         selectionDescription: 'Instructor courses',
                         setValues: (List<String>? values) {
                           _instructorCourses = values;
@@ -476,6 +532,7 @@ class FacultyAdminPopups {
 
   Future<void> showAddStudentDialog() async {
     return await showDialog(
+      barrierDismissible: false,
       context: mainContext,
       builder: (BuildContext context) {
         return AlertDialog(

@@ -31,9 +31,12 @@ class LectureCubit extends Cubit<LectureState> {
 
   void postLecture(Lecture lecture) async {
     try {
+      emit(LecturePosting());
       await lectureRepository.postLecture(lecture);
       emit(LecturePostSuccess(message: 'Lecture Added Successfully'));
+      print("Success");
     } catch (e) {
+      print(e);
       emit(LecturePostError(error: e.toString()));
     }
   }

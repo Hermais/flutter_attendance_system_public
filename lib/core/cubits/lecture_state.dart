@@ -64,3 +64,7 @@ class LecturePostError extends LectureState {
   LecturePostError({required this.error});
 
 }
+
+class LecturePosting extends LectureState {
+
+}

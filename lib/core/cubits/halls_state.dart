@@ -9,3 +9,6 @@ class HallsLoaded extends HallsState {
   final List<String> halls;
   HallsLoaded({required this.halls});
 }
+
+class HallsLoading extends HallsState {}
+class HallsFailed extends HallsState {}

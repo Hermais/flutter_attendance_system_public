@@ -20,13 +20,8 @@ class HallWebServices
   }
 
   Future<List<dynamic>> getAllHalls() async {
-    try {
       Response response = await dio.get('/admin/availableHalls');
       return response.data;
-    } catch (e) {
-      print(e);
-      return [];
-    }
   }
 
 

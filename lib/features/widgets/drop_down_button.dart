@@ -20,26 +20,32 @@ class DropdownButtonWidget<T> extends StatefulWidget {
 class DropdownButtonWidgetState<T> extends State<DropdownButtonWidget<T>> {
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<T>(
-      icon: const Icon(Icons.arrow_drop_down_outlined),
-      value: widget.value,
-      onChanged: widget.enabled ?? true ? (T? value) {
-        setState(() {
-          widget.value =  value;
-          widget.setValue(value);
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+        child: DropdownButtonFormField<T>(
+          icon: const Icon(Icons.arrow_drop_down_outlined),
+          value: widget.value,
+          onChanged: widget.enabled ?? true ? (T? value) {
+            setState(() {
+              widget.value =  value;
+              widget.setValue(value);
 
-        });
-      } : null,
-      items: widget.items
-          .map<DropdownMenuItem<T>>(
-            (T value) {
-          return DropdownMenuItem<T>(
-            value: value,
-            child: Text(value.toString()),
-          );
-        },
-      ).toList(),
-      hint: Text(widget.selectionDescription ?? 'Select an item'),
+            });
+          } : null,
+          items: widget.items
+              .map<DropdownMenuItem<T>>(
+                (T value) {
+              return DropdownMenuItem<T>(
+                value: value,
+                child: Text(value.toString()),
+              );
+            },
+          ).toList(),
+          hint: Text(widget.selectionDescription ?? 'Select an item'),
+        ),
+      ),
     );
   }
 }

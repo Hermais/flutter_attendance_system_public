@@ -15,17 +15,25 @@ class CourseCubit extends Cubit<CourseState> {
 
 
   void loadCourse() {
+    emit(CourseLoading());
     courseRepository.getCourse().then((courses) {
       emit(CourseLoaded(courses: courses));
     });
   }
 
-  void loadCourseByDepartmentForLecturePosting(String department) {
-    courseRepository.getCourseByDepartment(department).then((courses) {
-      emit(CourseLoaded(courses: courses));
-    });
+  void loadCourseByDepartmentForLecturePosting(String department) async {
+    emit(CourseLoading());
+    try{
+      await courseRepository.getCourseByDepartment(department).then((courses) {
+        emit(CourseLoaded(courses: courses));
+      });
+    }catch(e){
+      emit(CourseFailed());
+
+    }
   }
   void loadCourseByDepartmentForInstructorPosting(String department) {
+    emit(CourseLoading());
     courseRepository.getCourseByDepartmentForInstructorPosting(department).then((courses) {
       emit(CourseLoaded(courses: courses));
     });
@@ -33,8 +41,11 @@ class CourseCubit extends Cubit<CourseState> {
 
 
   void loadCourseByInstructorId(int instructorId) {
+    emit(CourseLoading());
     courseRepository.getCourseByInstructorId(instructorId).then((courses) {
       emit(CourseLoaded(courses: courses));
     });
   }
+
+
 }

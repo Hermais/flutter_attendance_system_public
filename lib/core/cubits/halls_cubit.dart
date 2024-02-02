@@ -10,8 +10,13 @@ class HallCubit extends Cubit<HallsState> {
   HallCubit({required this.hallRepository}) : super(HallsInitial());
 
   void loadHalls() {
-    hallRepository.getHalls().then((halls) {
-      emit(HallsLoaded(halls: halls));
-    });
+    emit(HallsLoading());
+    try {
+      hallRepository.getHalls().then((halls) {
+        emit(HallsLoaded(halls: halls));
+      });
+    } catch (e) {
+      emit(HallsFailed());
+    }
   }
 }

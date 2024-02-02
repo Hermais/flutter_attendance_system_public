@@ -12,10 +12,16 @@ class InstructorCubit extends Cubit<InstructorState> {
   InstructorCubit({required this.instructorRepository})
       : super(InstructorInitial());
 
-  void loadInstructor() {
-    instructorRepository.getInstructorData().then((instructors) {
-      emit(InstructorLoaded(instructors: instructors));
-    });
+  void loadInstructor() async {
+    emit(InstructorInitial());
+
+    try{
+      await instructorRepository.getInstructorData().then((instructors) {
+        emit(InstructorLoaded(instructors: instructors));
+      });
+    }catch(e){
+      emit(InstructorError(error: "Failed to load data. Try again later."));
+    }
   }
 
   void loadInstructorByDepartment(String department) {
@@ -25,31 +31,27 @@ class InstructorCubit extends Cubit<InstructorState> {
       emit(InstructorLoaded(instructors: instructors));
     });
   }
+
   void loadInstructorById(int id) {
-    instructorRepository
-        .getInstructorDataById(id)
-        .then((instructor) {
+    instructorRepository.getInstructorDataById(id).then((instructor) {
       emit(InstructorLoaded(instructors: instructor));
     });
   }
 
-  void postInstructorData(Instructor instructor){
-    instructorRepository.postInstructorData(instructor).then((_){
+  void postInstructorData(Instructor instructor) async {
+    try {
+      await instructorRepository.postInstructorData(instructor);
       emit(InstructorAdded(message: "Instructor posted successfully"));
       print("Instructor posted successfully");
-    }).catchError((error){
-      emit(InstructorError(error: "Failed to post instructor"));
-      print("Failed to post instructordent");
-    });
+    } catch (e) {
+      emit(InstructorError(error: "Failed to post instructor."));
+      print("Failed to post instructor.");
+    }
   }
 
   void loadInstructorsByStudentId(int id) {
-    instructorRepository
-        .getInstructorByStudentId(id)
-        .then((instructors) {
+    instructorRepository.getInstructorByStudentId(id).then((instructors) {
       emit(InstructorLoaded(instructors: instructors));
     });
   }
-
-
 }

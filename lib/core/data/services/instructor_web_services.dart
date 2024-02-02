@@ -19,22 +19,13 @@ class InstructorWebServices {
       receiveDataWhenStatusError: true,
     );
 
-    /// When we instantiate Dio, we pass in the options we created above.
     dio = Dio(options);
 
   }
 
-  /// list type must be dynamic because it can be a list of strings or a list of maps.
   Future<List<dynamic>> getInstructorData() async {
-    try {
-      /// here we type in the endpoint of the api, without the base url.
       Response response = await dio.get('/admin/instructor');
-      /// in flutter http response.body, here response.data
       return response.data;
-    } catch (e) {
-      print(e);
-      return [];
-    }
   }
 
   Future<List<dynamic>> getInstructorDataByDepartment(String department) async {
@@ -60,12 +51,7 @@ class InstructorWebServices {
     }
   }
   Future<void> postInstructorData(Map<String, dynamic> instructor) async {
-    try {
       await dio.post('/admin/instructor', data: instructor);
-    } catch (e) {
-      print(e);
-      rethrow;
-    }
   }
   Future<String?> postAttendance(Attendance attendance) async {
     try {

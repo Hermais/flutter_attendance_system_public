@@ -65,6 +65,20 @@ List<Widget> provideWidgetOptions(BuildContext context) {
                 );
               },
             );
+          }if (instructorState is InstructorError){
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                 Center(
+                  child: Text(instructorState.error),
+                ),
+                TextButton(onPressed: (){
+                  BlocProvider.of<InstructorCubit>(context).loadInstructor();
+
+                }, child: const Text("Reload"))
+              ],
+            );
           }
           return const Center(
             child: Text('No instructors were assigned.'),

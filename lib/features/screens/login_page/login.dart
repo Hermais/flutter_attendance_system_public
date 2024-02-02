@@ -54,8 +54,8 @@ class _LoginPageState extends State<LoginPage> {
           }
         } else if (authState is AuthFailed) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Login Failed, try again!: ${authState.message}'),
+            const SnackBar(
+              content: Text('Login Failed, try again!'),
             ),
           );
         }

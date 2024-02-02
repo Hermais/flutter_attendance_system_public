@@ -13,3 +13,11 @@ class CourseLoaded extends CourseState {
   CourseLoaded({required this.courses});
 
 }
+
+class CourseLoading extends CourseState {
+
+}
+
+class CourseFailed extends CourseState {
+
+}
