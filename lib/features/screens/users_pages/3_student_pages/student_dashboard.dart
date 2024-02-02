@@ -10,6 +10,7 @@ import '../../../../core/data/repositories/student_repository.dart';
 import '../../../../core/data/services/student_web_services.dart';
 import '../../../../main.dart';
 import '../../../widgets/bottom_navigation_bar.dart';
+import '../../../widgets/connectivity_listener.dart';
 import '../commons/student_info_popup.dart';
 
 void temp() {}
@@ -49,78 +50,80 @@ class StudentDashboardState extends State<StudentDashboard> {
   Widget build(BuildContext context) {
     final LectureManagerCubit studentLectureManagerCubit =
     LectureManagerCubit();
-    return MultiBlocProvider(
-      providers: [
+    return ConnectivityListener(
+      child: MultiBlocProvider(
+        providers: [
 
-        BlocProvider(
-          create: (context) =>studentCubit,
-        ),
-      ],
-      child: Scaffold(
-        appBar: AppBar(
+          BlocProvider(
+            create: (context) =>studentCubit,
+          ),
+        ],
+        child: Scaffold(
+          appBar: AppBar(
 
 
-          title: BlocBuilder<StudentCubit, StudentState>(
+            title: BlocBuilder<StudentCubit, StudentState>(
+              builder: (context, studentState) {
+                if (studentState is StudentLoaded) {
+                  return Text(
+                    'Welcome, ${studentState.students[0].firstName ??
+                        "Student!"}',
+                  );
+                } else {
+                  return const Text('Welcome, Student!');
+                }
+              },
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Theme
+                .of(context)
+                .primaryColor,
+
+            onPressed: () {
+              const StudentAndParentInfo(isForStudent: true).studentInfoPopup(
+                  context: context);
+            },
+            child: const Icon(Icons.question_mark),
+          ),
+          body: BlocBuilder<StudentCubit, StudentState>(
             builder: (context, studentState) {
               if (studentState is StudentLoaded) {
-                return Text(
-                  'Welcome, ${studentState.students[0].firstName ??
-                      "Student!"}',
+                return PageView(
+                  controller: _pageController,
+                  children: provideWidgetOptions(context, studentLectureManagerCubit),
+                  onPageChanged: (index) {
+                    setState(() {
+                      _selectedIndex = index;
+                    });
+                  },
                 );
               } else {
-                return const Text('Welcome, Student!');
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
               }
             },
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme
-              .of(context)
-              .primaryColor,
 
-          onPressed: () {
-            const StudentAndParentInfo(isForStudent: true).studentInfoPopup(
-                context: context);
-          },
-          child: const Icon(Icons.question_mark),
-        ),
-        body: BlocBuilder<StudentCubit, StudentState>(
-          builder: (context, studentState) {
-            if (studentState is StudentLoaded) {
-              return PageView(
-                controller: _pageController,
-                children: provideWidgetOptions(context, studentLectureManagerCubit),
-                onPageChanged: (index) {
-                  setState(() {
-                    _selectedIndex = index;
-                  });
-                },
-              );
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          },
-        ),
-
-        bottomNavigationBar: CustomBottomNavigationBar(
-          items: <FlashyTabBarItem>[
-            FlashyTabBarItem(
-              icon: const Icon(Icons.dashboard_rounded),
-              title: const Text('Lectures'),
-            ),
-            FlashyTabBarItem(
-              icon: const Icon(Icons.calendar_month_rounded),
-              title: const Text('My Timetable'),
-            ),
-            FlashyTabBarItem(
-              icon: const Icon(Icons.supervisor_account),
-              title: const Text('Instructors'),
-            ),
-          ],
-          selectedIndex: _selectedIndex,
-          onItemTapped: _onItemTapped,
+          bottomNavigationBar: CustomBottomNavigationBar(
+            items: <FlashyTabBarItem>[
+              FlashyTabBarItem(
+                icon: const Icon(Icons.dashboard_rounded),
+                title: const Text('Lectures'),
+              ),
+              FlashyTabBarItem(
+                icon: const Icon(Icons.calendar_month_rounded),
+                title: const Text('My Timetable'),
+              ),
+              FlashyTabBarItem(
+                icon: const Icon(Icons.supervisor_account),
+                title: const Text('Instructors'),
+              ),
+            ],
+            selectedIndex: _selectedIndex,
+            onItemTapped: _onItemTapped,
+          ),
         ),
       ),
     );

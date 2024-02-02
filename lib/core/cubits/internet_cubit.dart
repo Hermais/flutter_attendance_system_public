@@ -9,6 +9,8 @@ part 'internet_state.dart';
 class InternetCubit extends Cubit<InternetState> {
   final Connectivity connectivity;
   late StreamSubscription connectivitySubscription;
+  var firstTime = true;
+
 
   InternetCubit({required this.connectivity}) : super(InternetLoading()) {
     monitorInternetConnection();
@@ -18,8 +20,12 @@ class InternetCubit extends Cubit<InternetState> {
     return connectivitySubscription =
         connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
       if (result == ConnectivityResult.none) {
+        print("Internet: Disconnected");
         emit(InternetDisconnected());
-      } else {
+      } else if (firstTime) {
+        firstTime = false;
+      }else{
+        print("Internet: Connected");
         emit(InternetConnected());
       }
     });

@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/cubits/auth_cubit.dart';
 import '../../../../core/data/services/parent_web_services.dart';
 import '../../../../main.dart';
+import '../../../widgets/connectivity_listener.dart';
 import '../4_parent_pages/pages_list.dart';
 
 
@@ -39,57 +40,59 @@ class ParentDashboardState extends State<ParentDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-      ParentCubit(parentRepository: ParentRepository(
-          parentWebServices: ParentWebServices()))
-        ..loadParentById((authCubit.state as AuthSuccess).authGet.id),
-      child: Scaffold(
-          appBar: AppBar(
-            title: BlocBuilder<ParentCubit, ParentState>(
-              builder: (context, parentState) {
-                if (parentState is ParentLoaded) {
-                  return Text(
-                    'Welcome, ${parentState.parents[0].firstName ?? "Parent!"}',
-                  );
-                } else {
-                  return const Text('Welcome, Parent!');
-                }
+    return ConnectivityListener(
+      child: BlocProvider(
+        create: (context) =>
+        ParentCubit(parentRepository: ParentRepository(
+            parentWebServices: ParentWebServices()))
+          ..loadParentById((authCubit.state as AuthSuccess).authGet.id),
+        child: Scaffold(
+            appBar: AppBar(
+              title: BlocBuilder<ParentCubit, ParentState>(
+                builder: (context, parentState) {
+                  if (parentState is ParentLoaded) {
+                    return Text(
+                      'Welcome, ${parentState.parents[0].firstName ?? "Parent!"}',
+                    );
+                  } else {
+                    return const Text('Welcome, Parent!');
+                  }
+                },
+              ),
+            ),
+            // floatingActionButton: FloatingActionButton(
+            //   backgroundColor: Theme.of(context).primaryColor,
+            //
+            //   onPressed: () {const StudentAndParentInfo().studentInfoPopup(context: context);},
+            //   child: const Icon(Icons.question_mark),
+            // ),
+            body: PageView(
+              controller: _pageController,
+              children: provideWidgetOptions(context),
+              onPageChanged: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
               },
             ),
-          ),
-          // floatingActionButton: FloatingActionButton(
-          //   backgroundColor: Theme.of(context).primaryColor,
-          //
-          //   onPressed: () {const StudentAndParentInfo().studentInfoPopup(context: context);},
-          //   child: const Icon(Icons.question_mark),
-          // ),
-          body: PageView(
-            controller: _pageController,
-            children: provideWidgetOptions(context),
-            onPageChanged: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-          ),
-          bottomNavigationBar: CustomBottomNavigationBar(
-            items: <FlashyTabBarItem>[
-              FlashyTabBarItem(
+            bottomNavigationBar: CustomBottomNavigationBar(
+              items: <FlashyTabBarItem>[
+                FlashyTabBarItem(
 
 
-                icon: const Icon(Icons.checklist),
-                title: const Text('Attendance Record'),
-              ),
-              FlashyTabBarItem(
-                icon: const Icon(Icons.pin_drop_rounded),
-                title: const Text('Student Whereabouts'),
-              ),
+                  icon: const Icon(Icons.checklist),
+                  title: const Text('Attendance Record'),
+                ),
+                FlashyTabBarItem(
+                  icon: const Icon(Icons.pin_drop_rounded),
+                  title: const Text('Student Whereabouts'),
+                ),
 
-            ],
-            selectedIndex: _selectedIndex,
-            onItemTapped: _onItemTapped,
-          )
+              ],
+              selectedIndex: _selectedIndex,
+              onItemTapped: _onItemTapped,
+            )
+        ),
       ),
     );
   }

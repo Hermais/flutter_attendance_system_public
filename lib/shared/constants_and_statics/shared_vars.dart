@@ -1,7 +1,7 @@
 import 'package:google_fonts/google_fonts.dart';
 
 /// Web service constants
-const maxDuration = Duration(seconds: 5);
+const maxDuration = Duration(seconds: 10);
 const exampleBaseURL = 'https://qr-attendance-system.onrender.com';
 
 

@@ -10,6 +10,7 @@ import '../../../../core/cubits/auth_cubit.dart';
 import '../../../../core/data/repositories/faculty_admin_repository.dart';
 import '../../../../core/data/services/faculty_admin_web_services.dart';
 import '../../../../main.dart';
+import '../../../widgets/connectivity_listener.dart';
 import 'faculty_admin_pages_list.dart';
 
 class FacultyAdminDashboard extends StatefulWidget {
@@ -67,59 +68,60 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => FacultyAdminCubit(
-          facultyAdminRepository: FacultyAdminRepository(
-              facultyAdminWebServices: FacultyAdminWebServices()))
-        ..getFacultyAdminById((authCubit.state as AuthSuccess).authGet.id),
-      child: Scaffold(
-        appBar: AppBar(
-          title: BlocBuilder<FacultyAdminCubit, FacultyAdminState>(
-            builder: (context, facultyAdminState) {
-              if (facultyAdminState is FacultyAdminLoaded) {
-                return Text(
-                  'Welcome, ${facultyAdminState.facultyAdmin[0].firstName ?? "Faculty Admin!"}',
-                );
-              } else {
-                return const Text('Welcome, Faculty Admin!');
-              }
+    return ConnectivityListener(
+      child: BlocProvider(
+        create: (context) => FacultyAdminCubit(
+            facultyAdminRepository: FacultyAdminRepository(
+                facultyAdminWebServices: FacultyAdminWebServices()))
+          ..getFacultyAdminById((authCubit.state as AuthSuccess).authGet.id),
+        child: Scaffold(
+          appBar: AppBar(
+            title: BlocBuilder<FacultyAdminCubit, FacultyAdminState>(
+              builder: (context, facultyAdminState) {
+                if (facultyAdminState is FacultyAdminLoaded) {
+                  return Text(
+                    'Welcome, ${facultyAdminState.facultyAdmin[0].firstName ?? "Faculty Admin!"}',
+                  );
+                } else {
+                  return const Text('Welcome, Faculty Admin!');
+                }
+              },
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Theme.of(context).primaryColor,
+            onPressed: () {
+              FacultyAdminPopups facultyAdminPopups =
+                  FacultyAdminPopups(mainContext: context, setState: setState);
+              _selectedIndex == 0
+                  ? facultyAdminPopups.showAddLectureDialog()
+                  : facultyAdminPopups.showAddEntitiesDialog();
+            },
+            child: const Icon(Icons.settings_suggest),
+          ),
+          body: PageView(
+            controller: _pageController,
+            children: provideWidgetOptions(context),
+            onPageChanged: (index) {
+              setState(() {
+                _selectedIndex = index;
+              });
             },
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).primaryColor,
-          onPressed: () {
-            FacultyAdminPopups facultyAdminPopups =
-                FacultyAdminPopups(mainContext: context, setState: setState);
-            _selectedIndex == 0
-                ? facultyAdminPopups.showAddLectureDialog()
-                : facultyAdminPopups.showAddEntitiesDialog();
-          },
-          child: const Icon(Icons.settings_suggest),
-        ),
-        body: PageView(
-          controller: _pageController,
-          children: provideWidgetOptions(context),
-          onPageChanged: (index) {
-            setState(() {
-              _selectedIndex = index;
-              // _isFloatingActionButtonVisible = _selectedIndex==0;
-            });
-          },
-        ),
-        bottomNavigationBar: CustomBottomNavigationBar(
-          onItemTapped: _onItemTapped,
-          selectedIndex: _selectedIndex,
-          items: <FlashyTabBarItem>[
-            FlashyTabBarItem(
-              icon: const Icon(Icons.calendar_month_rounded),
-              title: const Text('Timetables'),
-            ),
-            FlashyTabBarItem(
-              icon: const Icon(Icons.supervisor_account),
-              title: const Text('Instructors'),
-            ),
-          ],
+          bottomNavigationBar: CustomBottomNavigationBar(
+            onItemTapped: _onItemTapped,
+            selectedIndex: _selectedIndex,
+            items: <FlashyTabBarItem>[
+              FlashyTabBarItem(
+                icon: const Icon(Icons.calendar_month_rounded),
+                title: const Text('Timetables'),
+              ),
+              FlashyTabBarItem(
+                icon: const Icon(Icons.supervisor_account),
+                title: const Text('Instructors'),
+              ),
+            ],
+          ),
         ),
       ),
     );

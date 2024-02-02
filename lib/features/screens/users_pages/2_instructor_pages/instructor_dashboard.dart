@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/cubits/lecture_manager_cubit.dart';
 import '../../../../core/data/repositories/instructor_repository.dart';
 import '../../../../core/data/services/instructor_web_services.dart';
+import '../../../widgets/connectivity_listener.dart';
 import '../../qr_page/qr_app.dart';
 import 'instructor_pages_list.dart';
 
@@ -50,91 +51,93 @@ class InstructorDashboardState extends State<InstructorDashboard> {
   Widget build(BuildContext context) {
 
 
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => instructorCubit,
-        ),
-        BlocProvider(
-          create: (context) => qrScannerCubit,
-        ),
-      ],
-      child: Scaffold(
-          appBar: AppBar(
-            actions: [
-              BlocProvider(
-                create: (context) => BlocProvider.of<QrScannerCubit>(context),
-                child: IconButton(
-                  onPressed: () {
-                    if (instructorLectureManagerCubit.state
-                    is LectureManagerInSession) {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) {
-                          return BlocProvider.value(
-                            value: qrScannerCubit,
-                            child: QRScannerWithScaffold(
-                              storeScanResult: verifyAttendance,
-                              qrAppTitle: "Scan QR code to track attendance:",
-                            ),
-                          );
-                        }),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("No lecture is selected."),
-                          duration: Duration(seconds: 1),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                    }
-                  },
-                  icon: const Icon(Icons.qr_code_scanner),
+    return ConnectivityListener(
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => instructorCubit,
+          ),
+          BlocProvider(
+            create: (context) => qrScannerCubit,
+          ),
+        ],
+        child: Scaffold(
+            appBar: AppBar(
+              actions: [
+                BlocProvider(
+                  create: (context) => BlocProvider.of<QrScannerCubit>(context),
+                  child: IconButton(
+                    onPressed: () {
+                      if (instructorLectureManagerCubit.state
+                      is LectureManagerInSession) {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) {
+                            return BlocProvider.value(
+                              value: qrScannerCubit,
+                              child: QRScannerWithScaffold(
+                                storeScanResult: verifyAttendance,
+                                qrAppTitle: "Scan QR code to track attendance:",
+                              ),
+                            );
+                          }),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("No lecture is selected."),
+                            duration: Duration(seconds: 1),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
+                    },
+                    icon: const Icon(Icons.qr_code_scanner),
+                  ),
                 ),
+              ],
+              title: BlocBuilder<InstructorCubit, InstructorState>(
+                builder: (context, instructorState) {
+                  if (instructorState is InstructorLoaded) {
+                    return Text(
+                      'Welcome, Dr. ${instructorState.instructors![0]
+                          .firstName ??
+                          "Instructor!"}',
+                    );
+                  } else {
+                    return const Text('Welcome, Instructor!');
+                  }
+                },
               ),
-            ],
-            title: BlocBuilder<InstructorCubit, InstructorState>(
-              builder: (context, instructorState) {
-                if (instructorState is InstructorLoaded) {
-                  return Text(
-                    'Welcome, Dr. ${instructorState.instructors![0]
-                        .firstName ??
-                        "Instructor!"}',
-                  );
-                } else {
-                  return const Text('Welcome, Instructor!');
-                }
+            ),
+            body: PageView(
+              controller: _pageController,
+              children:
+              provideWidgetOptions(context, instructorLectureManagerCubit),
+              onPageChanged: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
               },
             ),
-          ),
-          body: PageView(
-            controller: _pageController,
-            children:
-            provideWidgetOptions(context, instructorLectureManagerCubit),
-            onPageChanged: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-          ),
-          bottomNavigationBar: CustomBottomNavigationBar(
-            items: <FlashyTabBarItem>[
-              FlashyTabBarItem(
-                icon: const Icon(Icons.dashboard_rounded),
-                title: const Text('Lectures'),
-              ),
-              FlashyTabBarItem(
-                icon: const Icon(Icons.people),
-                title: const Text('Students'),
-              ),
-              FlashyTabBarItem(
-                icon: const Icon(Icons.checklist),
-                title: const Text('Attendance'),
-              ),
-            ],
-            selectedIndex: _selectedIndex,
-            onItemTapped: _onItemTapped,
-          )),
+            bottomNavigationBar: CustomBottomNavigationBar(
+              items: <FlashyTabBarItem>[
+                FlashyTabBarItem(
+                  icon: const Icon(Icons.dashboard_rounded),
+                  title: const Text('Lectures'),
+                ),
+                FlashyTabBarItem(
+                  icon: const Icon(Icons.people),
+                  title: const Text('Students'),
+                ),
+                FlashyTabBarItem(
+                  icon: const Icon(Icons.checklist),
+                  title: const Text('Attendance'),
+                ),
+              ],
+              selectedIndex: _selectedIndex,
+              onItemTapped: _onItemTapped,
+            )),
+      ),
     );
   }
 
