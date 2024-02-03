@@ -10,6 +10,7 @@ class InternetCubit extends Cubit<InternetState> {
   final Connectivity connectivity;
   late StreamSubscription connectivitySubscription;
   var firstTime = true;
+  var isConnected = true;
 
 
   InternetCubit({required this.connectivity}) : super(InternetLoading()) {
@@ -19,13 +20,15 @@ class InternetCubit extends Cubit<InternetState> {
   StreamSubscription<ConnectivityResult> monitorInternetConnection() {
     return connectivitySubscription =
         connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
-      if (result == ConnectivityResult.none) {
+      if (result == ConnectivityResult.none && isConnected) {
         print("Internet: Disconnected");
+        isConnected = !isConnected;
         emit(InternetDisconnected());
       } else if (firstTime) {
         firstTime = false;
-      }else{
+      }else if (result != ConnectivityResult.none && !isConnected){
         print("Internet: Connected");
+        isConnected = !isConnected;
         emit(InternetConnected());
       }
     });

@@ -20,7 +20,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthSuccess(authGet: AuthGet.fromJson(response)));
     } catch (e) {
       print(e);
-      emit(AuthFailed(message: e.toString().split("Exception: ")[1]));
+      emit(AuthFailed(message: e.toString()));
     }
   }
 

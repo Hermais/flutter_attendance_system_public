@@ -25,6 +25,8 @@ class DropdownButtonWidgetState<T> extends State<DropdownButtonWidget<T>> {
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
         child: DropdownButtonFormField<T>(
+          borderRadius: BorderRadius.circular(10),
+
           icon: const Icon(Icons.arrow_drop_down_outlined),
           value: widget.value,
           onChanged: widget.enabled ?? true ? (T? value) {

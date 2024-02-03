@@ -21,13 +21,9 @@ class AuthWebServices{
   }
 
   Future<Map<String, dynamic>> postAuthData(Map<String, dynamic> auth) async {
-      try{
         Response response = await dio.post('/authenticate', data: auth);
         print(response.data);
         return response.data;
-      }catch(e){
-        throw Exception('Failed to post auth data');
-      }
 
 
   }

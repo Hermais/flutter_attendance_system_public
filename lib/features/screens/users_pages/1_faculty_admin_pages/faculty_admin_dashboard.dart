@@ -91,11 +91,20 @@ class FacultyAdminDashboardState extends State<FacultyAdminDashboard> {
           floatingActionButton: FloatingActionButton(
             backgroundColor: Theme.of(context).primaryColor,
             onPressed: () {
-              FacultyAdminPopups facultyAdminPopups =
-                  FacultyAdminPopups(mainContext: context, setState: setState);
-              _selectedIndex == 0
-                  ? facultyAdminPopups.showAddLectureDialog()
-                  : facultyAdminPopups.showAddEntitiesDialog();
+             try{
+               FacultyAdminPopups facultyAdminPopups =
+               FacultyAdminPopups(mainContext: context, setState: setState);
+               _selectedIndex == 0
+                   ? facultyAdminPopups.showAddLectureDialog()
+                   : facultyAdminPopups.showAddEntitiesDialog();
+             }catch(e, stack){
+               FlutterError.reportError(FlutterErrorDetails(
+                 exception: e,
+                 stack: stack,
+                 library: 'widgets',
+                 context: ErrorDescription('Alert Dialog Error'),
+               ));
+             }
             },
             child: const Icon(Icons.settings_suggest),
           ),

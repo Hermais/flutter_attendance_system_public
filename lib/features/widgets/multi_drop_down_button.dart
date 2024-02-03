@@ -27,6 +27,7 @@ class _MultiSelectDropdownWidgetState<T>
   @override
   Widget build(BuildContext context) {
     return MultiSelectDialogField<T>(
+
       items: widget.items
           .map((value) => MultiSelectItem<T>(value, value.toString()))
           .toList(),

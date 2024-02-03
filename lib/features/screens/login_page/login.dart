@@ -16,15 +16,15 @@ class LoginPage extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _LoginPageState();
   }
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var devMode = true;
+  var devMode = false;
   var emailController = TextEditingController(text: 'hithamab@yahoo.com');
   var passwordController = TextEditingController(text: '19660603-9671-5368');
+  var _obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                   )
                 ],
               ),
-      
+
               /// AHMED SALEM - put the body here after removing the container.
               body: Center(
                 child: SingleChildScrollView(
@@ -158,28 +158,39 @@ class _LoginPageState extends State<LoginPage> {
                             const SizedBox(
                               height: 20,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 25,
-                              ),
-                              child: TextFormField(
-                                keyboardType: TextInputType.visiblePassword,
-                                controller: passwordController,
-                                obscureText: true,
-                                onFieldSubmitted: (String value) {
-                                  print(value);
-                                },
-                                decoration: InputDecoration(
-                                  labelText: 'Password',
-                                  prefixIcon: Icon(
-                                    Icons.lock,
-                                    color: Theme.of(context).primaryColor,
+                            Form(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 25,
+                                ),
+                                child: TextFormField(
+                                  keyboardType: TextInputType.visiblePassword,
+                                  controller: passwordController,
+                                  obscureText: _obscurePassword,
+                                  onFieldSubmitted: (String value) {
+                                    print(value);
+                                  },
+                                  decoration: InputDecoration(
+                                    labelText: 'Password',
+                                    prefixIcon: Icon(
+                                      Icons.lock,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                    suffixIcon: IconButton(
+                                      icon: Icon(
+                                         _obscurePassword
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          _obscurePassword = !_obscurePassword;
+                                        });
+                                      },
+                                    ),
+                                    border: const OutlineInputBorder(),
                                   ),
-                                  suffixIcon: Icon(
-                                    Icons.remove_red_eye,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                  border: const OutlineInputBorder(),
                                 ),
                               ),
                             ),

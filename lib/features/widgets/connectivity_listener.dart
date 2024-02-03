@@ -15,14 +15,14 @@ class ConnectivityListener extends StatelessWidget {
         if (state is InternetDisconnected) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              duration: Duration(seconds: 8),
+              duration: Duration(seconds: 3),
               content: Text('Internet Connection is lost, please check your connection!'),
             ),
           );
         }else if (state is InternetConnected) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              duration: const Duration(seconds: 4),
+              duration: const Duration(seconds: 2),
               backgroundColor: Theme.of(context).primaryColor,
               content: const Text('Internet Connection is restored!'),
             ),
