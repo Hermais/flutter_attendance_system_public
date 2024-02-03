@@ -32,11 +32,15 @@ class CourseCubit extends Cubit<CourseState> {
 
     }
   }
-  void loadCourseByDepartmentForInstructorPosting(String department) {
+  void loadCourseByDepartmentForInstructorPosting(String department) async {
     emit(CourseLoading());
-    courseRepository.getCourseByDepartmentForInstructorPosting(department).then((courses) {
-      emit(CourseLoaded(courses: courses));
-    });
+    try {
+      await courseRepository.getCourseByDepartmentForInstructorPosting(department).then((courses) {
+        emit(CourseLoaded(courses: courses));
+      });
+    }catch(e){
+      emit(CourseFailed(message: e.toString() ));
+    }
   }
 
 

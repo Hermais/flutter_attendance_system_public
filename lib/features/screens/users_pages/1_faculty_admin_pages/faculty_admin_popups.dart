@@ -74,6 +74,27 @@ class FacultyAdminPopups {
   final hallCubit = HallCubit(
       hallRepository: HallRepository(hallWebServices: HallWebServices()));
 
+  Future<void> showAlert(String? message) async{
+    return await showDialog(
+      context: mainContext,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Alert'),
+          content:  Text(message ?? "Warning"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> showAddLectureDialog() async {
     final multiCubitKey = GlobalKey();
 
@@ -103,19 +124,9 @@ class FacultyAdminPopups {
               child: BlocConsumer<LectureCubit , LectureState>(
                 listener: (context, state) {
                   if(state is LecturePostSuccess){
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(state.message),
-                        duration: const Duration(seconds: 3),
-                      ),
-                    );
+                    showAlert(state.message);
                   }else if (state is LecturePostError){
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(state.error),
-                        duration: const Duration(seconds: 20),
-                      ),
-                    );
+                    showAlert(state.error);
                   }else if (state is LecturePosting){
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -186,7 +197,7 @@ class FacultyAdminPopups {
                                   .map((e) => '${e.courseName}')
                                   .toList()
                                   ,
-                              selectionDescription: 'Select Course First',
+                              selectionDescription: courseState.courses.isEmpty ? 'No courses available':'Select a course',
                               setValue: (String? value) {
                                 _courseName = value!;
                                 // I want to print the id corresponding to the attribute courseName
@@ -229,7 +240,7 @@ class FacultyAdminPopups {
                             return DropdownButtonWidget<String>(
                               items:  hallsState.halls.map((e) => e).toList()
                                   ,
-                              selectionDescription: 'Select Hall',
+                              selectionDescription: hallsState.halls.isEmpty ? 'No halls available':'Select a hall' ,
                               setValue: (String? value) {
                                 _hallLocation = value!;
                               },
@@ -266,13 +277,7 @@ class FacultyAdminPopups {
                   if (_lectureStartDate == null || _startTime == null ||
                       _endTime == null || _courseCode == null ||
                       _hallLocation == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Please, fill all the fields."),
-                        duration: Duration(seconds: 3),
-                      ),
-                    );
-                    return;
+                    showAlert("Please, fill all the fields.");
                   }
                   Lecture lecture = Lecture(
                       firstDate: _lectureStartDate,
@@ -458,22 +463,42 @@ class FacultyAdminPopups {
                 BlocProvider(
                   create: (context) => courseCubit,
                   child: BlocBuilder<CourseCubit, CourseState>(
-                    builder: (context, state) {
-                      return MultiSelectDropdownWidget<String>(
-                        items: state is CourseLoaded
-                            ? state.courses
-                            .map((e) => '${e.courseCode}')
-                            .toList()
-                            : [
+                    builder: (context, courseState) {
+                      if(courseState is CourseInitial){
+                        return MultiSelectDropdownWidget<String>(
 
-                        ],
+                          selectionDescription: 'Instructor courses',
+                          setValues: (List<String>? values) {
 
-                        selectionDescription: 'Instructor courses',
-                        setValues: (List<String>? values) {
-                          _instructorCourses = values;
-                          print('Selected Values: $values');
-                        },
-                      );
+                          }, items: const ['Select Department First'],
+                        );
+                      } if(courseState is CourseLoading){
+                        return const CircularProgressIndicator();
+                      }if (courseState is CourseLoaded){
+                        if(courseState.courses.isEmpty){
+                          return const Text("No courses are available yet.");
+                        }
+                        return MultiSelectDropdownWidget<String>(
+                          items: courseState.courses
+                              .map((e) => '${e.courseCode}')
+                              .toList(),
+
+                          selectionDescription: 'Select all instructor courses',
+                          setValues: (List<String>? values) {
+                            _instructorCourses = values;
+                            print('Selected Values: $values');
+                          },
+                        );
+                      }else{
+                        return  TextButton(child: const Text("Retry Again."),
+                        onPressed: (){
+                          courseCubit
+                              .loadCourseByDepartmentForInstructorPosting(_lectureDepartment!);
+
+                        },);
+
+
+                      }
                     },
                   ),
                 ),
@@ -485,17 +510,33 @@ class FacultyAdminPopups {
               children: [
                 TextButton(
                   onPressed: () {
-                    final instructor = Instructor(
-                        adminId: 1,
-                        firstName: _instructorFirstName,
-                        lastName: _instructorLastName,
-                        emailId: _instructorEmailID,
-                        dateOfBirth: _instructorDateOfBirth,
-                        nationalId: _instructorNationalID,
-                        department: _lectureDepartment,
-                        courseCode: _instructorCourses);
-                    instructorCubit.postInstructorData(instructor);
-                    Navigator.pop(context);
+                    if (_instructorFirstName == null ||
+                        _instructorLastName == null ||
+                        _instructorEmailID == null ||
+                        _instructorDateOfBirth == null ||
+                        _instructorNationalID == null ||
+                        _lectureDepartment == null ||
+                        _instructorCourses == null ||
+                        _instructorCourses![0] == "Select Department First") {
+                      showAlert("Fill all fields first.");
+
+
+                    } else {
+                        final instructor = Instructor(
+                            adminId: 1,
+                            firstName: _instructorFirstName,
+                            lastName: _instructorLastName,
+                            emailId: _instructorEmailID,
+                            dateOfBirth: _instructorDateOfBirth,
+                            nationalId: _instructorNationalID,
+                            department: _lectureDepartment,
+                            courseCode: _instructorCourses);
+                        instructorCubit.postInstructorData(instructor);
+                        Navigator.pop(context);
+
+                    }
+
+
                   },
                   child: const Text(
                     'Add Instructor',
@@ -761,24 +802,43 @@ class FacultyAdminPopups {
 
                       return TextButton(
                         onPressed: () {
-                          final parent = Parent(
-                              firstName: _parentFirstName,
-                              lastName: _parentLastName,
-                              emailId: _parentEmailID,
-                              nationalId: _parentNationalID,
-                              dateOfBirth: _parentDateOfBirth);
-                          final student = Student(
-                              studyYear: _studentAcademicYear,
-                              adminId: 1,
-                              firstName: _studentFirstName,
-                              lastName: _studentLastName,
-                              emailId: _studentEmailID,
-                              dateOfBirth: _studentDateOfBirth,
-                              nationalId: _studentNationalID,
-                              department: _studentDepartment,
-                              parentDto: parent);
-                          studentCubit.printjson(student);
-                          studentCubit.postStudentData(student);
+                          if(
+                          _studentFirstName == null ||
+                              _studentLastName == null ||
+                              _studentEmailID == null ||
+                              _studentNationalID == null ||
+                              _studentDateOfBirth == null ||
+                              _studentAcademicYear == null ||
+                              _studentDepartment == null ||
+                              _parentEmailID == null ||
+                              _parentFirstName == null ||
+                              _parentLastName == null ||
+                              _parentNationalID == null ||
+                              _parentDateOfBirth == null
+                          ){
+                            showAlert("Please, fill all the fields.");
+
+                          }else{
+                            final parent = Parent(
+                                firstName: _parentFirstName,
+                                lastName: _parentLastName,
+                                emailId: _parentEmailID,
+                                nationalId: _parentNationalID,
+                                dateOfBirth: _parentDateOfBirth);
+                            final student = Student(
+                                studyYear: _studentAcademicYear,
+                                adminId: 1,
+                                firstName: _studentFirstName,
+                                lastName: _studentLastName,
+                                emailId: _studentEmailID,
+                                dateOfBirth: _studentDateOfBirth,
+                                nationalId: _studentNationalID,
+                                department: _studentDepartment,
+                                parentDto: parent);
+                            studentCubit.printjson(student);
+                            studentCubit.postStudentData(student);
+
+                          }
                         },
                         child: const Text(
                           'Add Student',
@@ -826,29 +886,15 @@ class FacultyAdminPopups {
         print("Selected file is an Excel file.");
         File selectedFile = File(filePath);
         await sendFile(selectedFile, message);
-        ScaffoldMessenger.of(mainContext).showSnackBar(
-          SnackBar(
-            content: message
-                ? const Text(' successfully loaded add student')
-                : const Text(' successfully loaded add instructor'),
-            duration: const Duration(seconds: 4),
-          ),
-        );
+
+        showAlert(message
+        ? ' successfully loaded add student'
+        : ' successfully loaded add instructor');
       } else {
-        ScaffoldMessenger.of(mainContext).showSnackBar(
-          const SnackBar(
-            content: Text("Selected file is not a valid Excel file."),
-            duration: Duration(seconds: 3),
-          ),
-        );
+        showAlert("Selected file is not a valid Excel file.");
       }
     } else {
-      ScaffoldMessenger.of(mainContext).showSnackBar(
-        const SnackBar(
-          content: Text("No file selected."),
-          duration: Duration(seconds: 3),
-        ),
-      );
+      showAlert("No file selected.");
     }
   }
 

@@ -19,5 +19,8 @@ class CourseLoading extends CourseState {
 }
 
 class CourseFailed extends CourseState {
+  String? message;
+
+  CourseFailed({this.message});
 
 }

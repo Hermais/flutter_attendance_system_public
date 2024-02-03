@@ -52,12 +52,7 @@ class CourseWebServices {
   }
 
   Future<List<dynamic>> getCourseDataByDepartmentForInstructorPosting(String department) async {
-    try {
       Response response = await dio.get('/admin/course/$department');
       return response.data;
-    } catch (e) {
-      print(e);
-      return [];
-    }
   }
 }
